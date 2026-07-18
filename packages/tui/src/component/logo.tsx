@@ -129,25 +129,31 @@ export function Logo() {
 
       if (clickT > 0) {
         if (clickType === 0) {
-          // Slash: diagonal line
-          const slashX = Math.floor(clickT * 40)
-          if (Math.abs(i - slashX) < 3) {
-            finalFg = `rgb(255,255,255)`
+          // Slash: diagonal line sweep
+          const slashPos = Math.floor((1 - clickT) * line.length)
+          if (Math.abs(i - slashPos) < 2) {
+            finalFg = `rgb(200,180,255)`
           }
         } else if (clickType === 1) {
-          // Burst: expand from center
+          // Burst: expand from center with purple flash
           const center = line.length / 2
           const dist = Math.abs(i - center)
-          if (dist < clickT * 10) {
-            finalFg = `rgb(${Math.floor(200 + clickT * 55)},${Math.floor(150 + clickT * 100)},255)`
+          if (dist < (1 - clickT) * 15) {
+            const intensity = Math.floor(150 + clickT * 105)
+            finalFg = `rgb(${intensity},${Math.floor(intensity * 0.7)},255)`
           }
         } else if (clickType === 2) {
-          // Shift: color inversion flash
-          finalFg = `rgb(${Math.floor(255 * clickT)},${Math.floor(200 * clickT)},${Math.floor(255 * clickT)})`
+          // Shift: brief white flash then back
+          if (clickT > 0.7) {
+            const flash = Math.floor((1 - clickT) * 3 * 200)
+            finalFg = `rgb(${flash},${flash},${flash})`
+          }
         } else {
-          // Glitch: random displacement look
-          if (Math.random() < clickT * 0.3) {
-            finalFg = `rgb(255,0,255)`
+          // Glitch: subtle purple distortion, not random magenta
+          const glitchPhase = clickT * Math.PI * 4
+          const shift = Math.sin(glitchPhase + i * 0.5)
+          if (shift > 0.5 && char !== " ") {
+            finalFg = `rgb(${Math.floor(180 + shift * 40)},${Math.floor(80 + shift * 30)},${Math.floor(220 + shift * 35)})`
           }
         }
       }
