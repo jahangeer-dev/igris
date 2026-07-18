@@ -1,6 +1,26 @@
 {
   "$schema": "https://igris.ai/config.json",
-  "provider": {},
+  "provider": {
+    "zen": {
+      "name": "Zen",
+      "npm": "@ai-sdk/openai-compatible",
+      "api": "https://zenmux.ai/api/v1",
+      "options": {
+        "apiKey": "public"
+      },
+      "models": {
+        "z-ai/glm-4.7-flash-free": {
+          "name": "GLM 4.7 Flash (Free)"
+        },
+        "z-ai/glm-4.6v-flash-free": {
+          "name": "GLM 4.6V Flash (Free)"
+        },
+        "moonshotai/kimi-k3-free": {
+          "name": "Kimi K3 (Free)"
+        }
+      }
+    }
+  },
   "permission": {},
   "references": {
     "effect": {
