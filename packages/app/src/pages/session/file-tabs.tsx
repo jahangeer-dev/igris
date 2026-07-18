@@ -2,18 +2,18 @@ import { createEffect, createMemo, createSignal, Match, on, onCleanup, Show, Swi
 import { createStore } from "solid-js/store"
 import { Dynamic } from "solid-js/web"
 import { makeEventListener } from "@solid-primitives/event-listener"
-import type { FileSearchHandle } from "@opencode-ai/session-ui/file"
-import { useFileComponent } from "@opencode-ai/ui/context/file"
-import { cloneSelectedLineRange, previewSelectedLines } from "@opencode-ai/session-ui/pierre/selection-bridge"
-import { createLineCommentController } from "@opencode-ai/session-ui/line-comment-annotations"
-import { createLineCommentControllerV2 } from "@opencode-ai/session-ui/v2/line-comment-annotations-v2"
-import { sampledChecksum } from "@opencode-ai/core/util/encode"
-import { DropdownMenu } from "@opencode-ai/ui/dropdown-menu"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { LineCommentV2OverflowIcon } from "@opencode-ai/ui/v2/line-comment-v2"
-import { MenuV2 } from "@opencode-ai/ui/v2/menu-v2"
-import { Tabs } from "@opencode-ai/ui/tabs"
-import { ScrollView } from "@opencode-ai/ui/scroll-view"
+import type { FileSearchHandle } from "@igris-ai/session-ui/file"
+import { useFileComponent } from "@igris-ai/ui/context/file"
+import { cloneSelectedLineRange, previewSelectedLines } from "@igris-ai/session-ui/pierre/selection-bridge"
+import { createLineCommentController } from "@igris-ai/session-ui/line-comment-annotations"
+import { createLineCommentControllerV2 } from "@igris-ai/session-ui/v2/line-comment-annotations-v2"
+import { sampledChecksum } from "@igris-ai/core/util/encode"
+import { DropdownMenu } from "@igris-ai/ui/dropdown-menu"
+import { IconButton } from "@igris-ai/ui/icon-button"
+import { LineCommentV2OverflowIcon } from "@igris-ai/ui/v2/line-comment-v2"
+import { MenuV2 } from "@igris-ai/ui/v2/menu-v2"
+import { Tabs } from "@igris-ai/ui/tabs"
+import { ScrollView } from "@igris-ai/ui/scroll-view"
 import { showToast } from "@/utils/toast"
 import { selectionFromLines, useFile, type FileSelection, type SelectedLineRange } from "@/context/file"
 import { useComments } from "@/context/comments"
@@ -757,7 +757,7 @@ function SessionFileViewV2(props: { tab: string }) {
           commentsUi.onLineNumberSelectionEnd(range)
         }}
         search={search}
-        class="select-text [--opencode-diffs-bg:var(--v2-background-bg-base)]"
+        class="select-text [--igris-diffs-bg:var(--v2-background-bg-base)]"
         media={{
           mode: "auto",
           path: path(),

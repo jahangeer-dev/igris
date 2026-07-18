@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { Button } from "@opencode-ai/ui/button"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import { Button } from "@igris-ai/ui/button"
+import { useDialog } from "@igris-ai/ui/context/dialog"
 import { QueryClient, QueryClientProvider } from "@tanstack/solid-query"
 import { mockProviderAuth } from "@/context/server-sync"
 import { onCleanup, onMount } from "solid-js"
@@ -61,7 +61,7 @@ export const ApiKey = {
 }
 
 export const OpenCodeZen = {
-  render: renderConnection("opencode", [{ type: "api", label: "API key" }]),
+  render: renderConnection("igris", [{ type: "api", label: "API key" }]),
 }
 
 export const LoginMethods = {

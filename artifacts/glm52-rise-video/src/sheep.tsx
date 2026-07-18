@@ -14,7 +14,7 @@ const SHEEP = 23_600_000 // 23.6M
 const PER_SHEEP = Math.round(TOKENS / SHEEP) // 1,734
 const nf = new Intl.NumberFormat("en-US")
 
-// the correct opencode "DATA" wordmark (white, over photo)
+// the correct igris "DATA" wordmark (white, over photo)
 function DataWordmark({ height = 30 }: { height?: number }) {
   return (
     <svg width={(height * 66) / 20} height={height} viewBox="0 0 66 20" fill="none" style={{ color: c.white }}>
@@ -130,7 +130,7 @@ export function NZSheep() {
             }}
           >
             <div style={{ color: c.dim }}>40.9B tokens ÷ 23.6M sheep · last week</div>
-            <div style={{ color: c.white }}>opencode.ai/data</div>
+            <div style={{ color: c.white }}>igris.ai/data</div>
           </div>
         </div>
       </div>

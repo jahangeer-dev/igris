@@ -1353,9 +1353,9 @@ export class Global extends HeyApiClient {
   }
 
   /**
-   * Upgrade opencode
+   * Upgrade igris
    *
-   * Upgrade opencode to the specified version or latest if not specified.
+   * Upgrade igris to the specified version or latest if not specified.
    */
   public upgrade<ThrowOnError extends boolean = false>(
     parameters?: {

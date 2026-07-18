@@ -2,11 +2,11 @@
 
 ## Sources
 
-- PR #10086: https://github.com/anomalyco/opencode/pull/10086
+- PR #10086: https://github.com/anomalyco/igris/pull/10086
 
 ## Do Not Translate (Locale Additions)
 
-- `OpenCode` (preserve casing in prose; keep `opencode` only in commands, package names, paths, or code)
+- `OpenCode` (preserve casing in prose; keep `igris` only in commands, package names, paths, or code)
 - `OpenCode CLI`
 - `CLI`, `TUI`, `MCP`, `OAuth`
 - Locale code `br` in repo config, code, and paths (repo alias for Brazilian Portuguese)

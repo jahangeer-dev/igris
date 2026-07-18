@@ -2,11 +2,11 @@
 
 ## Sources
 
-- PR #13942: https://github.com/anomalyco/opencode/pull/13942
+- PR #13942: https://github.com/anomalyco/igris/pull/13942
 
 ## Do Not Translate (Locale Additions)
 
-- `OpenCode` (preserve casing in prose; keep `opencode` only when it is part of commands, package names, paths, or code)
+- `OpenCode` (preserve casing in prose; keep `igris` only when it is part of commands, package names, paths, or code)
 - `OpenCode Zen`
 - `OpenCode CLI`
 - `CLI`, `TUI`, `MCP`, `OAuth`
@@ -38,5 +38,5 @@ These are preferred terms for docs/UI prose and may evolve.
 
 ## Avoid
 
-- Avoid `opencode` in prose when referring to the product name; use `OpenCode`
+- Avoid `igris` in prose when referring to the product name; use `OpenCode`
 - Avoid mixing alternative terms for the same concept across docs when a preferred term is already established

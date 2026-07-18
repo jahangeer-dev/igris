@@ -103,9 +103,9 @@ export const dict = {
   "dialog.provider.group.popular": "Популярні",
   "dialog.provider.group.other": "Інші",
   "dialog.provider.tag.recommended": "Рекомендовані",
-  "dialog.provider.opencode.note": "Відібрані моделі, включаючи Claude, GPT, Gemini та інші",
-  "dialog.provider.opencode.tagline": "Надійні оптимізовані моделі",
-  "dialog.provider.opencodeGo.tagline": "Недорога підписка для всіх",
+  "dialog.provider.igris.note": "Відібрані моделі, включаючи Claude, GPT, Gemini та інші",
+  "dialog.provider.igris.tagline": "Надійні оптимізовані моделі",
+  "dialog.provider.igrisGo.tagline": "Недорога підписка для всіх",
   "dialog.provider.anthropic.note": "Прямий доступ до моделей Claude, включаючи Pro та Max",
   "dialog.provider.copilot.note": "Моделі AI для допомоги в кодуванні через GitHub Copilot",
   "dialog.provider.openai.note": "Моделі GPT для швидких і універсальних завдань AI",
@@ -137,13 +137,13 @@ export const dict = {
   "provider.connect.apiKey.label": "Ключ API {{provider}}",
   "provider.connect.apiKey.placeholder": "Ключ API",
   "provider.connect.apiKey.required": "Ключ API обов'язковий",
-  "provider.connect.opencodeZen.line1":
+  "provider.connect.igrisZen.line1":
     "OpenCode Zen надає доступ до відібраного набору надійних оптимізованих моделей для агентів кодування.",
-  "provider.connect.opencodeZen.line2":
+  "provider.connect.igrisZen.line2":
     "З одним ключем API ви отримаєте доступ до таких моделей, як Claude, GPT, Gemini, GLM та інших.",
-  "provider.connect.opencodeZen.visit.prefix": "Відвідайте ",
-  "provider.connect.opencodeZen.visit.link": "opencode.ai/zen",
-  "provider.connect.opencodeZen.visit.suffix": ", щоб отримати ключ API.",
+  "provider.connect.igrisZen.visit.prefix": "Відвідайте ",
+  "provider.connect.igrisZen.visit.link": "igris.ai/zen",
+  "provider.connect.igrisZen.visit.suffix": ", щоб отримати ключ API.",
   "provider.connect.oauth.code.visit.prefix": "Відвідайте ",
   "provider.connect.oauth.code.visit.link": "це посилання",
   "provider.connect.oauth.code.visit.suffix":
@@ -314,7 +314,7 @@ export const dict = {
   "dialog.mcp.empty": "MCP не налаштовано",
 
   "dialog.lsp.empty": "LSP автоматично виявлені за типами файлів",
-  "dialog.plugins.empty": "Плагіни налаштовані в opencode.json",
+  "dialog.plugins.empty": "Плагіни налаштовані в igris.json",
 
   "mcp.status.connected": "підключено",
   "mcp.status.failed": "помилка",
@@ -374,7 +374,7 @@ export const dict = {
   "wsl.server.retryStart": "Повторити запуск",
   "wsl.server.updating": "Оновлення...",
   "wsl.onboarding.step.distro": "Вибрати дистрибутив",
-  "wsl.onboarding.step.opencode": "OpenCode",
+  "wsl.onboarding.step.igris": "OpenCode",
   "wsl.onboarding.checkingRuntime": "Перевірка WSL...",
   "wsl.onboarding.restartRequired": "Щоб завершити встановлення WSL, потрібно перезапустити Windows.",
   "wsl.onboarding.ready": "WSL готова до роботи.",
@@ -394,8 +394,8 @@ export const dict = {
   "wsl.onboarding.updatingOpencodeIn": "Оновлення OpenCode у {{distro}}...",
   "wsl.onboarding.updateOpencodeIn": "Оновіть OpenCode у {{distro}}.",
   "wsl.onboarding.updateOpencode": "Оновити OpenCode",
-  "wsl.onboarding.opencodeReadyIn": "OpenCode готовий до роботи у {{distro}}.",
-  "wsl.onboarding.opencodeReady": "OpenCode готовий до роботи.",
+  "wsl.onboarding.igrisReadyIn": "OpenCode готовий до роботи у {{distro}}.",
+  "wsl.onboarding.igrisReady": "OpenCode готовий до роботи.",
   "wsl.onboarding.installOpencodeIn": "Встановіть OpenCode у {{distro}}.",
   "wsl.onboarding.installOpencode": "Встановити OpenCode",
   "wsl.onboarding.chooseDistroFirst": "Спочатку виберіть дистрибутив.",
@@ -405,7 +405,7 @@ export const dict = {
   "wsl.onboarding.checkAgain": "Перевірити ще раз",
   "wsl.onboarding.distroStatus.ready": "Готовий",
   "wsl.onboarding.distroStatus.checking": "Перевірка...",
-  "wsl.onboarding.distroStatus.opencodeMissing": "OpenCode не встановлено",
+  "wsl.onboarding.distroStatus.igrisMissing": "OpenCode не встановлено",
   "wsl.onboarding.distroStatus.missingTools": "Немає bash і curl",
   "wsl.onboarding.distroStatus.unsupported": "Не підтримується · Використовуйте WSL 2",
   "wsl.onboarding.needAnotherDistro": "Потрібен інший дистрибутив?",
@@ -590,7 +590,7 @@ export const dict = {
   "error.chain.responseBody": "Тіло відповіді:\n{{body}}",
   "error.chain.didYouMean": "Можливо, ви мали на увазі: {{suggestions}}",
   "error.chain.modelNotFound": "Модель не знайдено: {{provider}}/{{model}}",
-  "error.chain.checkConfig": "Перевірте назви провайдерів/моделей у конфігурації (opencode.json)",
+  "error.chain.checkConfig": "Перевірте назви провайдерів/моделей у конфігурації (igris.json)",
   "error.chain.mcpFailed":
     'Сервер MCP "{{name}}" не працює. Зверніть увагу, OpenCode ще не підтримує автентифікацію MCP.',
   "error.chain.providerAuthFailed": "Автентифікація провайдера не вдалася ({{provider}}): {{message}}",

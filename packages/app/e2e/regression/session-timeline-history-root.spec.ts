@@ -1,4 +1,4 @@
-import { base64Encode } from "@opencode-ai/core/util/encode"
+import { base64Encode } from "@igris-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
 import {
   assistantMessage,
@@ -64,7 +64,7 @@ for (const scenario of scenarios) {
       provider: {
         all: [
           {
-            id: "opencode",
+            id: "igris",
             name: "OpenCode",
             models: {
               "claude-opus-4-6": {
@@ -75,8 +75,8 @@ for (const scenario of scenarios) {
             },
           },
         ],
-        connected: ["opencode"],
-        default: { providerID: "opencode", modelID: "claude-opus-4-6" },
+        connected: ["igris"],
+        default: { providerID: "igris", modelID: "claude-opus-4-6" },
       },
       sessions: [session()],
       sessionStatus: { [sessionID]: { type: "busy" } },

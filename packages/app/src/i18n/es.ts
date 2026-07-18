@@ -103,9 +103,9 @@ export const dict = {
   "dialog.provider.group.popular": "Popular",
   "dialog.provider.group.other": "Otro",
   "dialog.provider.tag.recommended": "Recomendado",
-  "dialog.provider.opencode.note": "Modelos seleccionados incluyendo Claude, GPT, Gemini y más",
-  "dialog.provider.opencode.tagline": "Modelos optimizados y fiables",
-  "dialog.provider.opencodeGo.tagline": "Suscripción económica para todos",
+  "dialog.provider.igris.note": "Modelos seleccionados incluyendo Claude, GPT, Gemini y más",
+  "dialog.provider.igris.tagline": "Modelos optimizados y fiables",
+  "dialog.provider.igrisGo.tagline": "Suscripción económica para todos",
   "dialog.provider.anthropic.note": "Acceso directo a modelos Claude, incluyendo Pro y Max",
   "dialog.provider.copilot.note": "Modelos de IA para asistencia de codificación a través de GitHub Copilot",
   "dialog.provider.openai.note": "Modelos GPT para tareas de IA generales rápidas y capaces",
@@ -137,13 +137,13 @@ export const dict = {
   "provider.connect.apiKey.label": "Clave API de {{provider}}",
   "provider.connect.apiKey.placeholder": "Clave API",
   "provider.connect.apiKey.required": "La clave API es obligatoria",
-  "provider.connect.opencodeZen.line1":
+  "provider.connect.igrisZen.line1":
     "OpenCode Zen te da acceso a un conjunto curado de modelos fiables optimizados para agentes de programación.",
-  "provider.connect.opencodeZen.line2":
+  "provider.connect.igrisZen.line2":
     "Con una sola clave API obtendrás acceso a modelos como Claude, GPT, Gemini, GLM y más.",
-  "provider.connect.opencodeZen.visit.prefix": "Visita ",
-  "provider.connect.opencodeZen.visit.link": "opencode.ai/zen",
-  "provider.connect.opencodeZen.visit.suffix": " para obtener tu clave API.",
+  "provider.connect.igrisZen.visit.prefix": "Visita ",
+  "provider.connect.igrisZen.visit.link": "igris.ai/zen",
+  "provider.connect.igrisZen.visit.suffix": " para obtener tu clave API.",
   "provider.connect.oauth.code.visit.prefix": "Visita ",
   "provider.connect.oauth.code.visit.link": "este enlace",
   "provider.connect.oauth.code.visit.suffix":
@@ -312,7 +312,7 @@ export const dict = {
   "dialog.mcp.empty": "No hay MCPs configurados",
 
   "dialog.lsp.empty": "LSPs detectados automáticamente por tipo de archivo",
-  "dialog.plugins.empty": "Plugins configurados en opencode.json",
+  "dialog.plugins.empty": "Plugins configurados en igris.json",
 
   "mcp.status.connected": "conectado",
   "mcp.status.failed": "fallido",
@@ -366,7 +366,7 @@ export const dict = {
   "wsl.server.retryStart": "Reintentar el inicio",
   "wsl.server.updating": "Actualizando...",
   "wsl.onboarding.step.distro": "Elegir distribución",
-  "wsl.onboarding.step.opencode": "OpenCode",
+  "wsl.onboarding.step.igris": "OpenCode",
   "wsl.onboarding.checkingRuntime": "Comprobando WSL...",
   "wsl.onboarding.restartRequired": "Es necesario reiniciar Windows para terminar de instalar WSL.",
   "wsl.onboarding.ready": "WSL está listo.",
@@ -386,8 +386,8 @@ export const dict = {
   "wsl.onboarding.updatingOpencodeIn": "Actualizando OpenCode en {{distro}}...",
   "wsl.onboarding.updateOpencodeIn": "Actualiza OpenCode en {{distro}}.",
   "wsl.onboarding.updateOpencode": "Actualizar OpenCode",
-  "wsl.onboarding.opencodeReadyIn": "OpenCode está listo en {{distro}}.",
-  "wsl.onboarding.opencodeReady": "OpenCode está listo.",
+  "wsl.onboarding.igrisReadyIn": "OpenCode está listo en {{distro}}.",
+  "wsl.onboarding.igrisReady": "OpenCode está listo.",
   "wsl.onboarding.installOpencodeIn": "Instala OpenCode en {{distro}}.",
   "wsl.onboarding.installOpencode": "Instalar OpenCode",
   "wsl.onboarding.chooseDistroFirst": "Elige primero una distribución.",
@@ -397,7 +397,7 @@ export const dict = {
   "wsl.onboarding.checkAgain": "Comprobar de nuevo",
   "wsl.onboarding.distroStatus.ready": "Lista",
   "wsl.onboarding.distroStatus.checking": "Comprobando...",
-  "wsl.onboarding.distroStatus.opencodeMissing": "OpenCode no está instalado",
+  "wsl.onboarding.distroStatus.igrisMissing": "OpenCode no está instalado",
   "wsl.onboarding.distroStatus.missingTools": "Faltan bash y curl",
   "wsl.onboarding.distroStatus.unsupported": "No compatible · Usa WSL 2",
   "wsl.onboarding.needAnotherDistro": "¿Necesitas otra distribución?",
@@ -568,7 +568,7 @@ export const dict = {
   "error.chain.responseBody": "Cuerpo de la respuesta:\n{{body}}",
   "error.chain.didYouMean": "¿Quisiste decir: {{suggestions}}",
   "error.chain.modelNotFound": "Modelo no encontrado: {{provider}}/{{model}}",
-  "error.chain.checkConfig": "Comprueba los nombres de proveedor/modelo en tu configuración (opencode.json)",
+  "error.chain.checkConfig": "Comprueba los nombres de proveedor/modelo en tu configuración (igris.json)",
   "error.chain.mcpFailed": 'El servidor MCP "{{name}}" falló. Nota, OpenCode no soporta autenticación MCP todavía.',
   "error.chain.providerAuthFailed": "Autenticación de proveedor fallida ({{provider}}): {{message}}",
   "error.chain.providerInitFailed":

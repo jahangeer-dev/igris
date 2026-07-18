@@ -57,7 +57,7 @@ export function parseTranslationArgs(args: string[]) {
     args,
     options: {
       concurrency: { type: "string", short: "c", default: "4" },
-      model: { type: "string", default: "opencode/gpt-5.5" },
+      model: { type: "string", default: "igris/gpt-5.5" },
       variant: { type: "string", default: "xhigh" },
       "dry-run": { type: "boolean", default: false },
       check: { type: "boolean", default: false },
@@ -92,9 +92,9 @@ export function targetFiles(locale: Locale) {
 }
 
 export function glossaryFile(locale: Locale) {
-  if (locale === "zh") return ".opencode/glossary/zh-cn.md"
-  if (locale === "zht") return ".opencode/glossary/zh-tw.md"
-  return `.opencode/glossary/${locale}.md`
+  if (locale === "zh") return ".igris/glossary/zh-cn.md"
+  if (locale === "zht") return ".igris/glossary/zh-tw.md"
+  return `.igris/glossary/${locale}.md`
 }
 
 export function findDrift(source: Dictionary, target: Dictionary) {
@@ -145,7 +145,7 @@ export function modelVariants(output: string, model: string) {
 
 export function translationConfig(agent: string, model: string, targets: string[]) {
   return {
-    $schema: "https://opencode.ai/config.json",
+    $schema: "https://igris.ai/config.json",
     model,
     default_agent: agent,
     share: "disabled" as const,
@@ -201,7 +201,7 @@ Synchronizes product app translations with the English app, UI, and desktop dict
 
 Options:
   -c, --concurrency <count>  Maximum parallel OpenCode runs for 'all' (default: 4)
-      --model <provider/id>  OpenCode model (default: opencode/gpt-5.5)
+      --model <provider/id>  OpenCode model (default: igris/gpt-5.5)
       --variant <name>       Model variant (default: xhigh)
       --dry-run              Report drift without running OpenCode
       --check                Exit nonzero when translation drift exists
@@ -374,7 +374,7 @@ async function translate(
 
   const proc = Bun.spawn(
     [
-      "opencode",
+      "igris",
       "--pure",
       "run",
       "--dir",
@@ -406,7 +406,7 @@ async function translate(
   if (result[2] !== 0) return { locale: plan.locale, stdout: result[0], stderr: result[1], code: result[2] }
 
   const sessionID = sessionIDFromEvents(result[0])
-  const exported = Bun.spawn(["opencode", "--pure", "export", sessionID, "--sanitize"], {
+  const exported = Bun.spawn(["igris", "--pure", "export", sessionID, "--sanitize"], {
     cwd: root,
     env,
     stdout: "pipe",
@@ -467,7 +467,7 @@ async function resolveModelVariant(model: string, variant: string) {
   if (!provider || !model.includes("/")) throw new Error(`Model must use provider/model syntax: ${model}`)
   const env = isolatedEnvironment()
   env.OPENCODE_DISABLE_PROJECT_CONFIG = "1"
-  const proc = Bun.spawn(["opencode", "--pure", "models", provider, "--verbose"], {
+  const proc = Bun.spawn(["igris", "--pure", "models", provider, "--verbose"], {
     cwd: root,
     env,
     stdin: "ignore",

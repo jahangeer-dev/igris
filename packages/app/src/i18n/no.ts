@@ -102,9 +102,9 @@ export const dict = {
   "dialog.provider.group.popular": "Populære",
   "dialog.provider.group.other": "Andre",
   "dialog.provider.tag.recommended": "Anbefalt",
-  "dialog.provider.opencode.note": "Utvalgte modeller inkludert Claude, GPT, Gemini og mer",
-  "dialog.provider.opencode.tagline": "Pålitelige, optimaliserte modeller",
-  "dialog.provider.opencodeGo.tagline": "Rimelig abonnement for alle",
+  "dialog.provider.igris.note": "Utvalgte modeller inkludert Claude, GPT, Gemini og mer",
+  "dialog.provider.igris.tagline": "Pålitelige, optimaliserte modeller",
+  "dialog.provider.igrisGo.tagline": "Rimelig abonnement for alle",
   "dialog.provider.anthropic.note": "Direkte tilgang til Claude-modeller, inkludert Pro og Max",
   "dialog.provider.copilot.note": "AI-modeller for kodeassistanse via GitHub Copilot",
   "dialog.provider.openai.note": "GPT-modeller for raske, dyktige generelle AI-oppgaver",
@@ -136,13 +136,13 @@ export const dict = {
   "provider.connect.apiKey.label": "{{provider}} API-nøkkel",
   "provider.connect.apiKey.placeholder": "API-nøkkel",
   "provider.connect.apiKey.required": "API-nøkkel er påkrevd",
-  "provider.connect.opencodeZen.line1":
+  "provider.connect.igrisZen.line1":
     "OpenCode Zen gir deg tilgang til et utvalg av pålitelige optimaliserte modeller for kodeagenter.",
-  "provider.connect.opencodeZen.line2":
+  "provider.connect.igrisZen.line2":
     "Med én enkelt API-nøkkel får du tilgang til modeller som Claude, GPT, Gemini, GLM og flere.",
-  "provider.connect.opencodeZen.visit.prefix": "Besøk ",
-  "provider.connect.opencodeZen.visit.link": "opencode.ai/zen",
-  "provider.connect.opencodeZen.visit.suffix": " for å hente API-nøkkelen din.",
+  "provider.connect.igrisZen.visit.prefix": "Besøk ",
+  "provider.connect.igrisZen.visit.link": "igris.ai/zen",
+  "provider.connect.igrisZen.visit.suffix": " for å hente API-nøkkelen din.",
   "provider.connect.oauth.code.visit.prefix": "Besøk ",
   "provider.connect.oauth.code.visit.link": "denne lenken",
   "provider.connect.oauth.code.visit.suffix":
@@ -303,7 +303,7 @@ export const dict = {
   "dialog.mcp.empty": "Ingen MCP-er konfigurert",
 
   "dialog.lsp.empty": "LSP-er automatisk oppdaget fra filtyper",
-  "dialog.plugins.empty": "Plugins konfigurert i opencode.json",
+  "dialog.plugins.empty": "Plugins konfigurert i igris.json",
 
   "mcp.status.connected": "tilkoblet",
   "mcp.status.failed": "mislyktes",
@@ -485,7 +485,7 @@ export const dict = {
   "error.chain.responseBody": "Responsinnhold:\n{{body}}",
   "error.chain.didYouMean": "Mente du: {{suggestions}}",
   "error.chain.modelNotFound": "Modell ikke funnet: {{provider}}/{{model}}",
-  "error.chain.checkConfig": "Sjekk leverandør-/modellnavnene i konfigurasjonen din (opencode.json)",
+  "error.chain.checkConfig": "Sjekk leverandør-/modellnavnene i konfigurasjonen din (igris.json)",
   "error.chain.mcpFailed": 'MCP-server "{{name}}" mislyktes. Merk at OpenCode ikke støtter MCP-autentisering ennå.',
   "error.chain.providerAuthFailed": "Leverandørautentisering mislyktes ({{provider}}): {{message}}",
   "error.chain.providerInitFailed":
@@ -966,7 +966,7 @@ export const dict = {
   "wsl.server.retryStart": "Prøv å starte på nytt",
   "wsl.server.updating": "Oppdaterer...",
   "wsl.onboarding.step.distro": "Velg distribusjon",
-  "wsl.onboarding.step.opencode": "OpenCode",
+  "wsl.onboarding.step.igris": "OpenCode",
   "wsl.onboarding.checkingRuntime": "Sjekker WSL...",
   "wsl.onboarding.restartRequired": "Windows må startes på nytt for å fullføre installasjonen av WSL.",
   "wsl.onboarding.ready": "WSL er klart.",
@@ -986,8 +986,8 @@ export const dict = {
   "wsl.onboarding.updatingOpencodeIn": "Oppdaterer OpenCode i {{distro}}...",
   "wsl.onboarding.updateOpencodeIn": "Oppdater OpenCode i {{distro}}.",
   "wsl.onboarding.updateOpencode": "Oppdater OpenCode",
-  "wsl.onboarding.opencodeReadyIn": "OpenCode er klar i {{distro}}.",
-  "wsl.onboarding.opencodeReady": "OpenCode er klar.",
+  "wsl.onboarding.igrisReadyIn": "OpenCode er klar i {{distro}}.",
+  "wsl.onboarding.igrisReady": "OpenCode er klar.",
   "wsl.onboarding.installOpencodeIn": "Installer OpenCode i {{distro}}.",
   "wsl.onboarding.installOpencode": "Installer OpenCode",
   "wsl.onboarding.chooseDistroFirst": "Velg en distribusjon først.",
@@ -997,7 +997,7 @@ export const dict = {
   "wsl.onboarding.checkAgain": "Sjekk på nytt",
   "wsl.onboarding.distroStatus.ready": "Klar",
   "wsl.onboarding.distroStatus.checking": "Sjekker...",
-  "wsl.onboarding.distroStatus.opencodeMissing": "OpenCode er ikke installert",
+  "wsl.onboarding.distroStatus.igrisMissing": "OpenCode er ikke installert",
   "wsl.onboarding.distroStatus.missingTools": "Mangler bash, curl",
   "wsl.onboarding.distroStatus.unsupported": "Ikke støttet · Bruk WSL 2",
   "wsl.onboarding.needAnotherDistro": "Trenger du en annen distribusjon?",

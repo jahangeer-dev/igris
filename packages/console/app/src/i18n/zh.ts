@@ -44,8 +44,8 @@ export const dict = {
   "notFound.docs": "文档",
   "notFound.github": "GitHub",
   "notFound.discord": "Discord",
-  "notFound.logoLightAlt": "opencode logo 亮色",
-  "notFound.logoDarkAlt": "opencode logo 暗色",
+  "notFound.logoLightAlt": "igris logo 亮色",
+  "notFound.logoDarkAlt": "igris logo 暗色",
 
   "user.logout": "退出登录",
 
@@ -99,8 +99,8 @@ export const dict = {
   "temp.feature.models.afterLink": "，包括本地模型",
   "temp.screenshot.caption": "使用 Tokyonight 主题的 OpenCode TUI",
   "temp.screenshot.alt": "使用 Tokyonight 主题的 OpenCode TUI",
-  "temp.logoLightAlt": "opencode logo 亮色",
-  "temp.logoDarkAlt": "opencode logo 暗色",
+  "temp.logoLightAlt": "igris logo 亮色",
+  "temp.logoDarkAlt": "igris logo 暗色",
 
   "home.banner.badge": "新",
   "home.banner.text": "桌面版标签页现已推出。",
@@ -634,7 +634,7 @@ export const dict = {
   "workspace.lite.subscription.resetsIn": "重置于",
   "workspace.lite.subscription.useBalance": "达到使用限额后使用您的可用余额",
   "workspace.lite.subscription.selectProvider":
-    "在你的 opencode 配置中选择「OpenCode Go」作为提供商，即可使用 Go 模型。",
+    "在你的 igris 配置中选择「OpenCode Go」作为提供商，即可使用 Go 模型。",
   "workspace.lite.providers.title": "提供商",
   "workspace.lite.providers.description": "控制用于路由的提供商。",
   "workspace.lite.providers.useChina": "启用部署在中国的模型",

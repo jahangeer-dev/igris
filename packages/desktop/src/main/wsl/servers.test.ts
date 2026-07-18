@@ -55,7 +55,7 @@ test("clears cached distro probes when removing a WSL server", () => {
       {
         Debian: {
           distro: "Debian",
-          resolvedPath: "/home/luke/.opencode/bin/opencode",
+          resolvedPath: "/home/luke/.igris/bin/igris",
           version: "1.16.2",
           expectedVersion: "1.16.2",
           matchesDesktop: true,
@@ -64,7 +64,7 @@ test("clears cached distro probes when removing a WSL server", () => {
       },
       "Debian",
     ),
-  ).toEqual({ distroProbes: {}, opencodeChecks: {} })
+  ).toEqual({ distroProbes: {}, igrisChecks: {} })
 })
 
 test("opens terminals for distro names containing spaces", () => {
@@ -115,7 +115,7 @@ test("ignores stale background OpenCode checks after removing a WSL server", asy
         onExit: () => undefined,
       },
       url: "http://127.0.0.1:4096",
-      username: "opencode",
+      username: "igris",
       password: "secret",
     }),
     testControllerOptions(),
@@ -128,7 +128,7 @@ test("ignores stale background OpenCode checks after removing a WSL server", asy
   await new Promise((resolve) => setTimeout(resolve, 0))
 
   expect(controller.getState().servers).toEqual([])
-  expect(controller.getState().opencodeChecks).toEqual({})
+  expect(controller.getState().igrisChecks).toEqual({})
 })
 
 test("ignores stale startup OpenCode checks after removing a WSL server", async () => {
@@ -147,14 +147,14 @@ test("ignores stale startup OpenCode checks after removing a WSL server", async 
   await new Promise((resolve) => setTimeout(resolve, 0))
 
   expect(controller.getState().servers).toEqual([])
-  expect(controller.getState().opencodeChecks).toEqual({})
+  expect(controller.getState().igrisChecks).toEqual({})
 })
 
 test("probes addable distros in parallel before checking OpenCode", async () => {
   persistedServers = []
   const started: string[] = []
   const release = new Map<string, () => void>()
-  const opencode: string[] = []
+  const igris: string[] = []
   const controller = createWslServersController("1.16.2", async () => new Promise<never>(() => undefined), {
     ...testControllerOptions(),
     probeDistro: async (distro) => {
@@ -163,27 +163,27 @@ test("probes addable distros in parallel before checking OpenCode", async () => 
       return { name: distro, canExecute: true, hasBash: true, hasCurl: true, error: null }
     },
     resolveOpencode: async (distro) => {
-      opencode.push(distro)
-      return "/home/me/.opencode/bin/opencode"
+      igris.push(distro)
+      return "/home/me/.igris/bin/igris"
     },
   })
 
   const task = controller.probeAddable(["Debian", "Ubuntu"])
   await waitFor(() => started.length === 2)
   expect(started).toEqual(["Debian", "Ubuntu"])
-  expect(opencode).toEqual([])
+  expect(igris).toEqual([])
   release.get("Debian")?.()
   release.get("Ubuntu")?.()
   await task
 
   expect(Object.keys(controller.getState().distroProbes)).toEqual(["Debian", "Ubuntu"])
-  expect(opencode).toEqual(["Debian", "Ubuntu"])
-  expect(Object.keys(controller.getState().opencodeChecks)).toEqual(["Debian", "Ubuntu"])
+  expect(igris).toEqual(["Debian", "Ubuntu"])
+  expect(Object.keys(controller.getState().igrisChecks)).toEqual(["Debian", "Ubuntu"])
 })
 
 test("does not check OpenCode in addable distros that cannot execute commands", async () => {
   persistedServers = []
-  const opencode: string[] = []
+  const igris: string[] = []
   const controller = createWslServersController("1.16.2", async () => new Promise<never>(() => undefined), {
     ...testControllerOptions(),
     probeDistro: async (distro) => ({
@@ -194,16 +194,16 @@ test("does not check OpenCode in addable distros that cannot execute commands", 
       error: distro === "Debian" ? null : "Open Ubuntu once to finish setup",
     }),
     resolveOpencode: async (distro) => {
-      opencode.push(distro)
-      return "/home/me/.opencode/bin/opencode"
+      igris.push(distro)
+      return "/home/me/.igris/bin/igris"
     },
   })
 
   await controller.probeAddable(["Debian", "Ubuntu"])
 
   expect(Object.keys(controller.getState().distroProbes)).toEqual(["Debian", "Ubuntu"])
-  expect(opencode).toEqual(["Debian"])
-  expect(Object.keys(controller.getState().opencodeChecks)).toEqual(["Debian"])
+  expect(igris).toEqual(["Debian"])
+  expect(Object.keys(controller.getState().igrisChecks)).toEqual(["Debian"])
 })
 
 async function waitFor(check: () => boolean) {
@@ -225,7 +225,7 @@ function testControllerOptions() {
       await new Promise<void>((resolve) => {
         releaseOpencodeResolve = resolve
       })
-      return "/home/me/.opencode/bin/opencode"
+      return "/home/me/.igris/bin/igris"
     },
   }
 }
