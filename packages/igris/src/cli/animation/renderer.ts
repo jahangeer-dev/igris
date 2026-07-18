@@ -49,8 +49,8 @@ export function render(state: RenderState, width: number, height: number): void 
   const cx = Math.floor(width / 2)
   const cy = Math.floor(height / 2)
 
-  // Purple background fill
-  out += bgRgb(25, 12, 50)
+  // Dark purple-black background fill
+  out += bgRgb(8, 4, 16)
   for (let i = 0; i < height; i++) {
     out += `\x1b[${i + 1};1H${" ".repeat(width)}`
   }
