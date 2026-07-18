@@ -1,113 +1,77 @@
-import { RGBA, TextAttributes } from "@opentui/core"
-import { For, createSignal, onCleanup, onMount } from "solid-js"
+import { createSignal, onCleanup, onMount } from "solid-js"
 import { useTheme } from "../context/theme"
 import { logo } from "../logo"
 
 export function Logo() {
   const { theme } = useTheme()
-  const [breath, setBreath] = createSignal(1.0)
-  const [colorShift, setColorShift] = createSignal(0)
-  const [clickFlash, setClickFlash] = createSignal(0)
-  const [clickType, setClickType] = createSignal(0)
-  let mounted = true
+  const [tick, setTick] = createSignal(0)
+  const [clickState, setClickState] = createSignal(0) // 0=none, 1=flash, 2=bright, 3=blue, 4=white
+  let clickStart = 0
+  let clickAnimId: ReturnType<typeof setTimeout> | null = null
+
+  const logoText = logo.join("\n")
+  const tagline = "⚔️ Shadow Knight Protocol"
 
   onMount(() => {
-    // Breathing pulse
-    let bp = 0
-    const bi = setInterval(() => {
-      if (!mounted) return clearInterval(bi)
-      bp += 0.05
-      setBreath(0.85 + Math.sin(bp) * 0.15)
-    }, 100)
-
-    // Color cycling
-    let cp = 0
-    const ci = setInterval(() => {
-      if (!mounted) return clearInterval(ci)
-      cp += 0.02
-      setColorShift(cp)
-    }, 80)
-
-    onCleanup(() => { mounted = false; clearInterval(bi); clearInterval(ci) })
+    // Animation tick every 50ms
+    const id = setInterval(() => setTick(t => t + 1), 50)
+    onCleanup(() => { clearInterval(id); if (clickAnimId) clearTimeout(clickAnimId) })
   })
 
   function handleClick() {
-    setClickType(t => (t + 1) % 4)
-    setClickFlash(1)
-    let start = Date.now()
-    const anim = () => {
-      const elapsed = Date.now() - start
-      if (elapsed > 300) { setClickFlash(0); return }
-      setClickFlash(1 - elapsed / 300)
-      setTimeout(anim, 16)
+    setClickState(s => s >= 4 ? 1 : s + 1)
+    clickStart = Date.now()
+    if (clickAnimId) clearTimeout(clickAnimId)
+    const animate = () => {
+      const elapsed = Date.now() - clickStart
+      if (elapsed >= 400) { setClickState(s => s); return }
+      setTick(t => t + 1) // force re-render
+      clickAnimId = setTimeout(animate, 16)
     }
-    setTimeout(anim, 16)
+    clickAnimId = setTimeout(animate, 16)
   }
 
-  // Use signals directly so SolidJS tracks reactivity
-  const b = breath()
-  const cs = colorShift()
-  const cf = clickFlash()
-  const ct = clickType()
+  const t = tick()
+  const cs = clickState()
+  const clickElapsed = clickStart ? Math.min(1, (Date.now() - clickStart) / 400) : 0
+  const clickActive = clickStart > 0 && clickElapsed < 1
 
-  // Base purple color with breathing + cycling
-  const r = Math.floor(123 + Math.sin(cs) * 15)
-  const g = Math.floor(62 + Math.sin(cs * 0.7) * 10)
-  const bk = Math.floor(212 + Math.cos(cs * 1.3) * 15)
+  // Derive all animation values from tick
+  const breath = 0.85 + Math.sin(t * 0.05) * 0.15
+  const shift = t * 0.01
+  const r = Math.floor(123 + Math.sin(shift) * 15)
+  const g = Math.floor(62 + Math.sin(shift * 0.7) * 10)
+  const b = Math.floor(212 + Math.cos(shift * 1.3) * 15)
 
-  // Apply click flash
-  let flashR = r, flashG = g, flashB = bk
-  if (cf > 0) {
-    if (ct === 0) { // Flash white
-      const t = Math.floor(cf * 255)
-      flashR = t; flashG = t; flashB = t
-    } else if (ct === 1) { // Bright purple
-      flashR = Math.floor(r + cf * 100)
-      flashG = Math.floor(g + cf * 50)
-      flashB = Math.floor(bk + cf * 40)
-    } else if (ct === 2) { // Electric blue
-      flashR = Math.floor(r * (1 - cf))
-      flashG = Math.floor(180 * cf + g * (1 - cf))
-      flashB = Math.floor(255 * cf + bk * (1 - cf))
-    } else { // White flash
-      const t = Math.floor(cf * 200)
-      flashR = t; flashG = t; flashB = t
+  // Click effects
+  let fr = r, fg = g, fb = b
+  if (clickActive) {
+    const p = 1 - clickElapsed
+    if (cs === 1) { // white flash
+      fr = fg = fb = Math.floor(p * 255)
+    } else if (cs === 2) { // bright purple
+      fr = Math.min(255, Math.floor(r + p * 100))
+      fg = Math.min(255, Math.floor(g + p * 50))
+      fb = Math.min(255, Math.floor(b + p * 40))
+    } else if (cs === 3) { // electric blue
+      fr = Math.floor(r * (1 - p))
+      fg = Math.floor(180 * p + g * (1 - p))
+      fb = Math.floor(255 * p + b * (1 - p))
+    } else { // cs >= 4, white flash
+      fr = fg = fb = Math.floor(p * 200)
     }
   }
 
-  const fg = `rgb(${flashR},${flashG},${flashB})`
-  const alpha = Math.floor(b * 255)
+  const fgColor = `rgb(${fr},${fg},${fb})`
+  const tagFg = `rgba(136,136,160,${breath})`
 
   return (
-    <box flexDirection="column" alignItems="center" onClick={handleClick}>
-      {/* Particles (decorative dots near logo) */}
-      <For each={[0, 1, 2]}>
-        {(i) => (
-          <text
-            fg={`rgba(123,62,212,${0.15 + Math.sin(cs + i * 2) * 0.1})`}
-            selectable={false}
-          >
-            {".·"[i % 2]}
-          </text>
-        )}
-      </For>
-
-      {/* IGRIS logo */}
-      <box flexDirection="column" alignItems="center">
-        <For each={logo}>
-          {(line) => (
-            <box flexDirection="row" justifyContent="center">
-              <text fg={fg} opacity={alpha / 255} selectable={false}>
-                {line}
-              </text>
-            </box>
-          )}
-        </For>
-      </box>
-
-      {/* Tagline */}
-      <text fg={`rgba(136,136,160,${b})`} selectable={false}>
-        ⚔️ Shadow Knight Protocol
+    <box flexDirection="column" alignItems="center" onMouseDown={handleClick}>
+      <text fg={fgColor} opacity={breath} selectable={false}>
+        {logoText}
+      </text>
+      <text fg={tagFg} selectable={false}>
+        {tagline}
       </text>
     </box>
   )
