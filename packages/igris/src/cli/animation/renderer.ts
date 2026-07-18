@@ -34,14 +34,14 @@ export interface RenderState {
   phase: "void" | "converge" | "reveal" | "glow" | "ready"
 }
 
-// IGRIS theme colors
+// IGRIS theme colors — Solo Leveling purple
 const COLORS = {
-  deep: [15, 10, 42] as const,        // #0F0A2A deep shadow
-  accent: [99, 102, 241] as const,    // #6366F1 violet
-  highlight: [167, 139, 250] as const, // #A78BFA soft purple
-  text: [229, 231, 235] as const,     // #E5E7EB light gray
-  dim: [107, 114, 128] as const,      // #6B7280
-  success: [34, 197, 94] as const,    // #22C55E green
+  deep: [25, 12, 50] as const,         // #190C32 deep purple
+  accent: [123, 62, 212] as const,     // #7B3ED4 violet
+  highlight: [155, 106, 232] as const, // #9B6AE8 soft purple
+  text: [229, 231, 235] as const,      // #E5E7EB light gray
+  dim: [136, 136, 160] as const,       // #8888A0 muted
+  success: [34, 197, 94] as const,     // #22C55E green
 }
 
 export function render(state: RenderState, width: number, height: number): void {
@@ -49,8 +49,8 @@ export function render(state: RenderState, width: number, height: number): void 
   const cx = Math.floor(width / 2)
   const cy = Math.floor(height / 2)
 
-  // Dark background fill (reduce brightness for void effect)
-  out += bgRgb(8, 6, 20)
+  // Purple background fill
+  out += bgRgb(25, 12, 50)
   for (let i = 0; i < height; i++) {
     out += `\x1b[${i + 1};1H${" ".repeat(width)}`
   }
