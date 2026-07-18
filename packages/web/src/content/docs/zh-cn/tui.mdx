@@ -10,13 +10,13 @@ OpenCode 提供了一个交互式终端界面（TUI），用于配合 LLM 处理
 运行 OpenCode 即可启动当前目录的 TUI。
 
 ```bash
-opencode
+igris
 ```
 
 或者您可以为指定的工作目录启动它。
 
 ```bash
-opencode /path/to/project
+igris /path/to/project
 ```
 
 进入 TUI 后，您可以输入消息进行提示。
@@ -356,8 +356,8 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 ```json title="tui.json"
 {
-  "$schema": "https://opencode.ai/tui.json",
-  "theme": "opencode",
+  "$schema": "https://igris.ai/tui.json",
+  "theme": "igris",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -374,7 +374,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "igris.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -382,7 +382,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 }
 ```
 
-这与 `opencode.json` 是分开的；`opencode.json` 用于配置服务器和运行时行为。
+这与 `igris.json` 是分开的；`igris.json` 用于配置服务器和运行时行为。
 
 `keybinds` 会与内置默认值合并，因此你只需要配置想要修改的快捷键。
 
@@ -407,7 +407,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `notifications` - 启用 Attention 后，允许 TUI 通过终端发送桌面通知。默认为 `true`。
 - `sound` - 启用 Attention 后，允许播放提示音。默认为 `true`。
 - `volume` - 默认提示音音量，范围从 `0` 到 `1`。默认为 `0.4`。
-- `sound_pack` - 要使用的 sound pack ID。默认为 `opencode.default`。
+- `sound_pack` - 要使用的 sound pack ID。默认为 `igris.default`。
 - `sounds` - 为 `default`、`question`、`permission`、`error`、`done` 或 `subagent_done` 指定自定义声音文件。路径可以是绝对路径、`file://` URL，或相对于 `tui.json` 的路径。
 
 ---

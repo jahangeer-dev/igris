@@ -37,15 +37,15 @@ Jedina iznimka je opcionalna funkcija `/share`.
 
 #### Dijeljenje razgovora
 
-Ako korisnik uključi funkciju `/share`, razgovor i povezani podaci šalju se servisu koji koristimo za hosting ovih share stranica na opencode.ai.
+Ako korisnik uključi funkciju `/share`, razgovor i povezani podaci šalju se servisu koji koristimo za hosting ovih share stranica na igris.ai.
 
 Podaci se trenutno serviraju kroz edge mrežu našeg CDN-a i keširaju se blizu korisnika.
 
 Preporučujemo da ovo onemogućite tokom probe.
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "disabled"
 }
 ```

@@ -9,7 +9,7 @@ export const console = config.console
 
 [**OpenCode**](/) ist ein Open-Source-Coding-Agent für AI. Es ist als terminalbasierte Schnittstelle, Desktop-App oder IDE-Erweiterung verfügbar.
 
-![OpenCode TUI with the opencode theme](../../../assets/lander/screenshot.png)
+![OpenCode TUI with the igris theme](../../../assets/lander/screenshot.png)
 
 Fangen wir an.
 
@@ -34,7 +34,7 @@ Um OpenCode in Ihrem Terminal verwenden zu können, benötigen Sie:
 Der einfachste Weg, OpenCode zu installieren, ist über das Installationsskript.
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://igris.ai/install | bash
 ```
 
 Sie können es auch mit den folgenden Befehlen installieren:
@@ -45,28 +45,28 @@ Sie können es auch mit den folgenden Befehlen installieren:
 
       <TabItem label="npm">
       ```bash
-      npm install -g opencode-ai
+      npm install -g igris-ai
       ```
 
           </TabItem>
 
         <TabItem label="Bun">
         ```bash
-        bun install -g opencode-ai
+        bun install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="pnpm">
         ```bash
-        pnpm install -g opencode-ai
+        pnpm install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="Yarn">
         ```bash
-        yarn global add opencode-ai
+        yarn global add igris-ai
         ```
 
       </TabItem>
@@ -76,16 +76,16 @@ Sie können es auch mit den folgenden Befehlen installieren:
 - **Homebrew unter macOS und Linux verwenden**
 
   ```bash
-  brew install anomalyco/tap/opencode
+  brew install anomalyco/tap/igris
   ```
 
-  > Wir empfehlen die Verwendung des OpenCode-Taps für die aktuellsten Versionen. Die offizielle `brew install opencode`-Formel wird vom Homebrew-Team gepflegt und seltener aktualisiert.
+  > Wir empfehlen die Verwendung des OpenCode-Taps für die aktuellsten Versionen. Die offizielle `brew install igris`-Formel wird vom Homebrew-Team gepflegt und seltener aktualisiert.
 
 - **Verwendung von Paru unter Arch Linux**
 
   ```bash
-  sudo pacman -S opencode           # Arch Linux (Stable)
-  paru -S opencode-bin              # Arch Linux (Latest from AUR)
+  sudo pacman -S igris           # Arch Linux (Stable)
+  paru -S igris-bin              # Arch Linux (Latest from AUR)
   ```
 
 #### Windows
@@ -97,36 +97,36 @@ Für das beste Erlebnis unter Windows empfehlen wir die Verwendung von [Windows 
 - **Verwendung von Chocolatey**
 
   ```bash
-  choco install opencode
+  choco install igris
   ```
 
 - **Scoop verwenden**
 
   ```bash
-  scoop install opencode
+  scoop install igris
   ```
 
 - **Mit NPM**
 
   ```bash
-  npm install -g opencode-ai
+  npm install -g igris-ai
   ```
 
 - **Mit Mise**
 
   ```bash
-  mise use -g github:anomalyco/opencode
+  mise use -g github:anomalyco/igris
   ```
 
 - **Verwendung von Docker**
 
   ```bash
-  docker run -it --rm ghcr.io/anomalyco/opencode
+  docker run -it --rm ghcr.io/anomalyco/igris
   ```
 
 Die Unterstützung für die Installation von OpenCode unter Windows mit Bun ist derzeit in Arbeit.
 
-Sie können die Binärdatei auch aus [Releases](https://github.com/anomalyco/opencode/releases) abrufen.
+Sie können die Binärdatei auch aus [Releases](https://github.com/anomalyco/igris/releases) abrufen.
 
 ---
 
@@ -137,7 +137,7 @@ Mit OpenCode können Sie jeden LLM-Anbieter verwenden, indem Sie dessen API-Schl
 Wenn Sie mit der Verwendung von LLM-Anbietern noch nicht vertraut sind, empfehlen wir die Verwendung von [OpenCode Zen](/docs/zen).
 Es handelt sich um eine kuratierte Liste von Modellen, die vom OpenCode Team getestet und verifiziert wurden.
 
-1. Führen Sie den Befehl `/connect` in TUI aus, wählen Sie OpenCode aus und gehen Sie zu [opencode.ai/auth](https://opencode.ai/auth).
+1. Führen Sie den Befehl `/connect` in TUI aus, wählen Sie OpenCode aus und gehen Sie zu [igris.ai/auth](https://igris.ai/auth).
 
    ```txt
    /connect
@@ -170,7 +170,7 @@ cd /path/to/project
 Und führen Sie OpenCode aus.
 
 ```bash
-opencode
+igris
 ```
 
 Als nächstes initialisieren Sie OpenCode für das Projekt, indem Sie den folgenden Befehl ausführen.
@@ -345,7 +345,7 @@ Dadurch wird ein Link zur aktuellen Konversation erstellt und in Ihre Zwischenab
 Gespräche werden standardmäßig nicht geteilt.
 :::
 
-Hier ist ein [Beispielgespräch](https://opencode.ai/s/4XP1fce5) mit OpenCode.
+Hier ist ein [Beispielgespräch](https://igris.ai/s/4XP1fce5) mit OpenCode.
 
 ---
 

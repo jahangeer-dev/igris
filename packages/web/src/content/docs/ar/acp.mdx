@@ -15,7 +15,7 @@ ACP بروتوكول مفتوح يوحّد آلية التواصل بين محر
 
 ## الإعداد
 
-لاستخدام OpenCode عبر ACP، اضبط محررك ليشغّل الأمر `opencode acp`.
+لاستخدام OpenCode عبر ACP، اضبط محررك ليشغّل الأمر `igris acp`.
 
 يشغّل هذا الأمر OpenCode كعملية فرعية متوافقة مع ACP تتواصل مع محررك عبر JSON-RPC باستخدام stdio.
 
@@ -31,7 +31,7 @@ ACP بروتوكول مفتوح يوحّد آلية التواصل بين محر
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "opencode",
+      "command": "igris",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ ACP بروتوكول مفتوح يوحّد آلية التواصل بين محر
             "custom": {
               "name": "OpenCode",
               "command": {
-                "command": "opencode",
+                "command": "igris",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ ACP بروتوكول مفتوح يوحّد آلية التواصل بين محر
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/igris",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ ACP بروتوكول مفتوح يوحّد آلية التواصل بين محر
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" }
     }
   }
@@ -106,8 +106,8 @@ ACP بروتوكول مفتوح يوحّد آلية التواصل بين محر
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" },
       env = {
         OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "igris",
         model = "claude-sonnet-4",
       },
     },

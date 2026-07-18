@@ -36,15 +36,15 @@ OpenCode はオープンソースであり、コードやコンテキストデ�
 
 #### 会話を共有する
 
-ユーザーが `/share` 機能を有効にすると、会話とそれに関連付けられたデータが、opencode.ai でこれらの共有ページをホストするために使用されるサービスに送信されます。
+ユーザーが `/share` 機能を有効にすると、会話とそれに関連付けられたデータが、igris.ai でこれらの共有ページをホストするために使用されるサービスに送信されます。
 
 現在、データは CDN のエッジネットワークを通じて提供され、ユーザーの近くのエッジにキャッシュされます。
 
 試用版ではこれを無効にすることをお勧めします。
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "disabled"
 }
 ```

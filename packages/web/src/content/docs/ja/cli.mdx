@@ -8,13 +8,13 @@ import { Tabs, TabItem } from "@astrojs/starlight/components"
 OpenCode CLI は、引数なしで実行すると、デフォルトで [TUI](/docs/tui) を開始します。
 
 ```bash
-opencode
+igris
 ```
 
 ただし、このページに記載されているようにコマンドも受け入れます。これにより、OpenCode をプログラム的に操作できるようになります。
 
 ```bash
-opencode run "Explain how closures work in JavaScript"
+igris run "Explain how closures work in JavaScript"
 ```
 
 ---
@@ -24,7 +24,7 @@ opencode run "Explain how closures work in JavaScript"
 OpenCode ターミナルユーザーインターフェイスを開始します。
 
 ```bash
-opencode [project]
+igris [project]
 ```
 
 #### フラグ
@@ -53,7 +53,7 @@ OpenCode CLI には次のコマンドもあります。
 OpenCode のエージェントを管理します。
 
 ```bash
-opencode agent [command]
+igris agent [command]
 ```
 
 ---
@@ -63,17 +63,17 @@ opencode agent [command]
 `serve` または `web` コマンドを使用して起動された、すでに実行中の OpenCode バックエンドサーバーにターミナルを接続します。
 
 ```bash
-opencode attach [url]
+igris attach [url]
 ```
 
 これにより、リモート OpenCode バックエンドで TUI を使用できるようになります。例えば：
 
 ```bash
 # Start the backend server for web/mobile access
-opencode web --port 4096 --hostname 0.0.0.0
+igris web --port 4096 --hostname 0.0.0.0
 
 # In another terminal, attach the TUI to the running backend
-opencode attach http://10.20.30.40:4096
+igris attach http://10.20.30.40:4096
 ```
 
 #### フラグ
@@ -85,7 +85,7 @@ opencode attach http://10.20.30.40:4096
 | <nobr><code>{"--session"}</code></nobr>  | `-s`     | 続行するセッション ID                                                             |
 | <nobr><code>{"--fork"}</code></nobr>     |          | 続行時にセッションをフォーク（`--continue` または `--session` と使用）            |
 | <nobr><code>{"--password"}</code></nobr> | `-p`     | Basic 認証パスワード（デフォルトは `OPENCODE_SERVER_PASSWORD`）                   |
-| <nobr><code>{"--username"}</code></nobr> | `-u`     | Basic 認証ユーザー名（デフォルトは `OPENCODE_SERVER_USERNAME` または `opencode`） |
+| <nobr><code>{"--username"}</code></nobr> | `-u`     | Basic 認証ユーザー名（デフォルトは `OPENCODE_SERVER_USERNAME` または `igris`） |
 
 ---
 
@@ -94,7 +94,7 @@ opencode attach http://10.20.30.40:4096
 カスタム構成で新しいエージェントを作成します。
 
 ```bash
-opencode agent create
+igris agent create
 ```
 
 このコマンドは、カスタムシステムプロンプトとツール構成を使用して新しいエージェントを作成する手順を示します。
@@ -106,7 +106,7 @@ opencode agent create
 利用可能なエージェントをすべてリストします。
 
 ```bash
-opencode agent list
+igris agent list
 ```
 
 ---
@@ -116,17 +116,17 @@ opencode agent list
 プロバイダーの資格情報とログインを管理するコマンド。
 
 ```bash
-opencode auth [command]
+igris auth [command]
 ```
 
 ---
 
 #### login
 
-OpenCode は [Models.dev](https://models.dev) のプロバイダーリストを利用しているため、`opencode auth login` を使用して、使用したいプロバイダーの API キーを構成できます。これは `~/.local/share/opencode/auth.json` に保存されます。
+OpenCode は [Models.dev](https://models.dev) のプロバイダーリストを利用しているため、`igris auth login` を使用して、使用したいプロバイダーの API キーを構成できます。これは `~/.local/share/igris/auth.json` に保存されます。
 
 ```bash
-opencode auth login
+igris auth login
 ```
 
 OpenCode が起動すると、認証情報ファイルからプロバイダーがロードされます。また、環境またはプロジェクト内の `.env` ファイルで定義されたキーがあるかどうかも確認します。
@@ -138,13 +138,13 @@ OpenCode が起動すると、認証情報ファイルからプロバイダー�
 認証情報ファイルに保存されているすべての認証されたプロバイダーをリストします。
 
 ```bash
-opencode auth list
+igris auth list
 ```
 
 またはショートバージョン。
 
 ```bash
-opencode auth ls
+igris auth ls
 ```
 
 ---
@@ -154,7 +154,7 @@ opencode auth ls
 資格情報ファイルからプロバイダーをクリアすることで、プロバイダーからログアウトします。
 
 ```bash
-opencode auth logout
+igris auth logout
 ```
 
 ---
@@ -164,7 +164,7 @@ opencode auth logout
 リポジトリ自動化のための GitHub エージェントを管理します。
 
 ```bash
-opencode github [command]
+igris github [command]
 ```
 
 ---
@@ -174,7 +174,7 @@ opencode github [command]
 GitHub エージェントをリポジトリにインストールします。
 
 ```bash
-opencode github install
+igris github install
 ```
 
 これにより、必要な GitHub Actions ワークフローが設定され、構成プロセスがガイドされます。 [詳細はこちら](/docs/github)。
@@ -186,7 +186,7 @@ opencode github install
 GitHub エージェントを実行します。これは通常、GitHub Actions で使用されます。
 
 ```bash
-opencode github run
+igris github run
 ```
 
 ##### フラグ
@@ -203,7 +203,7 @@ opencode github run
 モデルコンテキストプロトコルサーバーを管理します。
 
 ```bash
-opencode mcp [command]
+igris mcp [command]
 ```
 
 ---
@@ -213,7 +213,7 @@ opencode mcp [command]
 MCP サーバーを構成に追加します。
 
 ```bash
-opencode mcp add
+igris mcp add
 ```
 
 このコマンドは、ローカルまたはリモートの MCP サーバーを追加する手順を示します。
@@ -225,13 +225,13 @@ opencode mcp add
 構成されているすべての MCP サーバーとその接続ステータスをリストします。
 
 ```bash
-opencode mcp list
+igris mcp list
 ```
 
 または、短いバージョンを使用してください。
 
 ```bash
-opencode mcp ls
+igris mcp ls
 ```
 
 ---
@@ -241,7 +241,7 @@ opencode mcp ls
 OAuth 対応の MCP サーバーで認証します。
 
 ```bash
-opencode mcp auth [name]
+igris mcp auth [name]
 ```
 
 サーバー名を指定しない場合は、利用可能な OAuth 対応サーバーから選択するように求められます。
@@ -249,13 +249,13 @@ opencode mcp auth [name]
 OAuth 対応サーバーとその認証ステータスを一覧表示することもできます。
 
 ```bash
-opencode mcp auth list
+igris mcp auth list
 ```
 
 または、短いバージョンを使用してください。
 
 ```bash
-opencode mcp auth ls
+igris mcp auth ls
 ```
 
 ---
@@ -265,7 +265,7 @@ opencode mcp auth ls
 MCP サーバーの OAuth 資格情報を削除します。
 
 ```bash
-opencode mcp logout [name]
+igris mcp logout [name]
 ```
 
 ---
@@ -275,7 +275,7 @@ opencode mcp logout [name]
 MCP サーバーの OAuth 接続の問題をデバッグします。
 
 ```bash
-opencode mcp debug <name>
+igris mcp debug <name>
 ```
 
 ---
@@ -285,7 +285,7 @@ opencode mcp debug <name>
 構成されたプロバイダーから利用可能なすべてのモデルをリストします。
 
 ```bash
-opencode models [provider]
+igris models [provider]
 ```
 
 このコマンドは、構成されたプロバイダー全体で利用可能なすべてのモデルを `provider/model` の形式で表示します。
@@ -295,7 +295,7 @@ opencode models [provider]
 オプションでプロバイダー ID を渡して、そのプロバイダーによってモデルをフィルターできます。
 
 ```bash
-opencode models anthropic
+igris models anthropic
 ```
 
 #### フラグ
@@ -308,33 +308,33 @@ opencode models anthropic
 `--refresh` フラグを使用して、キャッシュされたモデルリストを更新します。これは、新しいモデルがプロバイダーに追加され、それを OpenCode で確認したい場合に便利です。
 
 ```bash
-opencode models --refresh
+igris models --refresh
 ```
 
 ---
 
 ### run
 
-プロンプトを直接渡して、非対話モードで opencode を実行します。
+プロンプトを直接渡して、非対話モードで igris を実行します。
 
 ```bash
-opencode run [message..]
+igris run [message..]
 ```
 
 これは、スクリプト作成、自動化、または完全な TUI を起動せずに迅速な回答が必要な場合に便利です。例えば。
 
-```bash "opencode run"
-opencode run Explain the use of context in Go
+```bash "igris run"
+igris run Explain the use of context in Go
 ```
 
-実行中の `opencode serve` インスタンスにアタッチして、実行ごとの MCP サーバーのコールドブート時間を回避することもできます。
+実行中の `igris serve` インスタンスにアタッチして、実行ごとの MCP サーバーのコールドブート時間を回避することもできます。
 
 ```bash
 # Start a headless server in one terminal
-opencode serve
+igris serve
 
 # In another terminal, run commands that attach to it
-opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
+igris run --attach http://localhost:4096 "Explain async/await in JavaScript"
 ```
 
 #### フラグ
@@ -351,9 +351,9 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 | <nobr><code>{"--file"}</code></nobr>     | `-f`     | メッセージに添付するファイル                                                              |
 | <nobr><code>{"--format"}</code></nobr>   |          | 形式: デフォルト (フォーマット済み) または json (生の JSON イベント)                      |
 | <nobr><code>{"--title"}</code></nobr>    |          | セッションのタイトル (値が指定されていない場合は、切り詰められたプロンプトが使用されます) |
-| <nobr><code>{"--attach"}</code></nobr>   |          | 実行中の opencode サーバー (http://localhost:4096 など) に接続します。                    |
+| <nobr><code>{"--attach"}</code></nobr>   |          | 実行中の igris サーバー (http://localhost:4096 など) に接続します。                    |
 | <nobr><code>{"--password"}</code></nobr> | `-p`     | Basic 認証パスワード（デフォルトは `OPENCODE_SERVER_PASSWORD`）                           |
-| <nobr><code>{"--username"}</code></nobr> | `-u`     | Basic 認証ユーザー名（デフォルトは `OPENCODE_SERVER_USERNAME` または `opencode`）         |
+| <nobr><code>{"--username"}</code></nobr> | `-u`     | Basic 認証ユーザー名（デフォルトは `OPENCODE_SERVER_USERNAME` または `igris`）         |
 | <nobr><code>{"--dir"}</code></nobr>      |          | 実行ディレクトリ、またはアタッチ時のリモートサーバー上のパス                              |
 | <nobr><code>{"--variant"}</code></nobr>  |          | モデルバリアント（プロバイダー固有の推論レベル）                                          |
 | <nobr><code>{"--thinking"}</code></nobr> |          | 思考ブロックを表示                                                                        |
@@ -366,10 +366,10 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 API アクセスのためにヘッドレス OpenCode サーバーを起動します。完全な HTTP インターフェイスについては、[サーバーのドキュメント](/docs/server) を確認してください。
 
 ```bash
-opencode serve
+igris serve
 ```
 
-これにより、TUI インターフェイスを使用せずに opencode 機能への API アクセスを提供する HTTP サーバーが起動します。 `OPENCODE_SERVER_PASSWORD` を設定して HTTP 基本認証を有効にします (ユーザー名のデフォルトは `opencode`)。
+これにより、TUI インターフェイスを使用せずに igris 機能への API アクセスを提供する HTTP サーバーが起動します。 `OPENCODE_SERVER_PASSWORD` を設定して HTTP 基本認証を有効にします (ユーザー名のデフォルトは `igris`)。
 
 #### フラグ
 
@@ -387,7 +387,7 @@ opencode serve
 OpenCode セッションを管理します。
 
 ```bash
-opencode session [command]
+igris session [command]
 ```
 
 ---
@@ -397,7 +397,7 @@ opencode session [command]
 すべての OpenCode セッションをリストします。
 
 ```bash
-opencode session list
+igris session list
 ```
 
 ##### フラグ
@@ -414,7 +414,7 @@ opencode session list
 OpenCode セッションのトークンの使用状況とコストの統計を表示します。
 
 ```bash
-opencode stats
+igris stats
 ```
 
 #### フラグ
@@ -433,7 +433,7 @@ opencode stats
 セッションデータを JSON としてエクスポートします。
 
 ```bash
-opencode export [sessionID]
+igris export [sessionID]
 ```
 
 セッション ID を指定しない場合は、利用可能なセッションから選択するように求められます。
@@ -445,14 +445,14 @@ opencode export [sessionID]
 JSON ファイルまたは OpenCode 共有 URL からセッションデータをインポートします。
 
 ```bash
-opencode import <file>
+igris import <file>
 ```
 
 ローカルファイルまたは OpenCode 共有 URL からインポートできます。
 
 ```bash
-opencode import session.json
-opencode import https://opncd.ai/s/abc123
+igris import session.json
+igris import https://opncd.ai/s/abc123
 ```
 
 ---
@@ -462,10 +462,10 @@ opencode import https://opncd.ai/s/abc123
 Web インターフェイスを使用してヘッドレス OpenCode サーバーを起動します。
 
 ```bash
-opencode web
+igris web
 ```
 
-これにより、HTTP サーバーが起動し、Web ブラウザが開き、Web インターフェイスを通じて OpenCode にアクセスします。 `OPENCODE_SERVER_PASSWORD` を設定して HTTP 基本認証を有効にします (ユーザー名のデフォルトは `opencode`)。
+これにより、HTTP サーバーが起動し、Web ブラウザが開き、Web インターフェイスを通じて OpenCode にアクセスします。 `OPENCODE_SERVER_PASSWORD` を設定して HTTP 基本認証を有効にします (ユーザー名のデフォルトは `igris`)。
 
 #### フラグ
 
@@ -483,7 +483,7 @@ opencode web
 ACP (エージェントクライアントプロトコル) サーバーを起動します。
 
 ```bash
-opencode acp
+igris acp
 ```
 
 このコマンドは、nd-JSON を使用して stdin/stdout 経由で通信する ACP サーバーを起動します。
@@ -503,7 +503,7 @@ opencode acp
 OpenCode をアンインストールし、関連ファイルをすべて削除します。
 
 ```bash
-opencode uninstall
+igris uninstall
 ```
 
 #### フラグ
@@ -519,22 +519,22 @@ opencode uninstall
 
 ### upgrade
 
-opencode を最新バージョンまたは特定のバージョンに更新します。
+igris を最新バージョンまたは特定のバージョンに更新します。
 
 ```bash
-opencode upgrade [target]
+igris upgrade [target]
 ```
 
 最新バージョンにアップグレードするには。
 
 ```bash
-opencode upgrade
+igris upgrade
 ```
 
 特定のバージョンにアップグレードするには。
 
 ```bash
-opencode upgrade v0.1.48
+igris upgrade v0.1.48
 ```
 
 #### フラグ
@@ -547,7 +547,7 @@ opencode upgrade v0.1.48
 
 ## グローバルフラグ
 
-opencode CLI は次のグローバルフラグを受け取ります。
+igris CLI は次のグローバルフラグを受け取ります。
 
 | フラグ                                     | ショート | 説明                                  |
 | ------------------------------------------ | -------- | ------------------------------------- |
@@ -585,7 +585,7 @@ OpenCode は環境変数を使用して構成できます。
 | `OPENCODE_CLIENT`                     | 文字列   | クライアント識別子 (デフォルトは `cli`)                             |
 | `OPENCODE_ENABLE_EXA`                 | ブール値 | Exa Web 検索ツールを有効にする                                      |
 | `OPENCODE_SERVER_PASSWORD`            | 文字列   | `serve`/`web` の基本認証を有効にする                                |
-| `OPENCODE_SERVER_USERNAME`            | 文字列   | 基本認証ユーザー名 (デフォルト `opencode`) をオーバーライドします。 |
+| `OPENCODE_SERVER_USERNAME`            | 文字列   | 基本認証ユーザー名 (デフォルト `igris`) をオーバーライドします。 |
 | `OPENCODE_MODELS_URL`                 | 文字列   | モデル設定を取得するためのカスタム URL                              |
 
 ---

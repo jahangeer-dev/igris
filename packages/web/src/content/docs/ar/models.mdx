@@ -50,14 +50,14 @@ description: تهيئة مزوّد LLM والنموذج.
 
 لتعيين أحد هذه النماذج كنموذج افتراضي، يمكنك ضبط المفتاح `model` في ملف إعدادات OpenCode.
 
-```json title="opencode.json" {3}
+```json title="igris.json" {3}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "model": "lmstudio/google/gemma-3n-e4b"
 }
 ```
 
-المعرّف الكامل هنا يكون بالشكل `provider_id/model_id`. على سبيل المثال، إذا كنت تستخدم [OpenCode Zen](/docs/zen) فستستخدم `opencode/gpt-5.1-codex` لنموذج GPT 5.1 Codex.
+المعرّف الكامل هنا يكون بالشكل `provider_id/model_id`. على سبيل المثال، إذا كنت تستخدم [OpenCode Zen](/docs/zen) فستستخدم `igris/gpt-5.1-codex` لنموذج GPT 5.1 Codex.
 
 إذا كنت قد هيّأت [مزوّداً مخصّصاً](/docs/providers#custom)، فإن `provider_id` هو المفتاح الموجود ضمن قسم `provider` في إعداداتك، و`model_id` هو المفتاح الموجود ضمن `provider.models`.
 
@@ -67,9 +67,9 @@ description: تهيئة مزوّد LLM والنموذج.
 
 يمكنك ضبط خيارات النموذج على مستوى عام عبر ملف الإعدادات.
 
-```jsonc title="opencode.jsonc" {7-12,19-24}
+```jsonc title="igris.jsonc" {7-12,19-24}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -106,11 +106,11 @@ description: تهيئة مزوّد LLM والنموذج.
 
 كما يمكنك تعريف متغيّرات مخصّصة تُوسّع المتغيّرات المدمجة. تتيح لك المتغيّرات ضبط إعدادات مختلفة للنموذج نفسه دون إنشاء إدخالات مكرّرة:
 
-```jsonc title="opencode.jsonc" {6-21}
+```jsonc title="igris.jsonc" {6-21}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
-    "opencode": {
+    "igris": {
       "models": {
         "gpt-5": {
           "variants": {
@@ -171,9 +171,9 @@ description: تهيئة مزوّد LLM والنموذج.
 
 يمكنك تجاوز المتغيّرات الموجودة أو إضافة متغيّراتك الخاصة:
 
-```jsonc title="opencode.jsonc" {7-18}
+```jsonc title="igris.jsonc" {7-18}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -208,9 +208,9 @@ description: تهيئة مزوّد LLM والنموذج.
 
 2. قائمة النماذج في إعدادات OpenCode.
 
-   ```json title="opencode.json"
+   ```json title="igris.json"
    {
-     "$schema": "https://opencode.ai/config.json",
+     "$schema": "https://igris.ai/config.json",
      "model": "anthropic/claude-sonnet-4-20250514"
    }
    ```

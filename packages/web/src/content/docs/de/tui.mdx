@@ -10,13 +10,13 @@ OpenCode bietet eine interaktive Terminaloberflaeche (TUI), um mit einem LLM an 
 Ohne weitere Argumente startet OpenCode die TUI im aktuellen Verzeichnis.
 
 ```bash
-opencode
+igris
 ```
 
 Oder du startest sie fuer ein bestimmtes Arbeitsverzeichnis.
 
 ```bash
-opencode /path/to/project
+igris /path/to/project
 ```
 
 In der TUI kannst du direkt mit einer Nachricht prompten.
@@ -359,8 +359,8 @@ Du kannst das Verhalten der TUI ueber die Datei `tui.json` (oder `tui.jsonc`) an
 
 ```json title="tui.json"
 {
-  "$schema": "https://opencode.ai/tui.json",
-  "theme": "opencode",
+  "$schema": "https://igris.ai/tui.json",
+  "theme": "igris",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -377,7 +377,7 @@ Du kannst das Verhalten der TUI ueber die Datei `tui.json` (oder `tui.jsonc`) an
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "igris.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -385,7 +385,7 @@ Du kannst das Verhalten der TUI ueber die Datei `tui.json` (oder `tui.jsonc`) an
 }
 ```
 
-Dies ist getrennt von `opencode.json`, welche das Server-/Runtime-Verhalten konfiguriert.
+Dies ist getrennt von `igris.json`, welche das Server-/Runtime-Verhalten konfiguriert.
 
 `keybinds` wird mit den integrierten Standardwerten zusammengeführt, daher musst du nur die Tastenkombinationen konfigurieren, die du ändern möchtest.
 
@@ -410,7 +410,7 @@ Attention lässt das TUI dich benachrichtigen, wenn OpenCode auf eine Antwort wa
 - `notifications` - Erlaubt dem TUI bei aktiviertem Attention, Desktop-Benachrichtigungen über das Terminal zu senden. Standard ist `true`.
 - `sound` - Erlaubt bei aktiviertem Attention das Abspielen von Hinweistönen. Standard ist `true`.
 - `volume` - Standardlautstärke der Hinweistöne von `0` bis `1`. Standard ist `0.4`.
-- `sound_pack` - Zu verwendende sound pack ID. Standard ist `opencode.default`.
+- `sound_pack` - Zu verwendende sound pack ID. Standard ist `igris.default`.
 - `sounds` - Legt eigene Sounddateien für `default`, `question`, `permission`, `error`, `done` oder `subagent_done` fest. Pfade können absolut, `file://` URLs oder relativ zu `tui.json` sein.
 
 ---

@@ -9,7 +9,7 @@ export const console = config.console
 
 [**OpenCode**](/) is an open source AI coding agent. It's available as a terminal-based interface, desktop app, or IDE extension.
 
-![OpenCode TUI with the opencode theme](../../assets/lander/screenshot.png)
+![OpenCode TUI with the igris theme](../../assets/lander/screenshot.png)
 
 Let's get started.
 
@@ -34,7 +34,7 @@ To use OpenCode in your terminal, you'll need:
 The easiest way to install OpenCode is through the install script.
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://igris.ai/install | bash
 ```
 
 You can also install it with the following commands:
@@ -45,28 +45,28 @@ You can also install it with the following commands:
 
       <TabItem label="npm">
       ```bash
-      npm install -g opencode-ai
+      npm install -g igris-ai
       ```
 
           </TabItem>
 
         <TabItem label="Bun">
         ```bash
-        bun install -g opencode-ai
+        bun install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="pnpm">
         ```bash
-        pnpm install -g opencode-ai
+        pnpm install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="Yarn">
         ```bash
-        yarn global add opencode-ai
+        yarn global add igris-ai
         ```
 
       </TabItem>
@@ -76,16 +76,16 @@ You can also install it with the following commands:
 - **Using Homebrew on macOS and Linux**
 
   ```bash
-  brew install anomalyco/tap/opencode
+  brew install anomalyco/tap/igris
   ```
 
-  > We recommend using the OpenCode tap for the most up to date releases. The official `brew install opencode` formula is maintained by the Homebrew team and is updated less frequently.
+  > We recommend using the OpenCode tap for the most up to date releases. The official `brew install igris` formula is maintained by the Homebrew team and is updated less frequently.
 
 - **Installing on Arch Linux**
 
   ```bash
-  sudo pacman -S opencode           # Arch Linux (Stable)
-  paru -S opencode-bin              # Arch Linux (Latest from AUR)
+  sudo pacman -S igris           # Arch Linux (Stable)
+  paru -S igris-bin              # Arch Linux (Latest from AUR)
   ```
 
 #### Windows
@@ -97,36 +97,36 @@ For the best experience on Windows, we recommend using [Windows Subsystem for Li
 - **Using Chocolatey**
 
   ```bash
-  choco install opencode
+  choco install igris
   ```
 
 - **Using Scoop**
 
   ```bash
-  scoop install opencode
+  scoop install igris
   ```
 
 - **Using NPM**
 
   ```bash
-  npm install -g opencode-ai
+  npm install -g igris-ai
   ```
 
 - **Using Mise**
 
   ```bash
-  mise use -g github:anomalyco/opencode
+  mise use -g github:anomalyco/igris
   ```
 
 - **Using Docker**
 
   ```bash
-  docker run -it --rm ghcr.io/anomalyco/opencode
+  docker run -it --rm ghcr.io/anomalyco/igris
   ```
 
 Support for installing OpenCode on Windows using Bun is currently in progress.
 
-You can also grab the binary from the [Releases](https://github.com/anomalyco/opencode/releases).
+You can also grab the binary from the [Releases](https://github.com/anomalyco/igris/releases).
 
 ---
 
@@ -138,7 +138,7 @@ If you are new to using LLM providers, we recommend using [OpenCode Zen](/docs/z
 It's a curated list of models that have been tested and verified by the OpenCode
 team.
 
-1. Run the `/connect` command in the TUI, select opencode, and head to [opencode.ai/auth](https://opencode.ai/auth).
+1. Run the `/connect` command in the TUI, select igris, and head to [igris.ai/auth](https://igris.ai/auth).
 
    ```txt
    /connect
@@ -171,7 +171,7 @@ cd /path/to/project
 And run OpenCode.
 
 ```bash
-opencode
+igris
 ```
 
 Next, initialize OpenCode for the project by running the following command.
@@ -349,7 +349,7 @@ This will create a link to the current conversation and copy it to your clipboar
 Conversations are not shared by default.
 :::
 
-Here's an [example conversation](https://opencode.ai/s/4XP1fce5) with OpenCode.
+Here's an [example conversation](https://igris.ai/s/4XP1fce5) with OpenCode.
 
 ---
 

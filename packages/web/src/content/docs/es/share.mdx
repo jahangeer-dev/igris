@@ -39,9 +39,9 @@ Esto generará una URL única que se copiará en su portapapeles.
 
 Para configurar explícitamente el modo manual en su [archivo de configuración](/docs/config):
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "manual"
 }
 ```
@@ -52,9 +52,9 @@ Para configurar explícitamente el modo manual en su [archivo de configuración]
 
 Puede habilitar el uso compartido automático para todas las conversaciones nuevas configurando la opción `share` en `"auto"` en su [archivo de configuración](/docs/config):
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "auto"
 }
 ```
@@ -67,14 +67,14 @@ Con el uso compartido automático habilitado, cada nueva conversación se compar
 
 Puede desactivar el uso compartido por completo configurando la opción `share` en `"disabled"` en su [archivo de configuración](/docs/config):
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "disabled"
 }
 ```
 
-Para aplicar esto en todo su equipo para un proyecto determinado, agréguelo al `opencode.json` en su proyecto y regístrelo en Git.
+Para aplicar esto en todo su equipo para un proyecto determinado, agréguelo al `igris.json` en su proyecto y regístrelo en Git.
 
 ---
 
@@ -125,4 +125,4 @@ Para implementaciones empresariales, la función de compartir puede ser:
 - **Restringido** solo a usuarios autenticados a través de SSO
 - **Autohospedado** en tu propia infraestructura
 
-[Obtenga más información](/docs/enterprise) sobre el uso de opencode en su organización.
+[Obtenga más información](/docs/enterprise) sobre el uso de igris en su organización.

@@ -10,13 +10,13 @@ OpenCode, projelerinizde LLM ile çalışmak için etkileşimli bir terminal ara
 OpenCode'u çalıştırdığınızda mevcut dizin için TUI başlar.
 
 ```bash
-opencode
+igris
 ```
 
 İsterseniz belirli bir çalışma dizini için de başlatabilirsiniz.
 
 ```bash
-opencode /path/to/project
+igris /path/to/project
 ```
 
 TUI içine girdiğinizde, bir mesajla istem gönderebilirsiniz.
@@ -357,8 +357,8 @@ TUI davranışını `tui.json` (veya `tui.jsonc`) aracılığıyla özelleştire
 
 ```json title="tui.json"
 {
-  "$schema": "https://opencode.ai/tui.json",
-  "theme": "opencode",
+  "$schema": "https://igris.ai/tui.json",
+  "theme": "igris",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -375,7 +375,7 @@ TUI davranışını `tui.json` (veya `tui.jsonc`) aracılığıyla özelleştire
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "igris.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -383,7 +383,7 @@ TUI davranışını `tui.json` (veya `tui.jsonc`) aracılığıyla özelleştire
 }
 ```
 
-Bu, sunucu/çalışma zamanı davranışını yapılandıran `opencode.json` dosyasından ayrıdır.
+Bu, sunucu/çalışma zamanı davranışını yapılandıran `igris.json` dosyasından ayrıdır.
 
 `keybinds` yerleşik varsayılanlarla birleştirilir; bu yüzden yalnızca değiştirmek istediğiniz kısayolları yapılandırmanız yeterlidir.
 
@@ -408,7 +408,7 @@ Attention, OpenCode bir yanıt beklediğinde, izin onayı gerektiğinde, oturum 
 - `notifications` - Attention etkin olduğunda TUI'nin terminal üzerinden masaüstü bildirimi göndermesine izin verir. Varsayılan değer `true`.
 - `sound` - Attention etkin olduğunda uyarı seslerinin çalmasına izin verir. Varsayılan değer `true`.
 - `volume` - Uyarı sesleri için varsayılan ses düzeyi, `0` ile `1` arasındadır. Varsayılan değer `0.4`.
-- `sound_pack` - Kullanılacak sound pack ID. Varsayılan değer `opencode.default`.
+- `sound_pack` - Kullanılacak sound pack ID. Varsayılan değer `igris.default`.
 - `sounds` - `default`, `question`, `permission`, `error`, `done` veya `subagent_done` için özel ses dosyaları ayarlar. Yollar mutlak, `file://` URL'leri veya `tui.json` dosyasına göre göreli olabilir.
 
 ---

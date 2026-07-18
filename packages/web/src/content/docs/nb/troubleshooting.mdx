@@ -11,12 +11,12 @@ For å feilsøke problemer med OpenCode, start med å sjekke loggene og lokale d
 
 Loggfiler skrives til:
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
-- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.local\share\opencode\log`
+- **macOS/Linux**: `~/.local/share/igris/log/`
+- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.local\share\igris\log`
 
 Loggfiler navngis med tidsstempler (f.eks. `2025-01-09T123456.log`) og de siste 10 loggfilene beholdes.
 
-Du kan angi loggnivået med kommandolinjealternativet `--log-level` for å få mer detaljert feilsøkingsinformasjon. For eksempel `opencode --log-level DEBUG`.
+Du kan angi loggnivået med kommandolinjealternativet `--log-level` for å få mer detaljert feilsøkingsinformasjon. For eksempel `igris --log-level DEBUG`.
 
 ---
 
@@ -24,8 +24,8 @@ Du kan angi loggnivået med kommandolinjealternativet `--log-level` for å få m
 
 OpenCode lagrer øktdata og andre applikasjonsdata på disken på:
 
-- **macOS/Linux**: `~/.local/share/opencode/`
-- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.local\share\opencode`
+- **macOS/Linux**: `~/.local/share/igris/`
+- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.local\share\igris`
 
 Denne katalogen inneholder:
 
@@ -39,7 +39,7 @@ Denne katalogen inneholder:
 
 ## Skrivebordsapp
 
-OpenCode Desktop kjører en lokal OpenCode-server (`opencode-cli` sidevognen) i bakgrunnen. De fleste problemene er forårsaket av en plugin som fungerer dårlig, en ødelagt cache eller en dårlig serverinnstilling.
+OpenCode Desktop kjører en lokal OpenCode-server (`igris-cli` sidevognen) i bakgrunnen. De fleste problemene er forårsaket av en plugin som fungerer dårlig, en ødelagt cache eller en dårlig serverinnstilling.
 
 ### Raske sjekker
 
@@ -57,15 +57,15 @@ Hvis skrivebordsappen krasjer ved oppstart, henger eller oppfører seg merkelig,
 
 Åpne den globale konfigurasjonsfilen og se etter en `plugin`-nøkkel.
 
-- **macOS/Linux**: `~/.config/opencode/opencode.jsonc` (eller `~/.config/opencode/opencode.json`)
-- **macOS/Linux** (eldre installasjoner): `~/.local/share/opencode/opencode.jsonc`
-- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.config\opencode\opencode.jsonc`
+- **macOS/Linux**: `~/.config/igris/igris.jsonc` (eller `~/.config/igris/igris.json`)
+- **macOS/Linux** (eldre installasjoner): `~/.local/share/igris/igris.jsonc`
+- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.config\igris\igris.jsonc`
 
 Hvis du har konfigurert plugins, deaktiver dem midlertidig ved å fjerne nøkkelen eller sette den til en tom matrise:
 
 ```jsonc
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "plugin": [],
 }
 ```
@@ -75,10 +75,10 @@ Hvis du har konfigurert plugins, deaktiver dem midlertidig ved å fjerne nøkkel
 OpenCode kan også laste lokale plugins fra disken. Flytt disse midlertidig ut av veien (eller gi nytt navn til mappen) og start skrivebordsappen på nytt:
 
 - **Globale plugins**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
-  - **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.config\opencode\plugins`
+  - **macOS/Linux**: `~/.config/igris/plugins/`
+  - **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.config\igris\plugins`
 - **Prosjektplugins** (bare hvis du bruker konfigurasjon per prosjekt)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.igris/plugins/`
 
 Hvis appen begynner å fungere igjen, aktiverer du plugins én om gangen for å finne ut hvilken som forårsaker problemet.
 
@@ -91,9 +91,9 @@ Hvis deaktivering av plugins ikke hjelper (eller en plugin-installasjon sitter f
 1. Avslutt OpenCode Desktop helt.
 2. Slett hurtigbufferkatalogen:
 
-- **macOS**: Finder -> `Cmd+Shift+G` -> lim inn `~/.cache/opencode`
-- **Linux**: slett `~/.cache/opencode` (eller kjør `rm -rf ~/.cache/opencode`)
-- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.cache\opencode`
+- **macOS**: Finder -> `Cmd+Shift+G` -> lim inn `~/.cache/igris`
+- **Linux**: slett `~/.cache/igris` (eller kjør `rm -rf ~/.cache/igris`)
+- **Windows**: Trykk `WIN+R` og lim inn `%USERPROFILE%\.cache\igris`
 
 3. Start OpenCode Desktop på nytt.
 
@@ -111,7 +111,7 @@ Fra startskjermen klikker du på servernavnet (med statusprikken) for å åpne s
 
 #### Fjern `server.port` / `server.hostname` fra konfigurasjonen din
 
-Hvis `opencode.json(c)` inneholder en `server`-del, fjern den midlertidig og start skrivebordsappen på nytt.
+Hvis `igris.json(c)` inneholder en `server`-del, fjern den midlertidig og start skrivebordsappen på nytt.
 
 #### Sjekk miljøvariabler
 
@@ -158,8 +158,8 @@ Hvis appen ikke starter og du ikke kan slette innstillingene fra UI-et, tilbakes
 1. Avslutt OpenCode Desktop.
 2. Finn og slett disse filene (de finnes i OpenCode Desktop-appens datakatalog):
 
-- `opencode.settings.dat` (stasjonær standardserver URL)
-- `opencode.global.dat` og `opencode.workspace.*.dat` (UI tilstand som nylige servere/prosjekter)
+- `igris.settings.dat` (stasjonær standardserver URL)
+- `igris.global.dat` og `igris.workspace.*.dat` (UI tilstand som nylige servere/prosjekter)
 
 ---
 
@@ -184,10 +184,10 @@ For å løse problemer med leverandørpakke:
 1. Tøm leverandørens pakkebuffer:
 
    ```bash
-   rm -rf ~/.cache/opencode
+   rm -rf ~/.cache/igris
    ```
 
-   På Windows, trykk `WIN+R` og slett: `%USERPROFILE%\.cache\opencode`
+   På Windows, trykk `WIN+R` og slett: `%USERPROFILE%\.cache\igris`
 
 2. Start OpenCode på nytt for å installere de nyeste provider-pakkene på nytt
 

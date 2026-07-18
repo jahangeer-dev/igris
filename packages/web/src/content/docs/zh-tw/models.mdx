@@ -50,14 +50,14 @@ OpenCode 使用 [AI SDK](https://ai-sdk.dev/) 和 [Models.dev](https://models.de
 
 要將某個模型設為預設模型，可以在 OpenCode 設定中設定 `model` 欄位。
 
-```json title="opencode.json" {3}
+```json title="igris.json" {3}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "model": "lmstudio/google/gemma-3n-e4b"
 }
 ```
 
-這裡完整的 ID 格式為 `provider_id/model_id`。例如，如果您使用 [OpenCode Zen](/docs/zen)，則 GPT 5.1 Codex 對應的值為 `opencode/gpt-5.1-codex`。
+這裡完整的 ID 格式為 `provider_id/model_id`。例如，如果您使用 [OpenCode Zen](/docs/zen)，則 GPT 5.1 Codex 對應的值為 `igris/gpt-5.1-codex`。
 
 如果您設定了[自訂提供商](/docs/providers#custom)，`provider_id` 是設定中 `provider` 部分的鍵名，`model_id` 是 `provider.models` 中的鍵名。
 
@@ -67,9 +67,9 @@ OpenCode 使用 [AI SDK](https://ai-sdk.dev/) 和 [Models.dev](https://models.de
 
 您可以透過設定檔全域設定模型的選項。
 
-```jsonc title="opencode.jsonc" {7-12,19-24}
+```jsonc title="igris.jsonc" {7-12,19-24}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -106,11 +106,11 @@ OpenCode 使用 [AI SDK](https://ai-sdk.dev/) 和 [Models.dev](https://models.de
 
 您也可以定義擴展內建變體的自訂變體。變體允許您為同一個模型設定不同的選項，而無需建立重複的項目：
 
-```jsonc title="opencode.jsonc" {6-21}
+```jsonc title="igris.jsonc" {6-21}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
-    "opencode": {
+    "igris": {
       "models": {
         "gpt-5": {
           "variants": {
@@ -171,9 +171,9 @@ OpenCode 為許多提供商提供了預設變體：
 
 您可以覆寫現有變體或新增自己的變體：
 
-```jsonc title="opencode.jsonc" {7-18}
+```jsonc title="igris.jsonc" {7-18}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -208,9 +208,9 @@ OpenCode 啟動時，會按以下優先順序載入模型：
 
 2. OpenCode 設定中的 model 欄位。
 
-   ```json title="opencode.json"
+   ```json title="igris.json"
    {
-     "$schema": "https://opencode.ai/config.json",
+     "$schema": "https://igris.ai/config.json",
      "model": "anthropic/claude-sonnet-4-20250514"
    }
    ```

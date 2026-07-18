@@ -51,14 +51,14 @@ OpenCode ใช้ [AI SDK](https://ai-sdk.dev/) และ [Models.dev](https://
 หากต้องการตั้งค่าสิ่งใดสิ่งหนึ่งเป็นโมเดลเริ่มต้น คุณสามารถตั้งค่าคีย์ `model` ในของคุณ
 การกำหนดค่า OpenCode
 
-```json title="opencode.json" {3}
+```json title="igris.json" {3}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "model": "lmstudio/google/gemma-3n-e4b"
 }
 ```
 
-ID แบบเต็มคือ `provider_id/model_id` ตัวอย่างเช่น หากคุณใช้ [OpenCode Zen](/docs/zen) คุณจะใช้ `opencode/gpt-5.1-codex` สำหรับ GPT 5.1 Codex
+ID แบบเต็มคือ `provider_id/model_id` ตัวอย่างเช่น หากคุณใช้ [OpenCode Zen](/docs/zen) คุณจะใช้ `igris/gpt-5.1-codex` สำหรับ GPT 5.1 Codex
 
 หากคุณได้กำหนดค่า [ผู้ให้บริการที่กำหนดเอง](/docs/providers#กำหนดเอง) `provider_id` จะเป็นคีย์จากส่วน `provider` ของการกำหนดค่าของคุณ และ `model_id` จะเป็นคีย์จาก `provider.models`
 
@@ -68,9 +68,9 @@ ID แบบเต็มคือ `provider_id/model_id` ตัวอย่า�
 
 คุณสามารถกำหนดค่าตัวเลือกของโมเดลได้ทั่วโลกผ่านการกำหนดค่า
 
-```jsonc title="opencode.jsonc" {7-12,19-24}
+```jsonc title="igris.jsonc" {7-12,19-24}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -107,11 +107,11 @@ ID แบบเต็มคือ `provider_id/model_id` ตัวอย่า�
 
 คุณยังสามารถกำหนดตัวแปรแบบกำหนดเองที่ขยายตัวแปรในตัวได้ ตัวแปรช่วยให้คุณกำหนดการตั้งค่าที่แตกต่างกันสำหรับรุ่นเดียวกันโดยไม่ต้องสร้างรายการที่ซ้ำกัน:
 
-```jsonc title="opencode.jsonc" {6-21}
+```jsonc title="igris.jsonc" {6-21}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
-    "opencode": {
+    "igris": {
       "models": {
         "gpt-5": {
           "variants": {
@@ -172,9 +172,9 @@ OpenCode มาพร้อมกับ variants เริ่มต้นสำ�
 
 คุณสามารถแทนที่ variants ที่มีอยู่หรือเพิ่มของคุณเองได้:
 
-```jsonc title="opencode.jsonc" {7-18}
+```jsonc title="igris.jsonc" {7-18}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -209,9 +209,9 @@ OpenCode มาพร้อมกับ variants เริ่มต้นสำ�
 
 2. รายการโมเดลในการกำหนดค่า OpenCode
 
-   ```json title="opencode.json"
+   ```json title="igris.json"
    {
-     "$schema": "https://opencode.ai/config.json",
+     "$schema": "https://igris.ai/config.json",
      "model": "anthropic/claude-sonnet-4-20250514"
    }
    ```

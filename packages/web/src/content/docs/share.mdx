@@ -39,9 +39,9 @@ This will generate a unique URL that'll be copied to your clipboard.
 
 To explicitly set manual mode in your [config file](/docs/config):
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "manual"
 }
 ```
@@ -52,9 +52,9 @@ To explicitly set manual mode in your [config file](/docs/config):
 
 You can enable automatic sharing for all new conversations by setting the `share` option to `"auto"` in your [config file](/docs/config):
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "auto"
 }
 ```
@@ -67,14 +67,14 @@ With auto-share enabled, every new conversation will automatically be shared and
 
 You can disable sharing entirely by setting the `share` option to `"disabled"` in your [config file](/docs/config):
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "share": "disabled"
 }
 ```
 
-To enforce this across your team for a given project, add it to the `opencode.json` in your project and check into Git.
+To enforce this across your team for a given project, add it to the `igris.json` in your project and check into Git.
 
 ---
 
@@ -125,4 +125,4 @@ For enterprise deployments, the share feature can be:
 - **Restricted** to users authenticated through SSO only
 - **Self-hosted** on your own infrastructure
 
-[Learn more](/docs/enterprise) about using opencode in your organization.
+[Learn more](/docs/enterprise) about using igris in your organization.

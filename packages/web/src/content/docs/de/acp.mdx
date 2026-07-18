@@ -15,7 +15,7 @@ ACP ist ein offenes Protokoll, das die Kommunikation zwischen Code-Editoren und 
 
 ## Konfiguration
 
-Um OpenCode über ACP zu verwenden, konfigurieren Sie Ihren Editor für die Ausführung des Befehls `opencode acp`.
+Um OpenCode über ACP zu verwenden, konfigurieren Sie Ihren Editor für die Ausführung des Befehls `igris acp`.
 
 Der Befehl startet OpenCode als ACP-kompatiblen Unterprozess, der über stdio über JSON-RPC mit Ihrem Editor kommuniziert.
 
@@ -31,7 +31,7 @@ Fügen Sie Ihrer [Zed](https://zed.dev)-Konfiguration (`~/.config/zed/settings.j
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "opencode",
+      "command": "igris",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ Sie können auch eine Tastenkombination binden, indem Sie Ihren `keymap.json` be
             "custom": {
               "name": "OpenCode",
               "command": {
-                "command": "opencode",
+                "command": "igris",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ Fügen Sie zu Ihrem [JetBrains IDE](https://www.jetbrains.com/) acp.json gemäß
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/igris",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ Fügen Sie Ihrer [Avante.nvim](https://github.com/yetone/avante.nvim)-Konfigurat
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" }
     }
   }
@@ -106,8 +106,8 @@ Wenn Sie Umgebungsvariablen übergeben müssen:
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" },
       env = {
         OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "igris",
         model = "claude-sonnet-4",
       },
     },

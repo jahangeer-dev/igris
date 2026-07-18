@@ -8,7 +8,7 @@ import config from "../../../../config.mjs"
 export const console = config.console
 
 [**OpenCode**](/) je AI agent za kodiranje otvorenog koda. Dostupan je kao interfejs baziran na terminalu, desktop aplikacija ili IDE ekstenzija.
-![OpenCode TUI sa opencode temom](../../../assets/lander/screenshot.png)
+![OpenCode TUI sa igris temom](../../../assets/lander/screenshot.png)
 Hajde da počnemo.
 
 ---
@@ -31,7 +31,7 @@ Da biste koristili OpenCode u svom terminalu, trebat će vam:
 Najlakši način za instaliranje OpenCode je putem instalacijske skripte.
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://igris.ai/install | bash
 ```
 
 Također ga možete instalirati pomoću sljedećih naredbi:
@@ -42,28 +42,28 @@ Također ga možete instalirati pomoću sljedećih naredbi:
 
       <TabItem label="npm">
       ```bash
-      npm install -g opencode-ai
+      npm install -g igris-ai
       ```
 
           </TabItem>
 
         <TabItem label="Bun">
         ```bash
-        bun install -g opencode-ai
+        bun install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="pnpm">
         ```bash
-        pnpm install -g opencode-ai
+        pnpm install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="Yarn">
         ```bash
-        yarn global add opencode-ai
+        yarn global add igris-ai
         ```
 
       </TabItem>
@@ -73,16 +73,16 @@ Također ga možete instalirati pomoću sljedećih naredbi:
 - **Korištenje Homebrew-a na macOS-u i Linux-u**
 
 ```bash
-  brew install anomalyco/tap/opencode
+  brew install anomalyco/tap/igris
 ```
 
-> Preporučujemo korištenje OpenCode tap za najnovija izdanja. Službenu formulu `brew install opencode` održava Homebrew tim i ažurira se rjeđe.
+> Preporučujemo korištenje OpenCode tap za najnovija izdanja. Službenu formulu `brew install igris` održava Homebrew tim i ažurira se rjeđe.
 
 - **Korištenje Parua na Arch Linuxu**
 
   ```bash
-  sudo pacman -S opencode           # Arch Linux (Stable)
-  paru -S opencode-bin              # Arch Linux (Latest from AUR)
+  sudo pacman -S igris           # Arch Linux (Stable)
+  paru -S igris-bin              # Arch Linux (Latest from AUR)
   ```
 
 #### Windows
@@ -94,35 +94,35 @@ Za najbolje iskustvo na Windows-u preporučujemo korištenje [Windows Subsystem 
 - **Korištenje Chocolatey-a**
 
 ```bash
-  choco install opencode
+  choco install igris
 ```
 
 - **Korištenje Scoop-a**
 
 ```bash
-  scoop install opencode
+  scoop install igris
 ```
 
 - **Korištenje NPM-a**
 
 ```bash
-  npm install -g opencode-ai
+  npm install -g igris-ai
 ```
 
 - **Korištenje Mise**
 
 ```bash
-  mise use -g github:anomalyco/opencode
+  mise use -g github:anomalyco/igris
 ```
 
 - **Korištenje Dockera**
 
 ```bash
-  docker run -it --rm ghcr.io/anomalyco/opencode
+  docker run -it --rm ghcr.io/anomalyco/igris
 ```
 
 Podrška za instaliranje OpenCode na Windows koristeći Bun je trenutno u toku.
-Također možete preuzeti binarnu datoteku iz [Releases](https://github.com/anomalyco/opencode/releases).
+Također možete preuzeti binarnu datoteku iz [Releases](https://github.com/anomalyco/igris/releases).
 
 ---
 
@@ -132,7 +132,7 @@ Uz OpenCode možete koristiti bilo kojeg LLM provajdera tako što ćete konfigur
 Ako ste tek počeli koristiti LLM provajdere, preporučujemo korištenje [OpenCode Zen](/docs/zen).
 To je kurirana lista modela koji su testirani i verifikovani od strane OpenCode tima.
 
-1. Pokrenite naredbu `/connect` u TUI-u, odaberite opencode i idite na [opencode.ai/auth](https://opencode.ai/auth).
+1. Pokrenite naredbu `/connect` u TUI-u, odaberite igris i idite na [igris.ai/auth](https://igris.ai/auth).
 
 ```txt
    /connect
@@ -163,7 +163,7 @@ cd /path/to/project
 I pokrenite OpenCode.
 
 ```bash
-opencode
+igris
 ```
 
 Zatim inicijalizirajte OpenCode za projekat pokretanjem sljedeće naredbe.
@@ -313,7 +313,7 @@ Ovo će kreirati vezu do trenutnog razgovora i kopirati je u međuspremnik.
 :::note
 Razgovori se ne dijele prema zadanim postavkama.
 :::
-Evo [primjer razgovora](https://opencode.ai/s/4XP1fce5) sa OpenCode.
+Evo [primjer razgovora](https://igris.ai/s/4XP1fce5) sa OpenCode.
 
 ---
 

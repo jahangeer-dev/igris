@@ -1,6 +1,6 @@
 ---
 title: ACP-støtte
-description: Bruk opencode i en hvilken som helst ACP-kompatibel editor.
+description: Bruk igris i en hvilken som helst ACP-kompatibel editor.
 ---
 
 OpenCode støtter [Agent Client Protocol](https://agentclientprotocol.com) eller (ACP), slik at du kan bruke den direkte i kompatible editorer og IDE-er.
@@ -15,7 +15,7 @@ ACP er en åpen protokoll som standardiserer kommunikasjon mellom kodeditorer og
 
 ## Konfigurasjon
 
-For å bruke OpenCode via ACP, konfigurer redigeringsprogrammet til å kjøre kommandoen `opencode acp`.
+For å bruke OpenCode via ACP, konfigurer redigeringsprogrammet til å kjøre kommandoen `igris acp`.
 
 Kommandoen starter OpenCode som en ACP-kompatibel underprosess som kommuniserer med editoren din over JSON-RPC via stdio.
 
@@ -31,7 +31,7 @@ Legg til i [Zed](https://zed.dev)-konfigurasjonen (`~/.config/zed/settings.json`
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "opencode",
+      "command": "igris",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ Du kan også binde en hurtigtast ved å redigere `keymap.json`:
             "custom": {
               "name": "OpenCode",
               "command": {
-                "command": "opencode",
+                "command": "igris",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ Legg til [JetBrains IDE](https://www.jetbrains.com/) acp.json i henhold til [dok
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/igris",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ Legg til i [Avante.nvim](https://github.com/yetone/avante.nvim)-konfigurasjonen:
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" }
     }
   }
@@ -106,8 +106,8 @@ Hvis du trenger å sende miljøvariabler:
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" },
       env = {
         OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "igris",
         model = "claude-sonnet-4",
       },
     },

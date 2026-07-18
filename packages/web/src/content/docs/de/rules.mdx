@@ -1,25 +1,25 @@
 ---
 title: Regeln
-description: Lege eigene Anweisungen fuer opencode fest.
+description: Lege eigene Anweisungen fuer igris fest.
 ---
 
-Du kannst opencode ueber eine `AGENTS.md`-Datei mit eigenen Anweisungen steuern.
+Du kannst igris ueber eine `AGENTS.md`-Datei mit eigenen Anweisungen steuern.
 Das ist aehnlich zu den Regeln in Cursor und wird direkt in den LLM-Kontext geladen.
 
 ---
 
 ## Initialisierung
 
-Um eine neue `AGENTS.md` zu erstellen, fuehre in opencode den Befehl `/init` aus.
+Um eine neue `AGENTS.md` zu erstellen, fuehre in igris den Befehl `/init` aus.
 
 :::tip
 Du solltest die `AGENTS.md` deines Projekts in Git committen.
 :::
 
 Der Befehl scannt dein Projekt und erzeugt daraus eine passende `AGENTS.md`.
-So kann opencode sich in deinem Code besser orientieren.
+So kann igris sich in deinem Code besser orientieren.
 
-Wenn bereits eine `AGENTS.md` existiert, versucht opencode sie zu erweitern.
+Wenn bereits eine `AGENTS.md` existiert, versucht igris sie zu erweitern.
 
 ---
 
@@ -57,7 +57,7 @@ Hier hinterlegst du projektspezifische Regeln, die dein Team gemeinsam nutzt.
 
 ## Typen
 
-opencode kann `AGENTS.md` aus mehreren Orten lesen.
+igris kann `AGENTS.md` aus mehreren Orten lesen.
 Die Orte haben unterschiedliche Zwecke.
 
 ### Projekt
@@ -67,8 +67,8 @@ Diese gelten nur in diesem Verzeichnis und seinen Unterordnern.
 
 ### Global
 
-Du kannst auch globale Regeln in `~/.config/opencode/AGENTS.md` speichern.
-Diese gelten in allen opencode-Sitzungen.
+Du kannst auch globale Regeln in `~/.config/igris/AGENTS.md` speichern.
+Diese gelten in allen igris-Sitzungen.
 
 Da diese Datei nicht in Git landet und nicht mit dem Team geteilt wird, eignet sie sich fuer persoenliche Regeln.
 
@@ -77,7 +77,7 @@ Da diese Datei nicht in Git landet und nicht mit dem Team geteilt wird, eignet s
 Wenn du von Claude Code kommst, unterstuetzt OpenCode dessen Dateikonventionen als Fallback:
 
 - **Projektregeln**: `CLAUDE.md` im Projekt (wenn keine `AGENTS.md` existiert)
-- **Globale Regeln**: `~/.claude/CLAUDE.md` (wenn keine `~/.config/opencode/AGENTS.md` existiert)
+- **Globale Regeln**: `~/.claude/CLAUDE.md` (wenn keine `~/.config/igris/AGENTS.md` existiert)
 - **Skills**: `~/.claude/skills/` - siehe [Agent Skills](/docs/skills/) fuer Details
 
 Um die Claude-Code-Kompatibilitaet zu deaktivieren, setze eine dieser Umgebungsvariablen:
@@ -92,10 +92,10 @@ export OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
 
 ## Rangfolge
 
-Beim Start sucht opencode in dieser Reihenfolge nach Regeldateien:
+Beim Start sucht igris in dieser Reihenfolge nach Regeldateien:
 
 1. **Lokale Dateien** beim Hochlaufen ab dem aktuellen Verzeichnis (`AGENTS.md`, `CLAUDE.md`)
-2. **Globale Datei** unter `~/.config/opencode/AGENTS.md`
+2. **Globale Datei** unter `~/.config/igris/AGENTS.md`
 3. **Claude-Code-Datei** unter `~/.claude/CLAUDE.md` (falls nicht deaktiviert)
 
 Pro Kategorie gewinnt die zuerst passende Datei.
@@ -105,23 +105,23 @@ Wenn sowohl `AGENTS.md` als auch `CLAUDE.md` existieren, wird nur `AGENTS.md` ve
 
 ## Eigene Anweisungen
 
-Du kannst zusaetzliche Anweisungsdateien in deiner `opencode.json` oder in `~/.config/opencode/opencode.json` angeben.
+Du kannst zusaetzliche Anweisungsdateien in deiner `igris.json` oder in `~/.config/igris/igris.json` angeben.
 So kann dein Team bestehende Regeln wiederverwenden, statt Inhalte in `AGENTS.md` zu duplizieren.
 
 Beispiel:
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "instructions": ["CONTRIBUTING.md", "docs/guidelines.md", ".cursor/rules/*.md"]
 }
 ```
 
 Du kannst auch Remote-URLs nutzen, um Regeln aus dem Web zu laden.
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "instructions": ["https://raw.githubusercontent.com/my-org/shared-rules/main/style.md"]
 }
 ```
@@ -134,23 +134,23 @@ Alle Anweisungsdateien werden mit deinen `AGENTS.md`-Dateien kombiniert.
 
 ## Externe Dateien referenzieren
 
-opencode parst Datei-Referenzen in `AGENTS.md` nicht automatisch.
+igris parst Datei-Referenzen in `AGENTS.md` nicht automatisch.
 Du erreichst aehnliches Verhalten auf zwei Wegen.
 
-### Mit opencode.json
+### Mit igris.json
 
-Empfohlen ist das `instructions`-Feld in der `opencode.json`:
+Empfohlen ist das `instructions`-Feld in der `igris.json`:
 
-```json title="opencode.json"
+```json title="igris.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "instructions": ["docs/development-standards.md", "test/testing-guidelines.md", "packages/*/AGENTS.md"]
 }
 ```
 
 ### Manuelle Anweisungen in AGENTS.md
 
-Du kannst opencode explizit anweisen, externe Dateien zu lesen.
+Du kannst igris explizit anweisen, externe Dateien zu lesen.
 Hier ein praxisnahes Beispiel:
 
 ```markdown title="AGENTS.md"
@@ -186,5 +186,5 @@ Damit kannst du:
 - Sicherstellen, dass Dateien nur bei Bedarf geladen werden
 
 :::tip
-Fuer Monorepos oder gemeinsame Standards ist `opencode.json` mit Glob-Mustern (z. B. `packages/*/AGENTS.md`) oft wartbarer als manuelle Anweisungen.
+Fuer Monorepos oder gemeinsame Standards ist `igris.json` mit Glob-Mustern (z. B. `packages/*/AGENTS.md`) oft wartbarer als manuelle Anweisungen.
 :::

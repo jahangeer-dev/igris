@@ -11,12 +11,12 @@ Da biste otklonili probleme s OpenCode, počnite provjeravanjem dnevnika i lokal
 
 Log fajlovi se pišu na:
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\opencode\log`
+- **macOS/Linux**: `~/.local/share/igris/log/`
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\igris\log`
 
 Datoteke evidencije se imenuju vremenskim oznakama (npr. `2025-01-09T123456.log`) i čuvaju se najnovijih 10 datoteka dnevnika.
 
-Možete postaviti nivo dnevnika pomoću opcije komandne linije `--log-level` da biste dobili detaljnije informacije o otklanjanju grešaka. Na primjer, `opencode --log-level DEBUG`.
+Možete postaviti nivo dnevnika pomoću opcije komandne linije `--log-level` da biste dobili detaljnije informacije o otklanjanju grešaka. Na primjer, `igris --log-level DEBUG`.
 
 ---
 
@@ -24,8 +24,8 @@ Možete postaviti nivo dnevnika pomoću opcije komandne linije `--log-level` da 
 
 OpenCode pohranjuje podatke o sesiji i druge podatke aplikacije na disku na:
 
-- **macOS/Linux**: `~/.local/share/opencode/`
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\opencode`
+- **macOS/Linux**: `~/.local/share/igris/`
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\igris`
 
 Ovaj direktorij sadrži:
 
@@ -39,7 +39,7 @@ Ovaj direktorij sadrži:
 
 ## Desktop aplikacija
 
-OpenCode Desktop pokreće lokalni OpenCode server (`opencode-cli` sidecar) u pozadini. Većina problema je uzrokovana nedostatkom dodatka, oštećenom keš memorijom ili lošim postavkama servera.
+OpenCode Desktop pokreće lokalni OpenCode server (`igris-cli` sidecar) u pozadini. Većina problema je uzrokovana nedostatkom dodatka, oštećenom keš memorijom ili lošim postavkama servera.
 
 ### Brze provjere
 
@@ -57,15 +57,15 @@ Ako se desktop aplikacija ruši pri pokretanju, visi ili se čudno ponaša, poč
 
 Otvorite svoju globalnu konfiguracijsku datoteku i potražite ključ `plugin`.
 
-- **macOS/Linux**: `~/.config/opencode/opencode.jsonc` (ili `~/.config/opencode/opencode.json`)
-- **macOS/Linux** (starije instalacije): `~/.local/share/opencode/opencode.jsonc`
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\opencode\opencode.jsonc`
+- **macOS/Linux**: `~/.config/igris/igris.jsonc` (ili `~/.config/igris/igris.json`)
+- **macOS/Linux** (starije instalacije): `~/.local/share/igris/igris.jsonc`
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\igris\igris.jsonc`
 
 Ako imate konfigurirane dodatke, privremeno ih onemogućite uklanjanjem ključa ili postavljanjem na prazan niz:
 
 ```jsonc
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "plugin": [],
 }
 ```
@@ -75,10 +75,10 @@ Ako imate konfigurirane dodatke, privremeno ih onemogućite uklanjanjem ključa 
 OpenCode također može učitati lokalne dodatke s diska. Privremeno ih maknite s puta (ili preimenujte folder) i ponovo pokrenite desktop aplikaciju:
 
 - **Globalni dodaci**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
-  - **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\opencode\plugins`
+  - **macOS/Linux**: `~/.config/igris/plugins/`
+  - **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\igris\plugins`
 - **Projektni dodaci** (samo ako koristite konfiguraciju po projektu)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.igris/plugins/`
 
 Ako aplikacija ponovo počne raditi, ponovo omogućite dodatke jedan po jedan kako biste otkrili koji od njih uzrokuje problem.
 
@@ -91,9 +91,9 @@ Ako onemogućavanje dodataka ne pomogne (ili se instalacija dodatka zaglavila), 
 1. Potpuno zatvorite OpenCode Desktop.
 2. Izbrišite keš direktorij:
 
-- **macOS**: Finder -> `Cmd+Shift+G` -> zalijepi `~/.cache/opencode`
-- **Linux**: obrišite `~/.cache/opencode` (ili pokrenite `rm -rf ~/.cache/opencode`)
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.cache\opencode`
+- **macOS**: Finder -> `Cmd+Shift+G` -> zalijepi `~/.cache/igris`
+- **Linux**: obrišite `~/.cache/igris` (ili pokrenite `rm -rf ~/.cache/igris`)
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.cache\igris`
 
 3. Ponovo pokrenite OpenCode Desktop.
 
@@ -111,7 +111,7 @@ Na početnom ekranu kliknite na ime servera (sa tačkom statusa) da otvorite bir
 
 #### Uklonite `server.port` / `server.hostname` iz vaše konfiguracije
 
-Ako vaš `opencode.json(c)` sadrži odjeljak `server`, privremeno ga uklonite i ponovo pokrenite desktop aplikaciju.
+Ako vaš `igris.json(c)` sadrži odjeljak `server`, privremeno ga uklonite i ponovo pokrenite desktop aplikaciju.
 
 #### Provjerite varijable okruženja
 
@@ -158,8 +158,8 @@ Ako se aplikacija ne pokrene i ne možete izbrisati postavke unutar korisničkog
 1. Zatvorite OpenCode Desktop.
 2. Pronađite i izbrišite ove datoteke (oni žive u direktoriju podataka OpenCode Desktop aplikacije):
 
-- `opencode.settings.dat` (URL zadanog servera za desktop)
-- `opencode.global.dat` i `opencode.workspace.*.dat` (stanje korisničkog interfejsa poput nedavnih servera/projekata)
+- `igris.settings.dat` (URL zadanog servera za desktop)
+- `igris.global.dat` i `igris.workspace.*.dat` (stanje korisničkog interfejsa poput nedavnih servera/projekata)
 
 Da brzo pronađete direktorij:
 
@@ -177,7 +177,7 @@ Ako imate problema s OpenCode:
 
    Najbolji način da prijavite greške ili zatražite funkcije je putem našeg GitHub spremišta:
 
-   [**github.com/anomalyco/opencode/issues**](https://github.com/anomalyco/opencode/issues)
+   [**github.com/anomalyco/igris/issues**](https://github.com/anomalyco/igris/issues)
 
    Prije kreiranja novog problema, pretražite postojeće probleme da vidite je li vaš problem već prijavljen.
 
@@ -185,7 +185,7 @@ Ako imate problema s OpenCode:
 
    Za pomoć u stvarnom vremenu i diskusiju u zajednici, pridružite se našem Discord serveru:
 
-   [**opencode.ai/discord**](https://opencode.ai/discord)
+   [**igris.ai/discord**](https://igris.ai/discord)
 
 ---
 
@@ -199,7 +199,7 @@ Evo nekih uobičajenih problema i kako ih riješiti.
 
 1. Provjerite dnevnike za poruke o greškama
 2. Pokušajte pokrenuti sa `--print-logs` da vidite izlaz u terminalu
-3. Uvjerite se da imate najnoviju verziju sa `opencode upgrade`
+3. Uvjerite se da imate najnoviju verziju sa `igris upgrade`
 
 ---
 
@@ -225,9 +225,9 @@ primjeri:
 
 - `openai/gpt-4.1`
 - `openrouter/google/gemini-2.5-flash`
-- `opencode/kimi-k2`
+- `igris/kimi-k2`
 
-Da saznate kojim modelima imate pristup, pokrenite `opencode models`
+Da saznate kojim modelima imate pristup, pokrenite `igris models`
 
 ---
 
@@ -241,10 +241,10 @@ Da biste ovo riješili:
 2. Ako se problem nastavi, pokušajte obrisati pohranjenu konfiguraciju:
 
 ```bash
-   rm -rf ~/.local/share/opencode
+   rm -rf ~/.local/share/igris
 ```
 
-Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.local\share\opencode`
+Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.local\share\igris`
 
 3. Ponovo izvršite autentifikaciju kod svog provajdera koristeći naredbu `/connect` u TUI.
 
@@ -259,10 +259,10 @@ Da biste riješili probleme s paketom dobavljača:
 1. Obrišite keš paketa provajdera:
 
 ```bash
-   rm -rf ~/.cache/opencode
+   rm -rf ~/.cache/igris
 ```
 
-Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.cache\opencode`
+Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.cache\igris`
 
 2. Ponovo pokrenite OpenCode da ponovo instalirate najnovije pakete dobavljača
 

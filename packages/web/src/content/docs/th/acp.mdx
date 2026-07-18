@@ -15,7 +15,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 
 ## การกำหนดค่า
 
-ในการใช้ OpenCode ผ่าน ACP ให้กำหนดค่าโปรแกรมแก้ไขของคุณให้รันคำสั่ง `opencode acp`
+ในการใช้ OpenCode ผ่าน ACP ให้กำหนดค่าโปรแกรมแก้ไขของคุณให้รันคำสั่ง `igris acp`
 
 คำสั่งนี้จะเริ่ม OpenCode เป็น process ย่อยที่รองรับ ACP ซึ่งสื่อสารกับโปรแกรมแก้ไขของคุณผ่าน JSON-RPC ทาง stdio
 
@@ -31,7 +31,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "opencode",
+      "command": "igris",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
             "custom": {
               "name": "OpenCode",
               "command": {
-                "command": "opencode",
+                "command": "igris",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/igris",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" }
     }
   }
@@ -106,8 +106,8 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" },
       env = {
         OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "igris",
         model = "claude-sonnet-4",
       },
     },
@@ -136,13 +136,13 @@ require("codecompanion").setup({
 })
 ```
 
-คุณสามารถใช้ CodeCompanion เพื่อใช้ opencode เป็น ACP agent สำหรับแชท
+คุณสามารถใช้ CodeCompanion เพื่อใช้ igris เป็น ACP agent สำหรับแชท
 
 หากคุณต้องส่ง environment variables (เช่น `OPENCODE_API_KEY`) โปรดดู [Configuring Adapters: Environment Variables](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) ในเอกสารของ CodeCompanion.nvim สำหรับรายละเอียดทั้งหมด
 
 ## การรองรับ
 
-opencode ทำงานผ่าน ACP เหมือนกับใน terminal และรองรับฟีเจอร์ทั้งหมด:
+igris ทำงานผ่าน ACP เหมือนกับใน terminal และรองรับฟีเจอร์ทั้งหมด:
 
 :::note
 คำสั่ง slash ในตัวบางคำสั่งเช่น `/undo` และ `/redo` ยังไม่รองรับในขณะนี้

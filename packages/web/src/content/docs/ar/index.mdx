@@ -9,7 +9,7 @@ export const console = config.console
 
 [**OpenCode**](/) هو وكيل ترميز بالذكاء الاصطناعي مفتوح المصدر. يتوفر كواجهة terminal، وتطبيق لسطح المكتب، أو إضافة لبيئة تطوير متكاملة (IDE).
 
-![واجهة OpenCode في terminal مع سمة opencode](../../../assets/lander/screenshot.png)
+![واجهة OpenCode في terminal مع سمة igris](../../../assets/lander/screenshot.png)
 
 لنبدأ.
 
@@ -34,7 +34,7 @@ export const console = config.console
 أسهل طريقة لتثبيت OpenCode هي عبر سكربت التثبيت.
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://igris.ai/install | bash
 ```
 
 يمكنك أيضا تثبيته عبر الأوامر التالية:
@@ -45,28 +45,28 @@ curl -fsSL https://opencode.ai/install | bash
 
       <TabItem label="npm">
       ```bash
-      npm install -g opencode-ai
+      npm install -g igris-ai
       ```
 
           </TabItem>
 
         <TabItem label="Bun">
         ```bash
-        bun install -g opencode-ai
+        bun install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="pnpm">
         ```bash
-        pnpm install -g opencode-ai
+        pnpm install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="Yarn">
         ```bash
-        yarn global add opencode-ai
+        yarn global add igris-ai
         ```
 
       </TabItem>
@@ -76,16 +76,16 @@ curl -fsSL https://opencode.ai/install | bash
 - **باستخدام Homebrew على macOS وLinux**
 
   ```bash
-  brew install anomalyco/tap/opencode
+  brew install anomalyco/tap/igris
   ```
 
-  > نوصي باستخدام tap الخاص بـ OpenCode للحصول على أحدث الإصدارات. صيغة `brew install opencode` الرسمية تُدار بواسطة فريق Homebrew ويتم تحديثها بوتيرة أقل.
+  > نوصي باستخدام tap الخاص بـ OpenCode للحصول على أحدث الإصدارات. صيغة `brew install igris` الرسمية تُدار بواسطة فريق Homebrew ويتم تحديثها بوتيرة أقل.
 
 - **باستخدام Paru على Arch Linux**
 
   ```bash
-  sudo pacman -S opencode           # Arch Linux (Stable)
-  paru -S opencode-bin              # Arch Linux (Latest from AUR)
+  sudo pacman -S igris           # Arch Linux (Stable)
+  paru -S igris-bin              # Arch Linux (Latest from AUR)
   ```
 
 #### Windows
@@ -97,36 +97,36 @@ curl -fsSL https://opencode.ai/install | bash
 - **باستخدام Chocolatey**
 
   ```bash
-  choco install opencode
+  choco install igris
   ```
 
 - **باستخدام Scoop**
 
   ```bash
-  scoop install opencode
+  scoop install igris
   ```
 
 - **باستخدام NPM**
 
   ```bash
-  npm install -g opencode-ai
+  npm install -g igris-ai
   ```
 
 - **باستخدام Mise**
 
   ```bash
-  mise use -g github:anomalyco/opencode
+  mise use -g github:anomalyco/igris
   ```
 
 - **باستخدام Docker**
 
   ```bash
-  docker run -it --rm ghcr.io/anomalyco/opencode
+  docker run -it --rm ghcr.io/anomalyco/igris
   ```
 
 دعم تثبيت OpenCode على Windows باستخدام Bun قيد العمل حاليا.
 
-يمكنك أيضا تنزيل الملف التنفيذي من صفحة [Releases](https://github.com/anomalyco/opencode/releases).
+يمكنك أيضا تنزيل الملف التنفيذي من صفحة [Releases](https://github.com/anomalyco/igris/releases).
 
 ---
 
@@ -137,7 +137,7 @@ curl -fsSL https://opencode.ai/install | bash
 إذا كنت جديدا على استخدام مزوّدي LLM، فنوصي باستخدام [OpenCode Zen](/docs/zen).
 إنها قائمة منتقاة من النماذج تم اختبارها والتحقق منها بواسطة فريق OpenCode.
 
-1. شغّل الأمر `/connect` في واجهة TUI، واختر opencode، ثم انتقل إلى [opencode.ai/auth](https://opencode.ai/auth).
+1. شغّل الأمر `/connect` في واجهة TUI، واختر igris، ثم انتقل إلى [igris.ai/auth](https://igris.ai/auth).
 
    ```txt
    /connect
@@ -169,7 +169,7 @@ cd /path/to/project
 ثم شغّل OpenCode.
 
 ```bash
-opencode
+igris
 ```
 
 بعد ذلك، هيّئ OpenCode للمشروع عبر تشغيل الأمر التالي.
@@ -333,7 +333,7 @@ Can you refactor the function in @packages/functions/src/api/index.ts?
 لا تتم مشاركة المحادثات افتراضيا.
 :::
 
-إليك [مثالا لمحادثة](https://opencode.ai/s/4XP1fce5) مع OpenCode.
+إليك [مثالا لمحادثة](https://igris.ai/s/4XP1fce5) مع OpenCode.
 
 ---
 

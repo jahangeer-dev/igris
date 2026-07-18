@@ -9,7 +9,7 @@ export const console = config.console
 
 [**OpenCode**](/) er en åpen kildekode AI kodeagent. Den er tilgjengelig som et terminalbasert grensesnitt, skrivebordsapp eller IDE-utvidelse.
 
-![OpenCode TUI med opencode-temaet](../../../assets/lander/screenshot.png)
+![OpenCode TUI med igris-temaet](../../../assets/lander/screenshot.png)
 
 La oss komme i gang.
 
@@ -34,7 +34,7 @@ For å bruke OpenCode i terminalen din trenger du:
 Den enkleste måten å installere OpenCode på er gjennom installasjonsskriptet.
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://igris.ai/install | bash
 ```
 
 Du kan også installere den med følgende kommandoer:
@@ -45,28 +45,28 @@ Du kan også installere den med følgende kommandoer:
 
       <TabItem label="npm">
       ```bash
-      npm install -g opencode-ai
+      npm install -g igris-ai
       ```
 
           </TabItem>
 
         <TabItem label="Bun">
         ```bash
-        bun install -g opencode-ai
+        bun install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="pnpm">
         ```bash
-        pnpm install -g opencode-ai
+        pnpm install -g igris-ai
         ```
 
           </TabItem>
 
         <TabItem label="Yarn">
         ```bash
-        yarn global add opencode-ai
+        yarn global add igris-ai
         ```
 
       </TabItem>
@@ -76,16 +76,16 @@ Du kan også installere den med følgende kommandoer:
 - **Bruke Homebrew på macOS og Linux**
 
   ```bash
-  brew install anomalyco/tap/opencode
+  brew install anomalyco/tap/igris
   ```
 
-  > Vi anbefaler å bruke OpenCode-tappen for de mest oppdaterte utgivelsene. Den offisielle `brew install opencode`-formelen vedlikeholdes av Homebrew-teamet og oppdateres sjeldnere.
+  > Vi anbefaler å bruke OpenCode-tappen for de mest oppdaterte utgivelsene. Den offisielle `brew install igris`-formelen vedlikeholdes av Homebrew-teamet og oppdateres sjeldnere.
 
 - **Bruke Paru på Arch Linux**
 
   ```bash
-  sudo pacman -S opencode           # Arch Linux (Stable)
-  paru -S opencode-bin              # Arch Linux (Latest from AUR)
+  sudo pacman -S igris           # Arch Linux (Stable)
+  paru -S igris-bin              # Arch Linux (Latest from AUR)
   ```
 
 #### Windows
@@ -97,36 +97,36 @@ For den beste opplevelsen på Windows anbefaler vi å bruke [Windows Subsystem f
 - **Bruke Chocolatey**
 
   ```bash
-  choco install opencode
+  choco install igris
   ```
 
 - **Bruke Scoop**
 
   ```bash
-  scoop install opencode
+  scoop install igris
   ```
 
 - **Bruke npm**
 
   ```bash
-  npm install -g opencode-ai
+  npm install -g igris-ai
   ```
 
 - **Bruke Mise**
 
   ```bash
-  mise use -g github:anomalyco/opencode
+  mise use -g github:anomalyco/igris
   ```
 
 - **Bruke Docker**
 
   ```bash
-  docker run -it --rm ghcr.io/anomalyco/opencode
+  docker run -it --rm ghcr.io/anomalyco/igris
   ```
 
 Støtte for installasjon av OpenCode på Windows med Bun er under arbeid.
 
-Du kan også hente binæren fra [Releases](https://github.com/anomalyco/opencode/releases).
+Du kan også hente binæren fra [Releases](https://github.com/anomalyco/igris/releases).
 
 ---
 
@@ -137,7 +137,7 @@ Med OpenCode kan du bruke hvilken som helst LLM-leverandør ved å konfigurere d
 Hvis du er ukjent med LLM-leverandører, anbefaler vi å bruke [OpenCode Zen](/docs/zen).
 Det er en kuratert liste over modeller som har blitt testet og verifisert av OpenCode-teamet.
 
-1. Kjør kommandoen `/connect` i TUI, velg OpenCode og gå til [opencode.ai/auth](https://opencode.ai/auth).
+1. Kjør kommandoen `/connect` i TUI, velg OpenCode og gå til [igris.ai/auth](https://igris.ai/auth).
 
    ```txt
    /connect
@@ -170,7 +170,7 @@ cd /path/to/project
 Og kjør OpenCode.
 
 ```bash
-opencode
+igris
 ```
 
 Deretter initialiserer du OpenCode for prosjektet ved å kjøre følgende kommando.
@@ -348,7 +348,7 @@ Dette vil opprette en kobling til den gjeldende samtalen og kopiere den til utkl
 Samtaler deles ikke som standard.
 :::
 
-Her er en [eksempelsamtale](https://opencode.ai/s/4XP1fce5) med OpenCode.
+Her er en [eksempelsamtale](https://igris.ai/s/4XP1fce5) med OpenCode.
 
 ---
 

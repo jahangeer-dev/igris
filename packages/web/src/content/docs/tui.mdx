@@ -10,13 +10,13 @@ OpenCode provides an interactive terminal interface or TUI for working on your p
 Running OpenCode starts the TUI for the current directory.
 
 ```bash
-opencode
+igris
 ```
 
 Or you can start it for a specific working directory.
 
 ```bash
-opencode /path/to/project
+igris /path/to/project
 ```
 
 Once you're in the TUI, you can prompt it with a message.
@@ -357,8 +357,8 @@ You can customize TUI behavior through `tui.json` (or `tui.jsonc`).
 
 ```json title="tui.json"
 {
-  "$schema": "https://opencode.ai/tui.json",
-  "theme": "opencode",
+  "$schema": "https://igris.ai/tui.json",
+  "theme": "igris",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -375,7 +375,7 @@ You can customize TUI behavior through `tui.json` (or `tui.jsonc`).
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "igris.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -383,7 +383,7 @@ You can customize TUI behavior through `tui.json` (or `tui.jsonc`).
 }
 ```
 
-This is separate from `opencode.json`, which configures server/runtime behavior.
+This is separate from `igris.json`, which configures server/runtime behavior.
 
 `keybinds` is merged with built-in defaults, so you only need to configure the shortcuts you want to change.
 
@@ -408,7 +408,7 @@ The TUI can request attention for questions, permissions, session errors, and co
 - `notifications` - Allow terminal-mediated desktop notifications when attention is enabled. Defaults to `true`.
 - `sound` - Allow attention sounds when attention is enabled. Defaults to `true`.
 - `volume` - Default sound volume from `0` to `1`. Defaults to `0.4`.
-- `sound_pack` - Sound pack ID to use. Defaults to `opencode.default`.
+- `sound_pack` - Sound pack ID to use. Defaults to `igris.default`.
 - `sounds` - Override sound files for `default`, `question`, `permission`, `error`, `done`, or `subagent_done`. Paths can be absolute, `file://` URLs, or relative to `tui.json`.
 
 ---

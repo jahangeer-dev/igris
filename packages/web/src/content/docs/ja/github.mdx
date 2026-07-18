@@ -3,7 +3,7 @@ title: GitHub
 description: GitHub の問題とプルリクエストで OpenCode を使用します。
 ---
 
-OpenCode は GitHub ワークフローと統合します。コメントで `/opencode` または `/oc` に言及すると、OpenCode が GitHub Actions ランナー内でタスクを実行します。
+OpenCode は GitHub ワークフローと統合します。コメントで `/igris` または `/oc` に言及すると、OpenCode が GitHub Actions ランナー内でタスクを実行します。
 
 ---
 
@@ -20,7 +20,7 @@ OpenCode は GitHub ワークフローと統合します。コメントで `/ope
 GitHub リポジトリにあるプロジェクトで次のコマンドを実行します。
 
 ```bash
-opencode github install
+igris github install
 ```
 
 ここでは、GitHub アプリのインストール、ワークフローの作成、シークレットの設定について説明します。
@@ -33,14 +33,14 @@ opencode github install
 
 1. **GitHub アプリをインストールします**
 
-[**github.com/apps/opencode-agent**](https://github.com/apps/opencode-agent) にアクセスしてください。ターゲットリポジトリにインストールされていることを確認してください。
+[**github.com/apps/igris-agent**](https://github.com/apps/igris-agent) にアクセスしてください。ターゲットリポジトリにインストールされていることを確認してください。
 
 2. **ワークフローを追加**
 
-次のワークフローファイルをリポジトリの `.github/workflows/opencode.yml` に追加します。適切な `model` と必要な API キーを `env` に設定してください。
+次のワークフローファイルをリポジトリの `.github/workflows/igris.yml` に追加します。適切な `model` と必要な API キーを `env` に設定してください。
 
-```yml title=".github/workflows/opencode.yml" {24,26}
-   name: opencode
+```yml title=".github/workflows/igris.yml" {24,26}
+   name: igris
 
    on:
      issue_comment:
@@ -49,10 +49,10 @@ opencode github install
        types: [created]
 
    jobs:
-     opencode:
+     igris:
        if: |
          contains(github.event.comment.body, '/oc') ||
-         contains(github.event.comment.body, '/opencode')
+         contains(github.event.comment.body, '/igris')
        runs-on: ubuntu-latest
        permissions:
          id-token: write
@@ -64,7 +64,7 @@ opencode github install
               persist-credentials: false
 
           - name: Run OpenCode
-           uses: anomalyco/opencode/github@latest
+           uses: anomalyco/igris/github@latest
            env:
              ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
            with:
@@ -107,8 +107,8 @@ OpenCode は、次の GitHub イベントによってトリガーできます。
 
 | イベントの種類                | トリガー                            | 詳細                                                                                                                                                        |
 | ----------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `issue_comment`               | 問題または PR についてコメントする  | コメントで `/opencode` または `/oc` について言及してください。 OpenCode はコンテキストを読み取り、ブランチを作成したり、PR を開いたり、返信したりできます。 |
-| `pull_request_review_comment` | PR 内の特定のコード行にコメントする | コードをレビューするときに、`/opencode` または `/oc` について言及します。 OpenCode は、ファイルパス、行番号、および diff コンテキストを受け取ります。       |
+| `issue_comment`               | 問題または PR についてコメントする  | コメントで `/igris` または `/oc` について言及してください。 OpenCode はコンテキストを読み取り、ブランチを作成したり、PR を開いたり、返信したりできます。 |
+| `pull_request_review_comment` | PR 内の特定のコード行にコメントする | コードをレビューするときに、`/igris` または `/oc` について言及します。 OpenCode は、ファイルパス、行番号、および diff コンテキストを受け取ります。       |
 | `issues`                      | 問題がオープンまたは編集されました  | 問題が作成または変更されると、OpenCode が自動的にトリガーされます。 `prompt` 入力が必要です。                                                               |
 | `pull_request`                | PR がオープンまたは更新されました   | PR が開かれる、同期される、または再度開かれるときに、OpenCode を自動的にトリガーします。自動レビューに役立ちます。                                          |
 | `schedule`                    | Cron ベースのスケジュール           | スケジュールに従って OpenCode を実行します。 `prompt` 入力が必要です。出力はログと PR に送られます (コメントする問題はありません)。                         |
@@ -118,7 +118,7 @@ OpenCode は、次の GitHub イベントによってトリガーできます。
 
 スケジュールに従って OpenCode を実行し、自動化されたタスクを実行します。
 
-```yaml title=".github/workflows/opencode-scheduled.yml"
+```yaml title=".github/workflows/igris-scheduled.yml"
 name: Scheduled OpenCode Task
 
 on:
@@ -126,7 +126,7 @@ on:
     - cron: "0 9 * * 1" # Every Monday at 9am UTC
 
 jobs:
-  opencode:
+  igris:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -140,7 +140,7 @@ jobs:
           persist-credentials: false
 
       - name: Run OpenCode
-        uses: anomalyco/opencode/github@latest
+        uses: anomalyco/igris/github@latest
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         with:
@@ -158,8 +158,8 @@ jobs:
 
 PR が開かれるか更新されるときに、PR を自動的にレビューします。
 
-```yaml title=".github/workflows/opencode-review.yml"
-name: opencode-review
+```yaml title=".github/workflows/igris-review.yml"
+name: igris-review
 
 on:
   pull_request:
@@ -177,7 +177,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - uses: anomalyco/opencode/github@latest
+      - uses: anomalyco/igris/github@latest
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -199,7 +199,7 @@ jobs:
 
 新しい問題を自動的に優先順位付けします。この例では、スパムを減らすために 30 日より古いアカウントにフィルターを適用します。
 
-```yaml title=".github/workflows/opencode-triage.yml"
+```yaml title=".github/workflows/igris-triage.yml"
 name: Issue Triage
 
 on:
@@ -233,7 +233,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: anomalyco/opencode/github@latest
+      - uses: anomalyco/igris/github@latest
         if: steps.check.outputs.result == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -254,8 +254,8 @@ jobs:
 
 デフォルトのプロンプトをオーバーライドして、ワークフローに合わせて OpenCode の動作をカスタマイズします。
 
-```yaml title=".github/workflows/opencode.yml"
-- uses: anomalyco/opencode/github@latest
+```yaml title=".github/workflows/igris.yml"
+- uses: anomalyco/igris/github@latest
   with:
     model: anthropic/claude-sonnet-4-5
     prompt: |
@@ -278,7 +278,7 @@ GitHub で OpenCode を使用する方法の例をいくつか示します。
 このコメントを GitHub の問題に追加します。
 
 ```
-  /opencode explain this issue
+  /igris explain this issue
 ```
 
 OpenCode は、すべてのコメントを含むスレッド全体を読み取り、明確な説明を返信します。
@@ -288,7 +288,7 @@ OpenCode は、すべてのコメントを含むスレッド全体を読み取�
 GitHub の問題で次のように言います。
 
 ```
-  /opencode fix this
+  /igris fix this
 ```
 
 そして、OpenCode は新しいブランチを作成し、変更を実装し、変更を含む PR を開きます。

@@ -49,14 +49,14 @@ OpenCode は [AI SDK](https://ai-sdk.dev/) および [Models.dev](https://models
 
 これらのいずれかをデフォルトのモデルとして設定するには、`model` キーを OpenCode の設定に追加します。
 
-```json title="opencode.json" {3}
+```json title="igris.json" {3}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "model": "lmstudio/google/gemma-3n-e4b"
 }
 ```
 
-ここでの完全な ID は `provider_id/model_id` です。たとえば、[OpenCode Zen](/docs/zen) を使用している場合、GPT 5.1 Codex には `opencode/gpt-5.1-codex` を使用します。
+ここでの完全な ID は `provider_id/model_id` です。たとえば、[OpenCode Zen](/docs/zen) を使用している場合、GPT 5.1 Codex には `igris/gpt-5.1-codex` を使用します。
 
 [カスタムプロバイダー](/docs/providers#custom) を構成している場合、`provider_id` は構成の `provider` 部分のキーであり、`model_id` は `provider.models` のキーです。
 
@@ -66,9 +66,9 @@ OpenCode は [AI SDK](https://ai-sdk.dev/) および [Models.dev](https://models
 
 config を通じてモデルのオプションをグローバルに設定できます。
 
-```jsonc title="opencode.jsonc" {7-12,19-24}
+```jsonc title="igris.jsonc" {7-12,19-24}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -105,11 +105,11 @@ config を通じてモデルのオプションをグローバルに設定でき�
 
 組み込みバリアントを拡張するカスタムバリアントを定義することもできます。バリアントを使用すると、重複したエントリを作成せずに、同じモデルに対して異なる設定を構成できます。
 
-```jsonc title="opencode.jsonc" {6-21}
+```jsonc title="igris.jsonc" {6-21}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
-    "opencode": {
+    "igris": {
       "models": {
         "gpt-5": {
           "variants": {
@@ -170,9 +170,9 @@ OpenCode には、多くのプロバイダーのデフォルトのバリアン�
 
 既存のバリアントをオーバーライドすることも、独自のバリアントを追加することもできます。
 
-```jsonc title="opencode.jsonc" {7-18}
+```jsonc title="igris.jsonc" {7-18}
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "provider": {
     "openai": {
       "models": {
@@ -207,9 +207,9 @@ OpenCode が起動すると、次の優先順位でモデルがチェックさ�
 
 2. OpenCode 構成内のモデルのリスト。
 
-   ```json title="opencode.json"
+   ```json title="igris.json"
    {
-     "$schema": "https://opencode.ai/config.json",
+     "$schema": "https://igris.ai/config.json",
      "model": "anthropic/claude-sonnet-4-20250514"
    }
    ```

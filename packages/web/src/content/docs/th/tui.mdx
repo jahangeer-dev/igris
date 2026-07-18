@@ -10,13 +10,13 @@ OpenCode มีอินเทอร์เฟซ terminal แบบโต้ต�
 การรัน OpenCode จะเริ่มต้น TUI สำหรับไดเร็กทอรีปัจจุบัน
 
 ```bash
-opencode
+igris
 ```
 
 หรือคุณสามารถเริ่มต้นสำหรับไดเร็กทอรีการทำงานเฉพาะได้
 
 ```bash
-opencode /path/to/project
+igris /path/to/project
 ```
 
 เมื่อคุณอยู่ใน TUI แล้ว คุณสามารถแจ้งด้วยข้อความได้
@@ -359,8 +359,8 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 ```json title="tui.json"
 {
-  "$schema": "https://opencode.ai/tui.json",
-  "theme": "opencode",
+  "$schema": "https://igris.ai/tui.json",
+  "theme": "igris",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -377,7 +377,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "igris.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -385,7 +385,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 }
 ```
 
-สิ่งนี้แยกจาก `opencode.json` ซึ่งกำหนดค่าพฤติกรรมเซิร์ฟเวอร์/รันไทม์
+สิ่งนี้แยกจาก `igris.json` ซึ่งกำหนดค่าพฤติกรรมเซิร์ฟเวอร์/รันไทม์
 
 `keybinds` จะถูกรวมกับค่าเริ่มต้นในตัว ดังนั้นคุณต้องกำหนดค่าเฉพาะ shortcut ที่ต้องการเปลี่ยนเท่านั้น
 
@@ -410,7 +410,7 @@ Attention ช่วยให้ TUI แจ้งเตือนคุณเม�
 - `notifications` - เมื่อเปิด Attention แล้ว อนุญาตให้ TUI ส่ง desktop notifications ผ่าน terminal ค่าเริ่มต้นคือ `true`
 - `sound` - เมื่อเปิด Attention แล้ว อนุญาตให้เล่นเสียงแจ้งเตือน ค่าเริ่มต้นคือ `true`
 - `volume` - ระดับเสียงแจ้งเตือนเริ่มต้นตั้งแต่ `0` ถึง `1` ค่าเริ่มต้นคือ `0.4`
-- `sound_pack` - sound pack ID ที่จะใช้ ค่าเริ่มต้นคือ `opencode.default`
+- `sound_pack` - sound pack ID ที่จะใช้ ค่าเริ่มต้นคือ `igris.default`
 - `sounds` - กำหนด sound files แบบกำหนดเองสำหรับ `default`, `question`, `permission`, `error`, `done` หรือ `subagent_done` Paths สามารถเป็น absolute, `file://` URLs หรือ relative กับ `tui.json`
 
 ---

@@ -15,7 +15,7 @@ ACP est un protocole ouvert qui standardise la communication entre les éditeurs
 
 ## Configuration
 
-Pour utiliser OpenCode via ACP, configurez votre éditeur pour exécuter la commande `opencode acp`.
+Pour utiliser OpenCode via ACP, configurez votre éditeur pour exécuter la commande `igris acp`.
 
 La commande démarre OpenCode en tant que sous-processus compatible ACP qui communique avec votre éditeur via JSON-RPC sur stdio.
 
@@ -31,7 +31,7 @@ Ajoutez à votre configuration [Zed](https://zed.dev) (`~/.config/zed/settings.j
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "opencode",
+      "command": "igris",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ Vous pouvez également associer un raccourci clavier en modifiant votre `keymap.
             "custom": {
               "name": "OpenCode",
               "command": {
-                "command": "opencode",
+                "command": "igris",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ Ajoutez `acp.json` à votre [IDE JetBrains](https://www.jetbrains.com/) conform�
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/igris",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ Ajoutez à votre configuration [Avante.nvim](https://github.com/yetone/avante.nv
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" }
     }
   }
@@ -106,8 +106,8 @@ Si vous devez transmettre des variables d'environnement :
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" },
       env = {
         OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "igris",
         model = "claude-sonnet-4",
       },
     },

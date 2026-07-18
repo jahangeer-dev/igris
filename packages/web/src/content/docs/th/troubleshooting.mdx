@@ -11,21 +11,21 @@ description: ปัญหาทั่วไปและวิธีแก้ป�
 
 ไฟล์บันทึกถูกเขียนไปที่:
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
-- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.local\share\opencode\log`
+- **macOS/Linux**: `~/.local/share/igris/log/`
+- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.local\share\igris\log`
 
 ไฟล์บันทึกจะถูกตั้งชื่อด้วยการประทับเวลา (เช่น `2025-01-09T123456.log`) และไฟล์บันทึกล่าสุด 10 ไฟล์จะถูกเก็บไว้
 
-คุณสามารถตั้งค่าระดับการบันทึกด้วยตัวเลือกบรรทัดคำสั่ง `--log-level` เพื่อรับข้อมูลการแก้ไขข้อบกพร่องโดยละเอียดเพิ่มเติม ตัวอย่างเช่น `opencode --log-level DEBUG`
+คุณสามารถตั้งค่าระดับการบันทึกด้วยตัวเลือกบรรทัดคำสั่ง `--log-level` เพื่อรับข้อมูลการแก้ไขข้อบกพร่องโดยละเอียดเพิ่มเติม ตัวอย่างเช่น `igris --log-level DEBUG`
 
 ---
 
 ## พื้นที่จัดเก็บ
 
-opencode เก็บข้อมูลเซสชันและข้อมูลแอปพลิเคชันอื่น ๆ ไว้บนดิสก์ที่:
+igris เก็บข้อมูลเซสชันและข้อมูลแอปพลิเคชันอื่น ๆ ไว้บนดิสก์ที่:
 
-- **macOS/Linux**: `~/.local/share/opencode/`
-- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.local\share\opencode`
+- **macOS/Linux**: `~/.local/share/igris/`
+- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.local\share\igris`
 
 ไดเรกทอรีนี้ประกอบด้วย:
 
@@ -39,7 +39,7 @@ opencode เก็บข้อมูลเซสชันและข้อม�
 
 ## แอปเดสก์ท็อป
 
-OpenCode Desktop รันเซิร์ฟเวอร์ OpenCode ในเครื่อง (ไฟล์ `opencode-cli` sidecar) ในเบื้องหลัง ปัญหาส่วนใหญ่มีสาเหตุมาจากปลั๊กอินที่ทำงานผิดปกติ แคชเสียหาย หรือการตั้งค่าเซิร์ฟเวอร์ไม่ถูกต้อง
+OpenCode Desktop รันเซิร์ฟเวอร์ OpenCode ในเครื่อง (ไฟล์ `igris-cli` sidecar) ในเบื้องหลัง ปัญหาส่วนใหญ่มีสาเหตุมาจากปลั๊กอินที่ทำงานผิดปกติ แคชเสียหาย หรือการตั้งค่าเซิร์ฟเวอร์ไม่ถูกต้อง
 
 ### การตรวจสอบอย่างรวดเร็ว
 
@@ -57,15 +57,15 @@ OpenCode Desktop รันเซิร์ฟเวอร์ OpenCode ในเ�
 
 เปิดไฟล์กำหนดค่าส่วนกลางของคุณแล้วมองหาคีย์ `plugin`
 
-- **macOS/Linux**: `~/.config/opencode/opencode.jsonc` (หรือ `~/.config/opencode/opencode.json`)
-- **macOS/Linux** (การติดตั้งเก่ากว่า): `~/.local/share/opencode/opencode.jsonc`
-- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.config\opencode\opencode.jsonc`
+- **macOS/Linux**: `~/.config/igris/igris.jsonc` (หรือ `~/.config/igris/igris.json`)
+- **macOS/Linux** (การติดตั้งเก่ากว่า): `~/.local/share/igris/igris.jsonc`
+- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.config\igris\igris.jsonc`
 
 หากคุณได้กำหนดค่าปลั๊กอินไว้ ให้ปิดการใช้งานชั่วคราวโดยลบคีย์ออกหรือตั้งค่าเป็นอาร์เรย์ว่าง:
 
 ```jsonc
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://igris.ai/config.json",
   "plugin": [],
 }
 ```
@@ -75,10 +75,10 @@ OpenCode Desktop รันเซิร์ฟเวอร์ OpenCode ในเ�
 OpenCode ยังสามารถโหลดปลั๊กอินในเครื่องจากดิสก์ได้ ย้ายสิ่งเหล่านี้ออกไปชั่วคราว (หรือเปลี่ยนชื่อโฟลเดอร์) และรีสตาร์ทแอปเดสก์ท็อป:
 
 - **ปลั๊กอินสากล**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
-  - **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.config\opencode\plugins`
+  - **macOS/Linux**: `~/.config/igris/plugins/`
+  - **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.config\igris\plugins`
 - **ปลั๊กอินโครงการ** (เฉพาะในกรณีที่คุณใช้การกำหนดค่าต่อโครงการ)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.igris/plugins/`
 
 หากแอปเริ่มทำงานอีกครั้ง ให้เปิดใช้งานปลั๊กอินอีกครั้งทีละรายการเพื่อดูว่าปลั๊กอินใดเป็นสาเหตุของปัญหา
 
@@ -91,9 +91,9 @@ OpenCode ยังสามารถโหลดปลั๊กอินใน�
 1. ออกจาก OpenCode Desktop โดยสมบูรณ์
 2. ลบไดเรกทอรีแคช:
 
-- **macOS**: ตัวค้นหา -> `Cmd+Shift+G` -> วาง `~/.cache/opencode`
-- **Linux**: ลบ `~/.cache/opencode` (หรือรัน `rm -rf ~/.cache/opencode`)
-- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.cache\opencode`
+- **macOS**: ตัวค้นหา -> `Cmd+Shift+G` -> วาง `~/.cache/igris`
+- **Linux**: ลบ `~/.cache/igris` (หรือรัน `rm -rf ~/.cache/igris`)
+- **Windows**: กด `WIN+R` แล้ววาง `%USERPROFILE%\.cache\igris`
 
 3. รีสตาร์ทเดสก์ท็อป OpenCode
 
@@ -111,7 +111,7 @@ OpenCode Desktop สามารถเริ่มต้นเซิร์ฟเ
 
 #### ลบ `server.port` / `server.hostname` ออกจากการกำหนดค่าของคุณ
 
-หาก `opencode.json(c)` ของคุณมีส่วน `server` ให้ลบออกชั่วคราวแล้วรีสตาร์ทแอปเดสก์ท็อป
+หาก `igris.json(c)` ของคุณมีส่วน `server` ให้ลบออกชั่วคราวแล้วรีสตาร์ทแอปเดสก์ท็อป
 
 #### ตรวจสอบตัวแปรสภาพแวดล้อม
 
@@ -158,8 +158,8 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 1. ออกจากเดสก์ท็อป OpenCode
 2. ค้นหาและลบไฟล์เหล่านี้ (อยู่ในไดเร็กทอรีข้อมูลแอป OpenCode Desktop):
 
-- `opencode.settings.dat` (เซิร์ฟเวอร์เริ่มต้นของเดสก์ท็อป URL)
-- `opencode.global.dat` และ `opencode.workspace.*.dat` (สถานะ UI เช่น เซิร์ฟเวอร์ล่าสุด/projects)
+- `igris.settings.dat` (เซิร์ฟเวอร์เริ่มต้นของเดสก์ท็อป URL)
+- `igris.global.dat` และ `igris.workspace.*.dat` (สถานะ UI เช่น เซิร์ฟเวอร์ล่าสุด/projects)
 
 หากต้องการค้นหาไดเร็กทอรีอย่างรวดเร็ว:
 
@@ -177,7 +177,7 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 
    วิธีที่ดีที่สุดในการรายงานจุดบกพร่องหรือขอคุณสมบัติคือผ่านพื้นที่เก็บข้อมูล GitHub ของเรา:
 
-   [**github.com/anomalyco/opencode/issues**](https://github.com/anomalyco/opencode/issues)
+   [**github.com/anomalyco/igris/issues**](https://github.com/anomalyco/igris/issues)
 
    ก่อนที่จะสร้างปัญหาใหม่ ให้ค้นหาปัญหาที่มีอยู่เพื่อดูว่าปัญหาของคุณได้รับการรายงานแล้วหรือไม่
 
@@ -185,7 +185,7 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 
    สำหรับความช่วยเหลือแบบเรียลไทม์และการสนทนาในชุมชน เข้าร่วมเซิร์ฟเวอร์ Discord ของเรา:
 
-   [**opencode.ai/discord**](https://opencode.ai/discord)
+   [**igris.ai/discord**](https://igris.ai/discord)
 
 ---
 
@@ -199,7 +199,7 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 
 1. ตรวจสอบบันทึกเพื่อดูข้อความแสดงข้อผิดพลาด
 2. ลองรันด้วย `--print-logs` เพื่อดูเอาต์พุตใน terminal
-3. ตรวจสอบให้แน่ใจว่าคุณมีเวอร์ชันล่าสุดด้วย `opencode upgrade`
+3. ตรวจสอบให้แน่ใจว่าคุณมีเวอร์ชันล่าสุดด้วย `igris upgrade`
 
 ---
 
@@ -225,9 +225,9 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 
 - `openai/gpt-4.1`
 - `openrouter/google/gemini-2.5-flash`
-- `opencode/kimi-k2`
+- `igris/kimi-k2`
 
-หากต้องการทราบว่าคุณมีสิทธิ์เข้าถึงรุ่นใด ให้เรียกใช้ `opencode models`
+หากต้องการทราบว่าคุณมีสิทธิ์เข้าถึงรุ่นใด ให้เรียกใช้ `igris models`
 
 ---
 
@@ -241,10 +241,10 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 2. หากปัญหายังคงอยู่ ให้ลองล้างการกำหนดค่าที่เก็บไว้:
 
    ```bash
-   rm -rf ~/.local/share/opencode
+   rm -rf ~/.local/share/igris
    ```
 
-   บน Windows กด `WIN+R` และลบ: `%USERPROFILE%\.local\share\opencode`
+   บน Windows กด `WIN+R` และลบ: `%USERPROFILE%\.local\share\igris`
 
 3. ตรวจสอบความถูกต้องอีกครั้งกับผู้ให้บริการของคุณโดยใช้คำสั่ง `/connect` ใน TUI
 
@@ -252,21 +252,21 @@ OpenCode Desktop จะแสดงการแจ้งเตือนของ
 
 ### AI_APICallError และปัญหาแพ็คเกจผู้ให้บริการ
 
-หากคุณพบข้อผิดพลาดในการโทร API อาจเนื่องมาจากแพ็คเกจผู้ให้บริการที่ล้าสมัย opencode จะติดตั้งแพ็คเกจของผู้ให้บริการแบบไดนามิก (OpenAI, Anthropic, Google ฯลฯ) ตามความจำเป็น และแคชไว้ในเครื่อง
+หากคุณพบข้อผิดพลาดในการโทร API อาจเนื่องมาจากแพ็คเกจผู้ให้บริการที่ล้าสมัย igris จะติดตั้งแพ็คเกจของผู้ให้บริการแบบไดนามิก (OpenAI, Anthropic, Google ฯลฯ) ตามความจำเป็น และแคชไว้ในเครื่อง
 
 ในการแก้ไขปัญหาแพ็คเกจผู้ให้บริการ:
 
 1. ล้างแคชแพ็คเกจผู้ให้บริการ:
 
    ```bash
-   rm -rf ~/.cache/opencode
+   rm -rf ~/.cache/igris
    ```
 
-   บน Windows กด `WIN+R` และลบ: `%USERPROFILE%\.cache\opencode`
+   บน Windows กด `WIN+R` และลบ: `%USERPROFILE%\.cache\igris`
 
-2. รีสตาร์ท opencode เพื่อติดตั้งแพ็คเกจผู้ให้บริการล่าสุดอีกครั้ง
+2. รีสตาร์ท igris เพื่อติดตั้งแพ็คเกจผู้ให้บริการล่าสุดอีกครั้ง
 
-การดำเนินการนี้จะบังคับให้ opencode ดาวน์โหลดแพ็คเกจผู้ให้บริการเวอร์ชันล่าสุด ซึ่งมักจะแก้ไขปัญหาความเข้ากันได้กับพารามิเตอร์โมเดลและการเปลี่ยนแปลง API
+การดำเนินการนี้จะบังคับให้ igris ดาวน์โหลดแพ็คเกจผู้ให้บริการเวอร์ชันล่าสุด ซึ่งมักจะแก้ไขปัญหาความเข้ากันได้กับพารามิเตอร์โมเดลและการเปลี่ยนแปลง API
 
 ---
 
@@ -297,4 +297,4 @@ Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 export DISPLAY=:99.0
 ```
 
-opencode จะตรวจพบว่าคุณใช้ Wayland และชอบ `wl-clipboard` หรือไม่เช่นนั้นจะพยายามค้นหาเครื่องมือคลิปบอร์ดตามลำดับ: `xclip` และ `xsel`
+igris จะตรวจพบว่าคุณใช้ Wayland และชอบ `wl-clipboard` หรือไม่เช่นนั้นจะพยายามค้นหาเครื่องมือคลิปบอร์ดตามลำดับ: `xclip` และ `xsel`

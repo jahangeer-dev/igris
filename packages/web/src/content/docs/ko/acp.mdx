@@ -15,7 +15,7 @@ ACP는 코드 편집기와 AI 코딩 에이전트 간의 통신을 표준화하�
 
 ## 구성
 
-ACP로 OpenCode를 사용하려면, 편집기에서 `opencode acp` 명령을 실행하도록 config를 설정하세요.
+ACP로 OpenCode를 사용하려면, 편집기에서 `igris acp` 명령을 실행하도록 config를 설정하세요.
 
 이 명령은 OpenCode를 ACP 호환 subprocess로 시작하며, stdio 기반 JSON-RPC를 통해 편집기와 통신합니다.
 
@@ -31,7 +31,7 @@ ACP로 OpenCode를 사용하려면, 편집기에서 `opencode acp` 명령을 실
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "opencode",
+      "command": "igris",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ ACP로 OpenCode를 사용하려면, 편집기에서 `opencode acp` 명령을 실
             "custom": {
               "name": "OpenCode",
               "command": {
-                "command": "opencode",
+                "command": "igris",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ ACP로 OpenCode를 사용하려면, 편집기에서 `opencode acp` 명령을 실
 {
   "agent_servers": {
     "OpenCode": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/igris",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ ACP로 OpenCode를 사용하려면, 편집기에서 `opencode acp` 명령을 실
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" }
     }
   }
@@ -106,8 +106,8 @@ ACP로 OpenCode를 사용하려면, 편집기에서 `opencode acp` 명령을 실
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["igris"] = {
+      command = "igris",
       args = { "acp" },
       env = {
         OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "igris",
         model = "claude-sonnet-4",
       },
     },
