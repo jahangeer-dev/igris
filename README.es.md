@@ -3,7 +3,7 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Igris logo">
     </picture>
   </a>
 </p>
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://igris.ai)
+[![Igris Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://igris.ai)
 
 ---
 
@@ -66,7 +66,7 @@ nix run nixpkgs#igris           # o github:anomalyco/igris para la rama dev más
 
 ### App de escritorio (BETA)
 
-OpenCode también está disponible como aplicación de escritorio. Descárgala directamente desde la [página de releases](https://github.com/anomalyco/igris/releases) o desde [igris.ai/download](https://igris.ai/download).
+Igris también está disponible como aplicación de escritorio. Descárgala directamente desde la [página de releases](https://github.com/anomalyco/igris/releases) o desde [igris.ai/download](https://igris.ai/download).
 
 | Plataforma            | Descarga                           |
 | --------------------- | ---------------------------------- |
@@ -86,20 +86,20 @@ scoop bucket add extras; scoop install extras/igris-desktop
 
 El script de instalación respeta el siguiente orden de prioridad para la ruta de instalación:
 
-1. `$OPENCODE_INSTALL_DIR` - Directorio de instalación personalizado
+1. `$IGRIS_INSTALL_DIR` - Directorio de instalación personalizado
 2. `$XDG_BIN_DIR` - Ruta compatible con la especificación XDG Base Directory
 3. `$HOME/bin` - Directorio binario estándar del usuario (si existe o se puede crear)
 4. `$HOME/.igris/bin` - Alternativa por defecto
 
 ```bash
 # Ejemplos
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://igris.ai/install | bash
+IGRIS_INSTALL_DIR=/usr/local/bin curl -fsSL https://igris.ai/install | bash
 XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://igris.ai/install | bash
 ```
 
 ### Agentes
 
-OpenCode incluye dos agentes integrados que puedes alternar con la tecla `Tab`.
+Igris incluye dos agentes integrados que puedes alternar con la tecla `Tab`.
 
 - **build** - Por defecto, agente con acceso completo para tareas de desarrollo
 - **plan** - Agente de solo lectura para análisis y exploración de código
@@ -114,15 +114,15 @@ Más información sobre [agentes](https://igris.ai/docs/agents).
 
 ### Documentación
 
-Para más información sobre cómo configurar OpenCode, [**ve a nuestra documentación**](https://igris.ai/docs).
+Para más información sobre cómo configurar Igris, [**ve a nuestra documentación**](https://igris.ai/docs).
 
 ### Contribuir
 
-Si te interesa contribuir a OpenCode, lee nuestras [docs de contribución](./CONTRIBUTING.md) antes de enviar un pull request.
+Si te interesa contribuir a Igris, lee nuestras [docs de contribución](./CONTRIBUTING.md) antes de enviar un pull request.
 
-### Proyectos basados en OpenCode
+### Proyectos basados en Igris
 
-Si estás trabajando en un proyecto basado en OpenCode y usas "igris" como parte del nombre, por ejemplo, "igris-dashboard" u "igris-mobile", agrega una nota en tu README para aclarar que no está hecho por el equipo de OpenCode y que no está afiliado con nosotros de ninguna manera.
+Si estás trabajando en un proyecto basado en Igris y usas "igris" como parte del nombre, por ejemplo, "igris-dashboard" u "igris-mobile", agrega una nota en tu README para aclarar que no está hecho por el equipo de Igris y que no está afiliado con nosotros de ninguna manera.
 
 ---
 

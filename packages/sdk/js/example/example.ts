@@ -1,8 +1,8 @@
-import { createOpencodeClient, createOpencodeServer } from "@igris-ai/sdk"
+import { createIgrisClient, createIgrisServer } from "@igris-ai/sdk"
 import { pathToFileURL } from "bun"
 
-const server = await createOpencodeServer()
-const client = createOpencodeClient({ baseUrl: server.url })
+const server = await createIgrisServer()
+const client = createIgrisClient({ baseUrl: server.url })
 
 const input = await Array.fromAsync(new Bun.Glob("packages/core/*.ts").scan())
 

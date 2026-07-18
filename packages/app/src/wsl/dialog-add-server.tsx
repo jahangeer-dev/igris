@@ -339,7 +339,7 @@ function useWslAddServerController(props: DialogWslServerProps) {
     const action = button.action
     if (!distro || !action) return
     if (action === "install-igris") {
-      await run(() => api.installOpencode(distro))
+      await run(() => api.installIgris(distro))
       return
     }
     setStore("adding", true)

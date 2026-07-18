@@ -1,9 +1,9 @@
 import { base64Encode } from "@igris-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { mockIgrisServer } from "../utils/mock-server"
 import { expectSessionTitle } from "../utils/waits"
 
-const directory = "C:/OpenCode/TerminalTabSwitch"
+const directory = "C:/Igris/TerminalTabSwitch"
 const projectID = "proj_terminal_tab_switch"
 const sessionA = "ses_terminal_tab_a"
 const sessionB = "ses_terminal_tab_b"
@@ -61,7 +61,7 @@ async function readProbe(page: Page) {
 }
 
 async function setup(page: Page) {
-  await mockOpenCodeServer(page, {
+  await mockIgrisServer(page, {
     directory,
     project: {
       id: projectID,
@@ -75,7 +75,7 @@ async function setup(page: Page) {
       all: [
         {
           id: "igris",
-          name: "OpenCode",
+          name: "Igris",
           models: { test: { id: "test", name: "Test", limit: { context: 200_000 } } },
         },
       ],

@@ -40,7 +40,7 @@ function oauth(http: HttpClient.HttpClient) {
     method: {
       id: methodID,
       type: "oauth",
-      label: "OpenCode Console account",
+      label: "Igris Console account",
     },
     authorize: () =>
       Effect.gen(function* () {
@@ -74,7 +74,7 @@ function oauth(http: HttpClient.HttpClient) {
   } satisfies IntegrationOAuthMethodRegistration
 }
 
-export const OpencodePlugin = define<HttpClient.HttpClient | EventV2.Service | Scope.Scope>({
+export const IgrisPlugin = define<HttpClient.HttpClient | EventV2.Service | Scope.Scope>({
   id: "igris",
   effect: Effect.fn(function* (ctx) {
     const events = yield* EventV2.Service
@@ -83,7 +83,7 @@ export const OpencodePlugin = define<HttpClient.HttpClient | EventV2.Service | S
     let connected = false
     let providers: typeof ConfigV1.Info.Type.provider | undefined
 
-    const load = Effect.fn("OpencodePlugin.load")(function* () {
+    const load = Effect.fn("IgrisPlugin.load")(function* () {
       const connection = yield* ctx.integration.connection.active("igris")
       const credential = connection
         ? yield* ctx.integration.connection.resolve(connection).pipe(Effect.catch(() => Effect.succeed(undefined)))
@@ -92,7 +92,7 @@ export const OpencodePlugin = define<HttpClient.HttpClient | EventV2.Service | S
       providers = credential
         ? yield* fetchProviders(http, credential).pipe(
             Effect.catch((cause) =>
-              Effect.logWarning("failed to load OpenCode provider config", { cause }).pipe(Effect.as(undefined)),
+              Effect.logWarning("failed to load Igris provider config", { cause }).pipe(Effect.as(undefined)),
             ),
           )
         : undefined
@@ -100,7 +100,7 @@ export const OpencodePlugin = define<HttpClient.HttpClient | EventV2.Service | S
 
     yield* ctx.integration.transform((draft) => {
       draft.update("igris", (integration) => {
-        integration.name = "OpenCode"
+        integration.name = "Igris"
       })
       draft.method.update(oauth(http))
       draft.method.update({ integrationID: "igris", method: { type: "key", label: "API key (service account)" } })
@@ -164,7 +164,7 @@ export const OpencodePlugin = define<HttpClient.HttpClient | EventV2.Service | S
 
       const item = catalog.provider.get(ProviderV2.ID.igris)
       if (!item) return
-      const hasKey = Boolean(process.env.OPENCODE_API_KEY || connected || item.provider.request.body.apiKey)
+      const hasKey = Boolean(process.env.IGRIS_API_KEY || connected || item.provider.request.body.apiKey)
       catalog.provider.update(item.provider.id, (provider) => {
         if (!hasKey) provider.request.body.apiKey = "public"
       })

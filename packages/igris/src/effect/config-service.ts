@@ -30,8 +30,8 @@ export type ServiceClass<Self, Id extends string, Service> = Context.ServiceClas
  * class ServerAuthConfig extends ConfigService.Service<ServerAuthConfig>()(
  *   "@igris/ServerAuthConfig",
  *   {
- *     password: Config.string("OPENCODE_SERVER_PASSWORD").pipe(Config.option),
- *     username: Config.string("OPENCODE_SERVER_USERNAME").pipe(Config.withDefault("igris")),
+ *     password: Config.string("IGRIS_SERVER_PASSWORD").pipe(Config.option),
+ *     username: Config.string("IGRIS_SERVER_USERNAME").pipe(Config.withDefault("igris")),
  *   },
  * ) {}
  *

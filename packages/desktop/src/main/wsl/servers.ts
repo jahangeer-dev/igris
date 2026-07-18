@@ -3,7 +3,7 @@ import type {
   WslInstalledDistro,
   WslJob,
   WslOnlineDistro,
-  WslOpencodeCheck,
+  WslIgrisCheck,
   WslRuntimeCheck,
   WslServerConfig,
   WslServerItem,
@@ -13,11 +13,11 @@ import type {
 } from "../../preload/types"
 import { WSL_SERVERS_KEY } from "../store-keys"
 import { getStore } from "../store"
-import { expectOpencodeVersion, pendingRestartAfterWslInstall, wslServerIdsToStartOnInitialize } from "./startup"
+import { expectIgrisVersion, pendingRestartAfterWslInstall, wslServerIdsToStartOnInitialize } from "./startup"
 import { clearWslDistroState, wslServerIdToRestart } from "./policy"
 import {
   installWslDistro,
-  installWslOpencode,
+  installWslIgris,
   installWslRuntimeElevated,
   listInstalledWslDistros,
   listOnlineWslDistros,
@@ -25,7 +25,7 @@ import {
   probeWslDistro,
   probeWslRuntime,
   readWslCommandVersion,
-  resolveWslOpencode,
+  resolveWslIgris,
   summarize,
 } from "./runtime"
 
@@ -48,7 +48,7 @@ type WslServersControllerOptions = {
   readServers?: () => WslServerConfig[]
   writeServers?: (servers: WslServerConfig[]) => void
   probeDistro?: typeof probeWslDistro
-  resolveOpencode?: typeof resolveWslOpencode
+  resolveIgris?: typeof resolveWslIgris
   readCommandVersion?: typeof readWslCommandVersion
 }
 
@@ -121,7 +121,7 @@ export function createWslServersController(
     updateServer(id, (item) => ({ ...item, runtime }))
   }
 
-  const setOpencodeCheck = (distro: string, check: WslOpencodeCheck) => {
+  const setIgrisCheck = (distro: string, check: WslIgrisCheck) => {
     setState({
       igrisChecks: {
         ...state.igrisChecks,
@@ -130,16 +130,16 @@ export function createWslServersController(
     })
   }
 
-  const checkOpencode = async (distro: string, opts?: { signal?: AbortSignal }) => {
-    const resolved = await (options?.resolveOpencode ?? resolveWslOpencode)(distro, opts)
+  const checkIgris = async (distro: string, opts?: { signal?: AbortSignal }) => {
+    const resolved = await (options?.resolveIgris ?? resolveWslIgris)(distro, opts)
     const version = resolved
       ? await (options?.readCommandVersion ?? readWslCommandVersion)(resolved, distro, opts)
       : null
     return igrisCheck(distro, resolved, version, appVersion)
   }
 
-  const refreshOpencodeCheck = async (distro: string, opts?: { signal?: AbortSignal }) => {
-    setOpencodeCheck(distro, await checkOpencode(distro, opts))
+  const refreshIgrisCheck = async (distro: string, opts?: { signal?: AbortSignal }) => {
+    setIgrisCheck(distro, await checkIgris(distro, opts))
   }
 
   const probeAddableDistros = async (distros: string[], opts?: { signal?: AbortSignal }) => {
@@ -157,7 +157,7 @@ export function createWslServersController(
       unique
         .filter((distro) => distroProbeReady(state.distroProbes[distro]))
         .filter((distro) => !state.igrisChecks[distro])
-        .map(async (distro) => [distro, await checkOpencode(distro, opts)] as const),
+        .map(async (distro) => [distro, await checkIgris(distro, opts)] as const),
     )
     if (igrisChecks.length) {
       setState({ igrisChecks: { ...state.igrisChecks, ...Object.fromEntries(igrisChecks) } })
@@ -168,11 +168,11 @@ export function createWslServersController(
     return state.servers.some((item) => item.config.id === id && item.config.distro === distro)
   }
 
-  const refreshOpencodeCheckBackground = (id: string, distro: string) => {
-    void checkOpencode(distro)
+  const refreshIgrisCheckBackground = (id: string, distro: string) => {
+    void checkIgris(distro)
       .then((check) => {
         if (!hasServer(id, distro)) return
-        setOpencodeCheck(distro, check)
+        setIgrisCheck(distro, check)
       })
       .catch((error) => {
         const message = error instanceof Error ? error.message : String(error)
@@ -180,13 +180,13 @@ export function createWslServersController(
       })
   }
 
-  const refreshOpencodeChecks = async () => {
+  const refreshIgrisChecks = async () => {
     await Promise.all(
       state.servers.map((item) =>
-        checkOpencode(item.config.distro)
+        checkIgris(item.config.distro)
           .then((check) => {
             if (!hasServer(item.config.id, item.config.distro)) return
-            setOpencodeCheck(item.config.distro, check)
+            setIgrisCheck(item.config.distro, check)
           })
           .catch((error) => {
             const message = error instanceof Error ? error.message : String(error)
@@ -251,7 +251,7 @@ export function createWslServersController(
         setRuntime(id, { kind: "failed", message })
         logger?.error("wsl sidecar exited", { id, distro: item.config.distro, code, signal })
       })
-      refreshOpencodeCheckBackground(id, item.config.distro)
+      refreshIgrisCheckBackground(id, item.config.distro)
       logger?.log("wsl sidecar ready", { id, distro: item.config.distro, url: sidecar.url })
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)
@@ -303,7 +303,7 @@ export function createWslServersController(
 
     async initialize() {
       refreshFromStore()
-      void refreshOpencodeChecks()
+      void refreshIgrisChecks()
       for (const id of wslServerIdsToStartOnInitialize(state.servers.map((item) => item.config))) void startServer(id)
     },
 
@@ -358,14 +358,14 @@ export function createWslServersController(
       })
     },
 
-    async installOpencode(name: string) {
+    async installIgris(name: string) {
       await runJob({ kind: "install-igris", distro: name, startedAt: Date.now() }, async (abort) => {
-        const result = await installWslOpencode(appVersion, name, { signal: abort.signal })
+        const result = await installWslIgris(appVersion, name, { signal: abort.signal })
         if (result.code !== 0) {
-          throw new Error(summarize(result.stderr || result.stdout) || "OpenCode installation failed")
+          throw new Error(summarize(result.stderr || result.stdout) || "Igris installation failed")
         }
-        await refreshOpencodeCheck(name, { signal: abort.signal })
-        expectOpencodeVersion(state.igrisChecks[name]?.version ?? null, appVersion, name)
+        await refreshIgrisCheck(name, { signal: abort.signal })
+        expectIgrisVersion(state.igrisChecks[name]?.version ?? null, appVersion, name)
         const id = wslServerIdToRestart(state.servers, name)
         if (id) await startServer(id)
       })
@@ -467,7 +467,7 @@ function igrisCheck(
   resolvedPath: string | null,
   version: string | null,
   expectedVersion: string,
-): WslOpencodeCheck {
+): WslIgrisCheck {
   if (!resolvedPath) {
     return {
       distro,
@@ -512,7 +512,7 @@ export type {
   WslOnlineDistro,
   WslRuntimeCheck,
   WslDistroProbe,
-  WslOpencodeCheck,
+  WslIgrisCheck,
   WslServerConfig,
   WslServerItem,
   WslServerRuntime,

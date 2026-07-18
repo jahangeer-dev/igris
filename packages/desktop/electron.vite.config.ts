@@ -3,12 +3,12 @@ import { defineConfig } from "electron-vite"
 import appPlugin from "@igris-ai/app/vite"
 import * as fs from "node:fs/promises"
 
-const OPENCODE_SERVER_DIST = "../igris/dist/node"
+const IGRIS_SERVER_DIST = "../igris/dist/node"
 
 const channel = (() => {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.IGRIS_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
-  if (process.env.OPENCODE_CHANNEL === "latest") return "prod"
+  if (process.env.IGRIS_CHANNEL === "latest") return "prod"
   return "dev"
 })()
 
@@ -34,7 +34,7 @@ const sentry =
 export default defineConfig({
   main: {
     define: {
-      "import.meta.env.OPENCODE_CHANNEL": JSON.stringify(channel),
+      "import.meta.env.IGRIS_CHANNEL": JSON.stringify(channel),
     },
     build: {
       rollupOptions: {
@@ -65,15 +65,15 @@ const require = __cjs_mod__.createRequire(import.meta.url);
         name: "igris:virtual-server-module",
         enforce: "pre",
         resolveId(id) {
-          if (id === "virtual:igris-server") return this.resolve(`${OPENCODE_SERVER_DIST}/node.js`)
+          if (id === "virtual:igris-server") return this.resolve(`${IGRIS_SERVER_DIST}/node.js`)
         },
       },
       {
         name: "igris:copy-server-assets",
         async writeBundle() {
-          for (const l of await fs.readdir(OPENCODE_SERVER_DIST)) {
+          for (const l of await fs.readdir(IGRIS_SERVER_DIST)) {
             if (!l.endsWith(".wasm")) continue
-            await fs.writeFile(`./out/main/chunks/${l}`, await fs.readFile(`${OPENCODE_SERVER_DIST}/${l}`))
+            await fs.writeFile(`./out/main/chunks/${l}`, await fs.readFile(`${IGRIS_SERVER_DIST}/${l}`))
           }
         },
       },

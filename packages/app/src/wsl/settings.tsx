@@ -15,7 +15,7 @@ import { ServerConnection } from "@/context/server"
 import { showToast } from "@/utils/toast"
 import { DialogAddWslServer } from "./dialog-add-server"
 import { useWslServers } from "./context"
-import { wslOpencodeAction, wslRuntimeRetryable } from "./settings-model"
+import { wslIgrisAction, wslRuntimeRetryable } from "./settings-model"
 
 type Controller = ReturnType<typeof useServerManagementController>
 
@@ -95,7 +95,7 @@ export function WslServerSettings(props: {
         {(item) => {
           const key = ServerConnection.Key.make(item.config.id)
           const check = () => wsl.data?.igrisChecks[item.config.distro]
-          const igrisAction = () => wslOpencodeAction(check())
+          const igrisAction = () => wslIgrisAction(check())
           const busy = () => wsl.data?.job?.kind === "install-igris" && wsl.data.job.distro === item.config.distro
           return (
             <div class="settings-v2-servers-row">
@@ -122,7 +122,7 @@ export function WslServerSettings(props: {
                     <ButtonV2
                       size="small"
                       disabled={busy() || request.isPending}
-                      onClick={() => api && request.mutate(() => api.installOpencode(item.config.distro))}
+                      onClick={() => api && request.mutate(() => api.installIgris(item.config.distro))}
                     >
                       {busy() ? language.t("wsl.server.updating") : label()}
                     </ButtonV2>

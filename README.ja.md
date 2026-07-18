@@ -3,7 +3,7 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Igris logo">
     </picture>
   </a>
 </p>
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://igris.ai)
+[![Igris Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://igris.ai)
 
 ---
 
@@ -66,7 +66,7 @@ nix run nixpkgs#igris           # または github:anomalyco/igris で最新 dev
 
 ### デスクトップアプリ (BETA)
 
-OpenCode はデスクトップアプリとしても利用できます。[releases page](https://github.com/anomalyco/igris/releases) から直接ダウンロードするか、[igris.ai/download](https://igris.ai/download) を利用してください。
+Igris はデスクトップアプリとしても利用できます。[releases page](https://github.com/anomalyco/igris/releases) から直接ダウンロードするか、[igris.ai/download](https://igris.ai/download) を利用してください。
 
 | プラットフォーム      | ダウンロード                       |
 | --------------------- | ---------------------------------- |
@@ -86,20 +86,20 @@ scoop bucket add extras; scoop install extras/igris-desktop
 
 インストールスクリプトは、インストール先パスを次の優先順位で決定します。
 
-1. `$OPENCODE_INSTALL_DIR` - カスタムのインストールディレクトリ
+1. `$IGRIS_INSTALL_DIR` - カスタムのインストールディレクトリ
 2. `$XDG_BIN_DIR` - XDG Base Directory Specification に準拠したパス
 3. `$HOME/bin` - 標準のユーザー用バイナリディレクトリ（存在する場合、または作成できる場合）
 4. `$HOME/.igris/bin` - デフォルトのフォールバック
 
 ```bash
 # 例
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://igris.ai/install | bash
+IGRIS_INSTALL_DIR=/usr/local/bin curl -fsSL https://igris.ai/install | bash
 XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://igris.ai/install | bash
 ```
 
 ### Agents
 
-OpenCode には組み込みの Agent が2つあり、`Tab` キーで切り替えられます。
+Igris には組み込みの Agent が2つあり、`Tab` キーで切り替えられます。
 
 - **build** - デフォルト。開発向けのフルアクセス Agent
 - **plan** - 分析とコード探索向けの読み取り専用 Agent
@@ -114,15 +114,15 @@ OpenCode には組み込みの Agent が2つあり、`Tab` キーで切り替え
 
 ### ドキュメント
 
-OpenCode の設定については [**ドキュメント**](https://igris.ai/docs) を参照してください。
+Igris の設定については [**ドキュメント**](https://igris.ai/docs) を参照してください。
 
 ### コントリビュート
 
-OpenCode に貢献したい場合は、Pull Request を送る前に [contributing docs](./CONTRIBUTING.md) を読んでください。
+Igris に貢献したい場合は、Pull Request を送る前に [contributing docs](./CONTRIBUTING.md) を読んでください。
 
-### OpenCode の上に構築する
+### Igris の上に構築する
 
-OpenCode に関連するプロジェクトで、名前に "igris"（例: "igris-dashboard" や "igris-mobile"）を含める場合は、そのプロジェクトが OpenCode チームによって作られたものではなく、いかなる形でも関係がないことを README に明記してください。
+Igris に関連するプロジェクトで、名前に "igris"（例: "igris-dashboard" や "igris-mobile"）を含める場合は、そのプロジェクトが Igris チームによって作られたものではなく、いかなる形でも関係がないことを README に明記してください。
 
 ---
 

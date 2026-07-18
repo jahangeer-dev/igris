@@ -3,7 +3,7 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Igris logo">
     </picture>
   </a>
 </p>
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://igris.ai)
+[![Igris Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://igris.ai)
 
 ---
 
@@ -66,7 +66,7 @@ nix run nixpkgs#igris           # 또는 github:anomalyco/igris 로 최신 dev �
 
 ### 데스크톱 앱 (BETA)
 
-OpenCode 는 데스크톱 앱으로도 제공됩니다. [releases page](https://github.com/anomalyco/igris/releases) 에서 직접 다운로드하거나 [igris.ai/download](https://igris.ai/download) 를 이용하세요.
+Igris 는 데스크톱 앱으로도 제공됩니다. [releases page](https://github.com/anomalyco/igris/releases) 에서 직접 다운로드하거나 [igris.ai/download](https://igris.ai/download) 를 이용하세요.
 
 | 플랫폼                | 다운로드                           |
 | --------------------- | ---------------------------------- |
@@ -86,20 +86,20 @@ scoop bucket add extras; scoop install extras/igris-desktop
 
 설치 스크립트는 설치 경로를 다음 우선순위로 결정합니다.
 
-1. `$OPENCODE_INSTALL_DIR` - 사용자 지정 설치 디렉터리
+1. `$IGRIS_INSTALL_DIR` - 사용자 지정 설치 디렉터리
 2. `$XDG_BIN_DIR` - XDG Base Directory Specification 준수 경로
 3. `$HOME/bin` - 표준 사용자 바이너리 디렉터리 (존재하거나 생성 가능할 경우)
 4. `$HOME/.igris/bin` - 기본 폴백
 
 ```bash
 # 예시
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://igris.ai/install | bash
+IGRIS_INSTALL_DIR=/usr/local/bin curl -fsSL https://igris.ai/install | bash
 XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://igris.ai/install | bash
 ```
 
 ### Agents
 
-OpenCode 에는 내장 에이전트 2개가 있으며 `Tab` 키로 전환할 수 있습니다.
+Igris 에는 내장 에이전트 2개가 있으며 `Tab` 키로 전환할 수 있습니다.
 
 - **build** - 기본값, 개발 작업을 위한 전체 권한 에이전트
 - **plan** - 분석 및 코드 탐색을 위한 읽기 전용 에이전트
@@ -114,15 +114,15 @@ OpenCode 에는 내장 에이전트 2개가 있으며 `Tab` 키로 전환할 수
 
 ### 문서
 
-OpenCode 설정에 대한 자세한 내용은 [**문서**](https://igris.ai/docs) 를 참고하세요.
+Igris 설정에 대한 자세한 내용은 [**문서**](https://igris.ai/docs) 를 참고하세요.
 
 ### 기여하기
 
-OpenCode 에 기여하고 싶다면, Pull Request 를 제출하기 전에 [contributing docs](./CONTRIBUTING.md) 를 읽어주세요.
+Igris 에 기여하고 싶다면, Pull Request 를 제출하기 전에 [contributing docs](./CONTRIBUTING.md) 를 읽어주세요.
 
-### OpenCode 기반으로 만들기
+### Igris 기반으로 만들기
 
-OpenCode 와 관련된 프로젝트를 진행하면서 이름에 "igris"(예: "igris-dashboard" 또는 "igris-mobile") 를 포함한다면, README 에 해당 프로젝트가 OpenCode 팀이 만든 것이 아니며 어떤 방식으로도 우리와 제휴되어 있지 않다는 점을 명시해 주세요.
+Igris 와 관련된 프로젝트를 진행하면서 이름에 "igris"(예: "igris-dashboard" 또는 "igris-mobile") 를 포함한다면, README 에 해당 프로젝트가 Igris 팀이 만든 것이 아니며 어떤 방식으로도 우리와 제휴되어 있지 않다는 점을 명시해 주세요.
 
 ---
 

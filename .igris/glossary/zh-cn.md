@@ -6,9 +6,9 @@
 
 ## Do Not Translate (Locale Additions)
 
-- `OpenCode` (preserve casing in prose; keep `igris` only when it is part of commands, package names, paths, or code)
-- `OpenCode Zen`
-- `OpenCode CLI`
+- `Igris` (preserve casing in prose; keep `igris` only when it is part of commands, package names, paths, or code)
+- `Igris Zen`
+- `Igris CLI`
 - `CLI`, `TUI`, `MCP`, `OAuth`
 - `Model Context Protocol` (prefer the English expansion when introducing `MCP`)
 
@@ -38,5 +38,5 @@ These are preferred terms for docs/UI prose and may evolve.
 
 ## Avoid
 
-- Avoid `igris` in prose when referring to the product name; use `OpenCode`
+- Avoid `igris` in prose when referring to the product name; use `Igris`
 - Avoid mixing alternative terms for the same concept across docs when a preferred term is already established

@@ -1,9 +1,9 @@
 import { base64Encode } from "@igris-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { mockIgrisServer } from "../utils/mock-server"
 import { expectSessionTitle } from "../utils/waits"
 
-const directory = "C:/OpenCode/SubagentNavigation"
+const directory = "C:/Igris/SubagentNavigation"
 const projectID = "proj_subagent_navigation"
 const parentID = "ses_subagent_parent"
 const childID = "ses_subagent_child"
@@ -44,7 +44,7 @@ test("shows the not found fallback when the viewed session is deleted", async ({
 })
 
 async function setup(page: Page, events?: () => EventPayload[]) {
-  await mockOpenCodeServer(page, {
+  await mockIgrisServer(page, {
     directory,
     project: {
       id: projectID,
@@ -58,7 +58,7 @@ async function setup(page: Page, events?: () => EventPayload[]) {
       all: [
         {
           id: "igris",
-          name: "OpenCode",
+          name: "Igris",
           models: {
             "claude-opus-4-6": { id: "claude-opus-4-6", name: "Claude Opus 4.6", limit: { context: 200_000 } },
           },

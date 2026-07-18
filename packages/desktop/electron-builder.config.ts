@@ -27,7 +27,7 @@ async function signWindows(configuration: { path: string }) {
 }
 
 const channel = (() => {
-  const raw = process.env.OPENCODE_CHANNEL
+  const raw = process.env.IGRIS_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
   return "dev"
 })()
@@ -74,7 +74,7 @@ const getBase = (appId: string): Configuration => ({
     sign: true,
   },
   protocols: {
-    name: "OpenCode",
+    name: "Igris",
     schemes: ["igris"],
   },
   win: {
@@ -115,7 +115,7 @@ function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode Dev",
+        productName: "Igris Dev",
         rpm: { packageName: "igris-dev" },
       }
     }
@@ -123,8 +123,8 @@ function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode Beta",
-        protocols: { name: "OpenCode Beta", schemes: ["igris"] },
+        productName: "Igris Beta",
+        protocols: { name: "Igris Beta", schemes: ["igris"] },
         publish: { provider: "github", owner: "anomalyco", repo: "igris-beta", channel: "latest" },
         rpm: { packageName: "igris-beta" },
       }
@@ -133,8 +133,8 @@ function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode",
-        protocols: { name: "OpenCode", schemes: ["igris"] },
+        productName: "Igris",
+        protocols: { name: "Igris", schemes: ["igris"] },
         publish: { provider: "github", owner: "anomalyco", repo: "igris", channel: "latest" },
         deb: { fpm: [legacyDesktopEntryFpm] },
         rpm: { packageName: "igris", fpm: [legacyDesktopEntryFpm] },

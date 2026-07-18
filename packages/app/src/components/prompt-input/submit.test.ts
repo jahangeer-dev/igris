@@ -100,7 +100,7 @@ beforeAll(async () => {
   }))
 
   mock.module("@igris-ai/sdk/v2/client", () => ({
-    createOpencodeClient: (input: { directory: string }) => {
+    createIgrisClient: (input: { directory: string }) => {
       createdClients.push(input.directory)
       return clientFor(input.directory)
     },

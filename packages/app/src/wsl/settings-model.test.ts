@@ -6,7 +6,7 @@ import {
   autoProbePlan,
   createProbeFailureGate,
   runAddableProbePlan,
-  wslOpencodeAction,
+  wslIgrisAction,
   wslRuntimeRetryable,
 } from "./settings-model"
 import type { WslServersState } from "./types"
@@ -37,10 +37,10 @@ describe("WSL server settings presentation", () => {
     expect(wslRuntimeRetryable({ kind: "stopped" })).toBe(true)
   })
 
-  test("offers install and update only when OpenCode needs attention", () => {
-    expect(wslOpencodeAction(undefined)).toBeUndefined()
+  test("offers install and update only when Igris needs attention", () => {
+    expect(wslIgrisAction(undefined)).toBeUndefined()
     expect(
-      wslOpencodeAction({
+      wslIgrisAction({
         distro: "Debian",
         resolvedPath: null,
         version: null,
@@ -48,9 +48,9 @@ describe("WSL server settings presentation", () => {
         matchesDesktop: null,
         error: null,
       }),
-    ).toBe("Install OpenCode")
+    ).toBe("Install Igris")
     expect(
-      wslOpencodeAction({
+      wslIgrisAction({
         distro: "Debian",
         resolvedPath: "/usr/local/bin/igris",
         version: "1.2.2",
@@ -58,9 +58,9 @@ describe("WSL server settings presentation", () => {
         matchesDesktop: false,
         error: null,
       }),
-    ).toBe("Update OpenCode")
+    ).toBe("Update Igris")
     expect(
-      wslOpencodeAction({
+      wslIgrisAction({
         distro: "Debian",
         resolvedPath: "/usr/local/bin/igris",
         version: "1.2.3",
@@ -179,7 +179,7 @@ describe("WSL server settings presentation", () => {
     expect(model.busy).toBe(true)
   })
 
-  test("does not report ready when OpenCode is present but cannot run", () => {
+  test("does not report ready when Igris is present but cannot run", () => {
     const model = addServerViewModel({
       state: {
         ...readyWslState,
@@ -208,7 +208,7 @@ describe("WSL server settings presentation", () => {
     })
 
     expect(model.distroStatuses.Debian).toEqual({
-      label: { key: "wsl.onboarding.installOpencode" },
+      label: { key: "wsl.onboarding.installIgris" },
       tone: "warning",
     })
     expect(model.primaryButton.action).toBe("install-igris")

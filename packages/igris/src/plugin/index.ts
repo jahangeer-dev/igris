@@ -7,14 +7,14 @@ import type {
   WorkspaceAdapter as PluginWorkspaceAdapter,
 } from "@igris-ai/plugin"
 import { Config } from "@/config/config"
-import { createOpencodeClient } from "@igris-ai/sdk"
+import { createIgrisClient } from "@igris-ai/sdk"
 import { ServerAuth } from "@/server/auth"
 import { CodexAuthPlugin } from "./openai/codex"
 import { Session } from "@/session/session"
 import { NamedError } from "@igris-ai/core/util/error"
 import { CopilotAuthPlugin } from "./github-copilot/copilot"
-import { gitlabAuthPlugin as GitlabAuthPlugin } from "igris-gitlab-auth"
-import { PoeAuthPlugin } from "igris-poe-auth"
+import { gitlabAuthPlugin as GitlabAuthPlugin } from "opencode-gitlab-auth"
+import { PoeAuthPlugin } from "opencode-poe-auth"
 import { CloudflareAIGatewayAuthPlugin, CloudflareWorkersAuthPlugin } from "./cloudflare"
 import { AzureAuthPlugin } from "./azure"
 import { DigitalOceanAuthPlugin } from "./digitalocean"
@@ -139,7 +139,7 @@ const layer = Layer.effect(
         const { Server } = yield* Effect.promise(() => import("../server/server"))
 
         const serverUrl = Server.url
-        const client = createOpencodeClient({
+        const client = createIgrisClient({
           baseUrl: serverUrl?.toString() ?? "http://localhost:4096",
           directory: ctx.directory,
           headers: ServerAuth.headers(),

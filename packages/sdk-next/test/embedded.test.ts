@@ -4,19 +4,19 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { Flag } from "@igris-ai/core/flag/flag"
 import { Deferred, Effect, Latch, Option, Schema, Stream } from "effect"
-import type { OpenCodeEvent } from "../src"
+import type { IgrisEvent } from "../src"
 
 test("embedded client uses the real router and handlers", async () => {
   const directory = await mkdtemp(join(tmpdir(), "igris-embedded-"))
-  const database = Flag.OPENCODE_DB
-  Flag.OPENCODE_DB = join(directory, "igris.sqlite")
-  const { AbsolutePath, Agent, Location, Model, OpenCode, Prompt, Provider, Session, Tool } = await import("../src")
+  const database = Flag.IGRIS_DB
+  Flag.IGRIS_DB = join(directory, "igris.sqlite")
+  const { AbsolutePath, Agent, Location, Model, Igris, Prompt, Provider, Session, Tool } = await import("../src")
   const sessionID = Session.ID.make(`ses_embedded_${crypto.randomUUID()}`)
   const model = Model.Ref.make({ id: Model.ID.make("embedded"), providerID: Provider.ID.make("test") })
 
   try {
     const program = Effect.gen(function* () {
-      const igris = yield* OpenCode.create()
+      const igris = yield* Igris.create()
       yield* igris.tools.register({
         embedded_tool: Tool.make({
           description: "Embedded test tool",
@@ -99,23 +99,23 @@ test("embedded client uses the real router and handlers", async () => {
     })
     await Effect.runPromise(Effect.scoped(program))
   } finally {
-    Flag.OPENCODE_DB = database
+    Flag.IGRIS_DB = database
     await rm(directory, { recursive: true, force: true })
   }
 })
 
 test("Location-owned runner events reach the ready global client", async () => {
   const directory = await mkdtemp(join(tmpdir(), "igris-embedded-events-"))
-  const database = Flag.OPENCODE_DB
-  Flag.OPENCODE_DB = join(directory, "igris.sqlite")
-  const { AbsolutePath, Location, OpenCode, Prompt, Session } = await import("../src")
+  const database = Flag.IGRIS_DB
+  Flag.IGRIS_DB = join(directory, "igris.sqlite")
+  const { AbsolutePath, Location, Igris, Prompt, Session } = await import("../src")
   const sessionID = Session.ID.make(`ses_embedded_${crypto.randomUUID()}`)
 
   try {
     const program = Effect.gen(function* () {
-      const igris = yield* OpenCode.create()
+      const igris = yield* Igris.create()
       const connected = yield* Latch.make(false)
-      const prompted = yield* Deferred.make<OpenCodeEvent>()
+      const prompted = yield* Deferred.make<IgrisEvent>()
       yield* igris.events.subscribe().pipe(
         Stream.runForEach((event) =>
           event.type === "server.connected"
@@ -138,28 +138,28 @@ test("Location-owned runner events reach the ready global client", async () => {
     })
     await Effect.runPromise(Effect.scoped(program))
   } finally {
-    Flag.OPENCODE_DB = database
+    Flag.IGRIS_DB = database
     await rm(directory, { recursive: true, force: true })
   }
 }, 10_000)
 
 test("independent embedded hosts do not share live notifications", async () => {
   const directory = await mkdtemp(join(tmpdir(), "igris-embedded-hosts-"))
-  const database = Flag.OPENCODE_DB
-  Flag.OPENCODE_DB = join(directory, "igris.sqlite")
-  const { AbsolutePath, Agent, Location, OpenCode, Session } = await import("../src")
+  const database = Flag.IGRIS_DB
+  Flag.IGRIS_DB = join(directory, "igris.sqlite")
+  const { AbsolutePath, Agent, Location, Igris, Session } = await import("../src")
   const sessionID = Session.ID.make(`ses_embedded_${crypto.randomUUID()}`)
 
   try {
     const program = Effect.gen(function* () {
-      const first = yield* OpenCode.create()
-      const second = yield* OpenCode.create()
+      const first = yield* Igris.create()
+      const second = yield* Igris.create()
       const firstReady = yield* Latch.make(false)
       const secondReady = yield* Latch.make(false)
       const firstEvent = yield* Latch.make(false)
       const secondEvent = yield* Latch.make(false)
       const observe = (ready: Latch.Latch, event: Latch.Latch) =>
-        Stream.runForEach((notification: OpenCodeEvent) =>
+        Stream.runForEach((notification: IgrisEvent) =>
           notification.type === "server.connected"
             ? ready.open
             : notification.type === "session.next.agent.switched" && notification.data.sessionID === sessionID
@@ -181,32 +181,32 @@ test("independent embedded hosts do not share live notifications", async () => {
     })
     await Effect.runPromise(Effect.scoped(program))
   } finally {
-    Flag.OPENCODE_DB = database
+    Flag.IGRIS_DB = database
     await rm(directory, { recursive: true, force: true })
   }
 }, 10_000)
 
 test("embedded client is available as a Layer service", async () => {
   const directory = await mkdtemp(join(tmpdir(), "igris-embedded-layer-"))
-  const database = Flag.OPENCODE_DB
-  Flag.OPENCODE_DB = join(directory, "igris.sqlite")
-  const { AbsolutePath, Location, OpenCode, Session } = await import("../src")
+  const database = Flag.IGRIS_DB
+  Flag.IGRIS_DB = join(directory, "igris.sqlite")
+  const { AbsolutePath, Location, Igris, Session } = await import("../src")
   const sessionID = Session.ID.make(`ses_embedded_${crypto.randomUUID()}`)
 
   try {
     const created = await Effect.runPromise(
       Effect.gen(function* () {
-        const igris = yield* OpenCode.Service
+        const igris = yield* Igris.Service
         return yield* igris.sessions.create({
           id: sessionID,
           location: Location.Ref.make({ directory: AbsolutePath.make(directory) }),
         })
-      }).pipe(Effect.provide(OpenCode.layer), Effect.scoped),
+      }).pipe(Effect.provide(Igris.layer), Effect.scoped),
     )
 
     expect(created.id).toBe(sessionID)
   } finally {
-    Flag.OPENCODE_DB = database
+    Flag.IGRIS_DB = database
     await rm(directory, { recursive: true, force: true })
   }
 })

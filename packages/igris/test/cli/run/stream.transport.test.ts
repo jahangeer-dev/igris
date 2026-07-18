@@ -1,15 +1,15 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
-import { OpencodeClient, type GlobalEvent } from "@igris-ai/sdk/v2"
+import { IgrisClient, type GlobalEvent } from "@igris-ai/sdk/v2"
 import { createSessionTransport } from "@/cli/cmd/run/stream.transport"
 import type { FooterApi, FooterEvent, LocalReplayRow, RunFilePart, StreamCommit } from "@/cli/cmd/run/types"
 
-type EventStream = Awaited<ReturnType<OpencodeClient["event"]["subscribe"]>>["stream"]
-type GlobalEventStream = Awaited<ReturnType<OpencodeClient["global"]["event"]>>["stream"]
+type EventStream = Awaited<ReturnType<IgrisClient["event"]["subscribe"]>>["stream"]
+type GlobalEventStream = Awaited<ReturnType<IgrisClient["global"]["event"]>>["stream"]
 type SdkEvent = EventStream extends AsyncGenerator<infer T, unknown, unknown> ? T : never
-type SessionMessage = NonNullable<Awaited<ReturnType<OpencodeClient["session"]["messages"]>>["data"]>[number]
-type SessionChild = NonNullable<Awaited<ReturnType<OpencodeClient["session"]["children"]>>["data"]>[number]
+type SessionMessage = NonNullable<Awaited<ReturnType<IgrisClient["session"]["messages"]>>["data"]>[number]
+type SessionChild = NonNullable<Awaited<ReturnType<IgrisClient["session"]["children"]>>["data"]>[number]
 type SessionToolPart = Extract<SessionMessage["parts"][number], { type: "tool" }>
-type SessionStatusMap = NonNullable<Awaited<ReturnType<OpencodeClient["session"]["status"]>>["data"]>
+type SessionStatusMap = NonNullable<Awaited<ReturnType<IgrisClient["session"]["status"]>>["data"]>
 type TextPart = Extract<SessionMessage["parts"][number], { type: "text" }>
 type ReasoningPart = Extract<SessionMessage["parts"][number], { type: "reasoning" }>
 
@@ -417,27 +417,27 @@ function sdk(
   input: {
     stream?: EventStream
     globalStream?: GlobalEventStream
-    subscribe?: OpencodeClient["event"]["subscribe"]
-    globalEvent?: OpencodeClient["global"]["event"]
-    promptAsync?: OpencodeClient["session"]["promptAsync"]
-    status?: OpencodeClient["session"]["status"]
-    messages?: OpencodeClient["session"]["messages"]
-    children?: OpencodeClient["session"]["children"]
-    permissions?: OpencodeClient["permission"]["list"]
-    questions?: OpencodeClient["question"]["list"]
+    subscribe?: IgrisClient["event"]["subscribe"]
+    globalEvent?: IgrisClient["global"]["event"]
+    promptAsync?: IgrisClient["session"]["promptAsync"]
+    status?: IgrisClient["session"]["status"]
+    messages?: IgrisClient["session"]["messages"]
+    children?: IgrisClient["session"]["children"]
+    permissions?: IgrisClient["permission"]["list"]
+    questions?: IgrisClient["question"]["list"]
   } = {},
 ) {
-  const client = new OpencodeClient()
+  const client = new IgrisClient()
 
-  const subscribe: OpencodeClient["event"]["subscribe"] = input.subscribe ?? (() => sse(input.stream ?? emptyStream()))
-  const globalEvent: OpencodeClient["global"]["event"] =
+  const subscribe: IgrisClient["event"]["subscribe"] = input.subscribe ?? (() => sse(input.stream ?? emptyStream()))
+  const globalEvent: IgrisClient["global"]["event"] =
     input.globalEvent ?? (() => globalSse(input.globalStream ?? wrapGlobalStream(input.stream ?? emptyStream())))
-  const promptAsync: OpencodeClient["session"]["promptAsync"] = input.promptAsync ?? (() => ok(undefined))
-  const status: OpencodeClient["session"]["status"] = input.status ?? (() => ok({}))
-  const messages: OpencodeClient["session"]["messages"] = input.messages ?? (() => ok([]))
-  const children: OpencodeClient["session"]["children"] = input.children ?? (() => ok([]))
-  const permissions: OpencodeClient["permission"]["list"] = input.permissions ?? (() => ok([]))
-  const questions: OpencodeClient["question"]["list"] = input.questions ?? (() => ok([]))
+  const promptAsync: IgrisClient["session"]["promptAsync"] = input.promptAsync ?? (() => ok(undefined))
+  const status: IgrisClient["session"]["status"] = input.status ?? (() => ok({}))
+  const messages: IgrisClient["session"]["messages"] = input.messages ?? (() => ok([]))
+  const children: IgrisClient["session"]["children"] = input.children ?? (() => ok([]))
+  const permissions: IgrisClient["permission"]["list"] = input.permissions ?? (() => ok([]))
+  const questions: IgrisClient["question"]["list"] = input.questions ?? (() => ok([]))
 
   spyOn(client.event, "subscribe").mockImplementation(subscribe)
   spyOn(client.global, "event").mockImplementation(globalEvent)

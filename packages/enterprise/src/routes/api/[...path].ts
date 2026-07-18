@@ -18,9 +18,9 @@ app
     openAPIRouteHandler(app, {
       documentation: {
         info: {
-          title: "Opencode Enterprise API",
+          title: "Igris Enterprise API",
           version: "1.0.0",
-          description: "Opencode Enterprise API endpoints",
+          description: "Igris Enterprise API endpoints",
         },
         openapi: "3.1.1",
       },

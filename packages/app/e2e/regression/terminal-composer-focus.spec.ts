@@ -1,9 +1,9 @@
 import { base64Encode } from "@igris-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { mockIgrisServer } from "../utils/mock-server"
 import { expectSessionTitle } from "../utils/waits"
 
-const directory = "C:/OpenCode/TerminalComposerFocus"
+const directory = "C:/Igris/TerminalComposerFocus"
 const projectID = "proj_terminal_composer_focus"
 const sessionID = "ses_terminal_composer_focus"
 const ptyID = "pty_terminal_composer_focus"
@@ -12,7 +12,7 @@ const newPtyID = "pty_terminal_composer_focus_new"
 test.use({ viewport: { width: 1440, height: 900 } })
 
 test.beforeEach(async ({ page }) => {
-  await mockOpenCodeServer(page, {
+  await mockIgrisServer(page, {
     directory,
     project: {
       id: projectID,
@@ -26,7 +26,7 @@ test.beforeEach(async ({ page }) => {
       all: [
         {
           id: "igris",
-          name: "OpenCode",
+          name: "Igris",
           models: { test: { id: "test", name: "Test", limit: { context: 200_000 } } },
         },
       ],

@@ -18,7 +18,7 @@ describe("igris acp prompt content subprocess", () => {
         yield* Effect.promise(() => writeFile(path.join(home, "README.md"), "# ACP content smoke\n"))
         const acp = yield* createAcpClient(
           { igris },
-          { OPENCODE_CONFIG_CONTENT: JSON.stringify(promptContentConfig(llm.url)) },
+          { IGRIS_CONFIG_CONTENT: JSON.stringify(promptContentConfig(llm.url)) },
         )
         yield* initialize(acp)
         const session = yield* newSession(acp, home)

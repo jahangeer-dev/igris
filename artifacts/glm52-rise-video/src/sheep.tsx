@@ -8,7 +8,7 @@ const c = {
 }
 const MONO = '"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace'
 
-// verified: NZ OpenCode Go, week of Jun 22-28, 2026 (2026-W26)
+// verified: NZ Igris Go, week of Jun 22-28, 2026 (2026-W26)
 const TOKENS = 40_915_594_381 // 40.9B
 const SHEEP = 23_600_000 // 23.6M
 const PER_SHEEP = Math.round(TOKENS / SHEEP) // 1,734
@@ -104,7 +104,7 @@ export function NZSheep() {
         {/* bottom block */}
         <div>
           <div style={{ fontSize: 23, fontWeight: 600, color: c.dim, letterSpacing: 2, marginBottom: 8 }}>
-            OPENCODE GO · NEW ZEALAND
+            IGRIS GO · NEW ZEALAND
           </div>
           <div
             style={{

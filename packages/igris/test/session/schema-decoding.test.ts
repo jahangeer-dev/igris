@@ -238,7 +238,7 @@ describe("SessionStatus.Info", () => {
         reason: "free_tier_limit",
         provider: "igris",
         title: "Free limit reached",
-        message: "Subscribe to OpenCode Go.",
+        message: "Subscribe to Igris Go.",
         label: "subscribe",
         link: "https://igris.ai/go",
       },

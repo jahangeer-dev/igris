@@ -13,7 +13,7 @@ export const NvidiaPlugin = define({
           evt.provider.update(item.provider.id, (provider) => {
             provider.request.headers["HTTP-Referer"] = "https://igris.ai/"
             provider.request.headers["X-Title"] = "igris"
-            provider.request.headers["X-BILLING-INVOKE-ORIGIN"] ??= "OpenCode"
+            provider.request.headers["X-BILLING-INVOKE-ORIGIN"] ??= "Igris"
           })
         }
       }),

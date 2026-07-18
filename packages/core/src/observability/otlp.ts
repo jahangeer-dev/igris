@@ -40,7 +40,7 @@ export function resource(): { serviceName: string; serviceVersion: string; attri
     attributes: {
       ...resourceAttributes(),
       "deployment.environment.name": InstallationChannel,
-      "igris.client": Flag.OPENCODE_CLIENT,
+      "igris.client": Flag.IGRIS_CLIENT,
       "igris.run": runID,
       "service.instance.id": runID,
     },

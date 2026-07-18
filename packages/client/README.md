@@ -1,6 +1,6 @@
 # @igris-ai/client
 
-Private generation target for clients derived directly from OpenCode's authoritative Effect `HttpApi`.
+Private generation target for clients derived directly from Igris's authoritative Effect `HttpApi`.
 
 ## Entrypoints
 
@@ -16,9 +16,9 @@ The Promise root remains structural and has no Core or Effect runtime dependency
 Effect consumers construct canonical decoded inputs:
 
 ```ts
-import { AbsolutePath, Location, OpenCode, Prompt } from "@igris-ai/client/effect"
+import { AbsolutePath, Location, Igris, Prompt } from "@igris-ai/client/effect"
 
-const client = yield * OpenCode.make({ baseUrl: "https://igris.example" })
+const client = yield * Igris.make({ baseUrl: "https://igris.example" })
 yield *
   client.sessions.create({
     location: Location.Ref.make({ directory: AbsolutePath.make("/workspace") }),

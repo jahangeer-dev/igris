@@ -76,7 +76,7 @@ export const InstanceHttpApi = HttpApi.make("igris-instance")
   .addHttpApi(WorkspaceApi)
   .middleware(SchemaErrorMiddleware)
 
-export const OpenCodeHttpApi = HttpApi.make("igris")
+export const IgrisHttpApi = HttpApi.make("igris")
   .addHttpApi(RootHttpApi)
   .addHttpApi(EventApi)
   .addHttpApi(InstanceHttpApi)

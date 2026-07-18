@@ -2,7 +2,7 @@ import fuzzysort from "fuzzysort"
 import type {
   WslInstalledDistro,
   WslOnlineDistro,
-  WslOpencodeCheck,
+  WslIgrisCheck,
   WslServersPlatform,
   WslServerRuntime,
   WslServersState,
@@ -51,10 +51,10 @@ function isHiddenDistro(name: string) {
 export const wslRuntimeRetryable = (runtime: WslServerRuntime) =>
   runtime.kind === "failed" || runtime.kind === "stopped"
 
-export function wslOpencodeAction(check?: WslOpencodeCheck) {
+export function wslIgrisAction(check?: WslIgrisCheck) {
   if (!check) return
-  if (!check.resolvedPath) return "Install OpenCode"
-  if (check.matchesDesktop === false) return "Update OpenCode"
+  if (!check.resolvedPath) return "Install Igris"
+  if (check.matchesDesktop === false) return "Update Igris"
 }
 
 export function wslDistroReady(state: WslServersState | undefined, name: string) {
@@ -172,9 +172,9 @@ function addServerDistroStatus(input: {
     }
     return
   }
-  if (check.matchesDesktop === false) return { label: { key: "wsl.onboarding.updateOpencode" }, tone: "warning" }
+  if (check.matchesDesktop === false) return { label: { key: "wsl.onboarding.updateIgris" }, tone: "warning" }
   if (!check.resolvedPath) return { label: { key: "wsl.onboarding.distroStatus.igrisMissing" }, tone: "warning" }
-  if (check.error) return { label: { key: "wsl.onboarding.installOpencode" }, tone: "warning" }
+  if (check.error) return { label: { key: "wsl.onboarding.installIgris" }, tone: "warning" }
   return { label: { key: "wsl.onboarding.distroStatus.ready" }, tone: "success" }
 }
 
@@ -185,22 +185,22 @@ function checkingStatus(): DistroStatus {
 function addServerPrimaryButton(input: {
   state: WslServersState | undefined
   selectedDistro: string | null
-  igrisCheck: WslOpencodeCheck | null
+  igrisCheck: WslIgrisCheck | null
   adding: boolean
   probingAddable: boolean
 }): AddServerPrimaryButton {
   const ready = !!input.selectedDistro && wslDistroReady(input.state, input.selectedDistro)
   const probingSelected = input.probingAddable && !addServerSelectedDistroSettled(input.state, input.selectedDistro)
-  const probingOpencode =
+  const probingIgris =
     probingSelected ||
     (ready &&
       (!input.igrisCheck ||
         (!!input.selectedDistro &&
           input.state?.job?.kind === "probe-addable" &&
           input.state.job.distros.includes(input.selectedDistro))))
-  const installingOpencode =
+  const installingIgris =
     input.state?.job?.kind === "install-igris" && input.state.job.distro === input.selectedDistro
-  if (!ready || probingOpencode) {
+  if (!ready || probingIgris) {
     return {
       variant: "contrast",
       label: probingSelected ? { key: "wsl.onboarding.distroStatus.checking" } : { key: "wsl.server.add" },
@@ -210,18 +210,18 @@ function addServerPrimaryButton(input: {
       width: null,
     }
   }
-  if (!addServerOpencodeReady(input.igrisCheck)) {
+  if (!addServerIgrisReady(input.igrisCheck)) {
     const update = !!input.igrisCheck?.resolvedPath && input.igrisCheck.matchesDesktop === false
     return {
       variant: "neutral",
-      label: installingOpencode
-        ? { key: "wsl.onboarding.updatingOpencode" }
+      label: installingIgris
+        ? { key: "wsl.onboarding.updatingIgris" }
         : update
-          ? { key: "wsl.onboarding.updateOpencode" }
-          : { key: "wsl.onboarding.installOpencode" },
+          ? { key: "wsl.onboarding.updateIgris" }
+          : { key: "wsl.onboarding.installIgris" },
       disabled: !!input.state?.job || input.adding,
       action: "install-igris",
-      loading: installingOpencode,
+      loading: installingIgris,
       width: update ? "138px" : "129px",
     }
   }
@@ -235,7 +235,7 @@ function addServerPrimaryButton(input: {
   }
 }
 
-function addServerOpencodeReady(check: WslOpencodeCheck | null) {
+function addServerIgrisReady(check: WslIgrisCheck | null) {
   return !!check?.resolvedPath && check.matchesDesktop !== false && !check.error
 }
 

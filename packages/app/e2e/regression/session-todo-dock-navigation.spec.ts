@@ -1,9 +1,9 @@
 import { base64Encode } from "@igris-ai/core/util/encode"
 import { expect, test, type Page } from "@playwright/test"
-import { mockOpenCodeServer } from "../utils/mock-server"
+import { mockIgrisServer } from "../utils/mock-server"
 import { expectSessionTitle } from "../utils/waits"
 
-const directory = "C:/OpenCode/TodoDockNavigation"
+const directory = "C:/Igris/TodoDockNavigation"
 const projectID = "proj_todo_dock_navigation"
 const sourceID = "ses_todo_dock_source"
 const otherID = "ses_todo_dock_other"
@@ -28,7 +28,7 @@ test("animates todo lifecycle without replaying it across session tabs", async (
   const events: EventPayload[] = []
   const todos: Record<string, typeof activeTodos> = { [sourceID]: [], [otherID]: [] }
 
-  await mockOpenCodeServer(page, {
+  await mockIgrisServer(page, {
     directory,
     project: {
       id: projectID,
@@ -42,7 +42,7 @@ test("animates todo lifecycle without replaying it across session tabs", async (
       all: [
         {
           id: "igris",
-          name: "OpenCode",
+          name: "Igris",
           models: {
             "claude-opus-4-6": {
               id: "claude-opus-4-6",

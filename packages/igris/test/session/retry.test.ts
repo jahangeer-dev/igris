@@ -273,7 +273,7 @@ describe("session.retry.retryable", () => {
         reason: "free_tier_limit",
         provider: "igris",
         title: "Free limit reached",
-        message: "Subscribe to OpenCode Go for reliable access to the best open-source models, starting at $5/month.",
+        message: "Subscribe to Igris Go for reliable access to the best open-source models, starting at $5/month.",
         label: "subscribe",
         link: SessionRetry.GO_UPSELL_URL,
       },

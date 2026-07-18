@@ -1,13 +1,13 @@
 # @igris-ai/sdk-next
 
-Effect-native scoped OpenCode host for in-process applications. This transitional package will replace the existing generated `@igris-ai/sdk` after its consumers migrate.
+Effect-native scoped Igris host for in-process applications. This transitional package will replace the existing generated `@igris-ai/sdk` after its consumers migrate.
 
 The SDK executes Server's assembled HTTP router in memory. It opens no listener and performs no network I/O, while preserving the same routing, middleware, handlers, codecs, and errors as the network client.
 
 ```ts
-import { OpenCode } from "@igris-ai/sdk-next"
+import { Igris } from "@igris-ai/sdk-next"
 
-const igris = yield * OpenCode.create()
+const igris = yield * Igris.create()
 const session = yield * igris.sessions.get({ sessionID })
 ```
 
@@ -19,11 +19,11 @@ The same constructor is available as a service Layer:
 
 ```ts
 const program = Effect.gen(function* () {
-  const igris = yield* OpenCode.Service
+  const igris = yield* Igris.Service
   return yield* igris.sessions.get({ sessionID })
 })
 
-yield * program.pipe(Effect.provide(OpenCode.layer))
+yield * program.pipe(Effect.provide(Igris.layer))
 ```
 
-`OpenCode.layer` adapts `OpenCode.create()` for dependency injection; it does not define another host implementation.
+`Igris.layer` adapts `Igris.create()` for dependency injection; it does not define another host implementation.

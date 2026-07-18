@@ -13,8 +13,8 @@ await Effect.runPromise(
         emitPromise(contract, {
           outputTypes: {
             "events.subscribe": {
-              name: "OpenCodeEventEncoded",
-              import: 'import type { OpenCodeEventEncoded } from "@igris-ai/protocol/groups/event"',
+              name: "IgrisEventEncoded",
+              import: 'import type { IgrisEventEncoded } from "@igris-ai/protocol/groups/event"',
             },
           },
         }),

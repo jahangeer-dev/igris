@@ -6,9 +6,9 @@ import { define } from "./internal"
 import { Effect } from "effect"
 import { AbsolutePath } from "../schema"
 import { SkillV2 } from "../skill"
-import customizeOpencodeContent from "./skill/customize-igris.md" with { type: "text" }
+import customizeIgrisContent from "./skill/customize-igris.md" with { type: "text" }
 
-export const CustomizeOpencodeContent = customizeOpencodeContent
+export const CustomizeIgrisContent = customizeIgrisContent
 
 export const Plugin = define({
   id: "skill",
@@ -22,7 +22,7 @@ export const Plugin = define({
             description:
               "Use ONLY when the user is editing or creating igris's own configuration: igris.json, igris.jsonc, files under .igris/, or files under ~/.config/igris/. Also use when creating or fixing igris agents, subagents, commands, skills, plugins, MCP servers, or permission rules. Do not use for the user's own application code, or for any project that is not configuring igris itself.",
             location: AbsolutePath.make("/builtin/customize-igris.md"),
-            content: CustomizeOpencodeContent,
+            content: CustomizeIgrisContent,
           }),
         }),
       )

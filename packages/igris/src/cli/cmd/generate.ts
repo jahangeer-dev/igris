@@ -18,9 +18,9 @@ export const GenerateCommand = {
           {
             lang: "js",
             source: [
-              `import { createOpencodeClient } from "@igris-ai/sdk`,
+              `import { createIgrisClient } from "@igris-ai/sdk`,
               ``,
-              `const client = createOpencodeClient()`,
+              `const client = createIgrisClient()`,
               `await client.${operation.operationId}({`,
               `  ...`,
               `})`,

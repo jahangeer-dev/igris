@@ -50,7 +50,7 @@ export function registerWslIpcHandlers(controller: WslServersController) {
     controller.probeAddable(requireWslIpcStrings("distro", distros)),
   )
   ipcMain.handle("wsl-servers-install-igris", (_event: IpcMainInvokeEvent, name: string) =>
-    controller.installOpencode(requireWslIpcString("distro", name)),
+    controller.installIgris(requireWslIpcString("distro", name)),
   )
   ipcMain.handle("wsl-servers-open-terminal", (_event: IpcMainInvokeEvent, name: string) =>
     controller.openTerminal(requireWslIpcString("distro", name)),

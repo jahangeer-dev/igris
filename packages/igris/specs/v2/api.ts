@@ -1,9 +1,9 @@
 // @ts-nocheck
 
-import { OpenCode } from "@igris-ai/core"
+import { Igris } from "@igris-ai/core"
 import { ReadTool } from "@igris-ai/core/tools"
 
-const igris = OpenCode.make({})
+const igris = Igris.make({})
 
 igris.tool.add(ReadTool)
 

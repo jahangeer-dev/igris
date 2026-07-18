@@ -1,6 +1,6 @@
 import { Global } from "@igris-ai/core/global"
 import { InstallationVersion } from "@igris-ai/core/installation/version"
-import { createOpencodeClient } from "@igris-ai/sdk/v2/client"
+import { createIgrisClient } from "@igris-ai/sdk/v2/client"
 import { ServerAuth } from "@igris-ai/server/auth"
 import { Context, Effect, FileSystem, Layer, Option, Schedule, Schema, Scope } from "effect"
 import { HttpServer } from "effect/unstable/http"
@@ -9,7 +9,7 @@ import { spawn } from "node:child_process"
 import path from "path"
 
 export interface Interface {
-  readonly client: () => Effect.Effect<ReturnType<typeof createOpencodeClient>, unknown>
+  readonly client: () => Effect.Effect<ReturnType<typeof createIgrisClient>, unknown>
   readonly transport: () => Effect.Effect<{ url: string; headers: RequestInit["headers"] }, unknown>
   readonly start: () => Effect.Effect<string, Error>
   readonly status: () => Effect.Effect<string | undefined>
@@ -60,7 +60,7 @@ export const layer = Layer.effect(
     })
 
     const createClient = Effect.fnUntraced(function* (url: string) {
-      return createOpencodeClient({ baseUrl: url, headers: ServerAuth.headers({ password: yield* password() }) })
+      return createIgrisClient({ baseUrl: url, headers: ServerAuth.headers({ password: yield* password() }) })
     })
 
     const healthy = Effect.fnUntraced(function* () {
@@ -140,7 +140,7 @@ export const layer = Layer.effect(
 
     const client = Effect.fn("cli.daemon.client")(function* () {
       const connection = yield* transport()
-      return createOpencodeClient({ baseUrl: connection.url, headers: connection.headers })
+      return createIgrisClient({ baseUrl: connection.url, headers: connection.headers })
     })
 
     const status = Effect.fn("cli.daemon.status")(function* () {

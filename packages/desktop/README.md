@@ -1,6 +1,6 @@
-# OpenCode Desktop
+# Igris Desktop
 
-The OpenCode Desktop app, built with Electron.
+The Igris Desktop app, built with Electron.
 
 ## Development
 

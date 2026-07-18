@@ -1,4 +1,4 @@
-import type { OpenCodeEventEncoded } from "@igris-ai/protocol/groups/event"
+import type { IgrisEventEncoded } from "@igris-ai/protocol/groups/event"
 
 export type JsonValue =
   | null
@@ -2538,7 +2538,7 @@ export type SkillsListOutput = {
   }>
 }
 
-export type EventsSubscribeOutput = OpenCodeEventEncoded
+export type EventsSubscribeOutput = IgrisEventEncoded
 
 export type PtysListInput = {
   readonly location?: {

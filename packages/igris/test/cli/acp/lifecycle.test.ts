@@ -30,7 +30,7 @@ describe("igris acp lifecycle subprocess", () => {
       Effect.gen(function* () {
         const acp = yield* createAcpClient(
           { igris },
-          { OPENCODE_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
+          { IGRIS_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
         )
         const initialized = yield* initialize(acp)
         expect(initialized.agentCapabilities?.sessionCapabilities?.close).toEqual({})
@@ -47,7 +47,7 @@ describe("igris acp lifecycle subprocess", () => {
       Effect.gen(function* () {
         const acp = yield* createAcpClient(
           { igris },
-          { OPENCODE_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
+          { IGRIS_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
         )
         const initialized = yield* initialize(acp)
         expect(initialized.agentCapabilities?.loadSession).toBe(true)
@@ -71,7 +71,7 @@ describe("igris acp lifecycle subprocess", () => {
       Effect.gen(function* () {
         const acp = yield* createAcpClient(
           { igris },
-          { OPENCODE_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
+          { IGRIS_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
         )
         yield* initialize(acp)
         const session = yield* newSession(acp, home)
@@ -99,7 +99,7 @@ describe("igris acp lifecycle subprocess", () => {
       Effect.gen(function* () {
         const acp = yield* createAcpClient(
           { igris },
-          { OPENCODE_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
+          { IGRIS_CONFIG_CONTENT: JSON.stringify(verifierConfig(llm.url)) },
         )
         yield* initialize(acp)
         const session = yield* newSession(acp, home)

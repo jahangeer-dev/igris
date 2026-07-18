@@ -36,7 +36,7 @@ Core igris server and harness issues, including sqlite, snapshots, memory, API b
 
 ### Inference
 
-OpenCode Zen, OpenCode Go, and billing issues.
+Igris Zen, Igris Go, and billing issues.
 
 ### Windows
 

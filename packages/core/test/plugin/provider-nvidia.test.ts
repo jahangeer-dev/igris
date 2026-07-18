@@ -41,7 +41,7 @@ describe("NvidiaPlugin", () => {
         Existing: "value",
         "HTTP-Referer": "https://igris.ai/",
         "X-Title": "igris",
-        "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+        "X-BILLING-INVOKE-ORIGIN": "Igris",
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.openrouter))?.request.headers).toEqual({})
     }),
@@ -64,7 +64,7 @@ describe("NvidiaPlugin", () => {
       expect((yield* catalog.provider.get(ProviderV2.ID.make("nvidia")))?.request.headers).toEqual({
         "HTTP-Referer": "https://igris.ai/",
         "X-Title": "igris",
-        "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+        "X-BILLING-INVOKE-ORIGIN": "Igris",
       })
     }),
   )

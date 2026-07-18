@@ -6,7 +6,7 @@ import type {
   ToolCallLocation,
   ToolCallUpdate,
 } from "@agentclientprotocol/sdk"
-import type { Event, OpencodeClient } from "@igris-ai/sdk/v2"
+import type { Event, IgrisClient } from "@igris-ai/sdk/v2"
 import { applyPatch } from "diff"
 import { exists, readText } from "@/util/filesystem"
 import type { ACPSession } from "./session"
@@ -28,7 +28,7 @@ export class Handler {
 
   constructor(
     private readonly input: {
-      sdk: OpencodeClient
+      sdk: IgrisClient
       connection: Connection
       session: ACPSession.Interface
     },

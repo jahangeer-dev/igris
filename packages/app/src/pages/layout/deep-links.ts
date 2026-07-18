@@ -36,15 +36,15 @@ export const collectOpenProjectDeepLinks = (urls: string[]) =>
 export const collectNewSessionDeepLinks = (urls: string[]) =>
   urls.map(parseNewSessionDeepLink).filter((link): link is { directory: string; prompt?: string } => !!link)
 
-type OpenCodeWindow = Window & {
-  __OPENCODE__?: {
+type IgrisWindow = Window & {
+  __IGRIS__?: {
     deepLinks?: string[]
   }
 }
 
-export const drainPendingDeepLinks = (target: OpenCodeWindow) => {
-  const pending = target.__OPENCODE__?.deepLinks ?? []
+export const drainPendingDeepLinks = (target: IgrisWindow) => {
+  const pending = target.__IGRIS__?.deepLinks ?? []
   if (pending.length === 0) return []
-  if (target.__OPENCODE__) target.__OPENCODE__.deepLinks = []
+  if (target.__IGRIS__) target.__IGRIS__.deepLinks = []
   return pending
 }

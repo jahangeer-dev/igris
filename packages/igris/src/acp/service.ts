@@ -31,7 +31,7 @@ import {
 } from "@agentclientprotocol/sdk"
 import { InstallationVersion } from "@igris-ai/core/installation/version"
 import { AppNodeBuilder } from "@igris-ai/core/effect/app-node-builder"
-import type { AssistantMessage, Message, OpencodeClient, SessionMessageResponse } from "@igris-ai/sdk/v2"
+import type { AssistantMessage, Message, IgrisClient, SessionMessageResponse } from "@igris-ai/sdk/v2"
 import { Context, Effect, Layer, ManagedRuntime } from "effect"
 import * as ACPError from "./error"
 import { buildConfigOptions, parseModelSelection } from "./config-option"
@@ -73,7 +73,7 @@ export type Interface = {
 export class Service extends Context.Service<Service, Interface>()("@igris/ACP/Service") {}
 
 export function make(input: {
-  sdk: OpencodeClient
+  sdk: IgrisClient
   connection?: ServiceConnection
   directory?: Directory.Interface
   session?: ACPSession.Interface
@@ -102,7 +102,7 @@ export function make(input: {
         "terminal-auth": {
           command: "igris",
           args: ["auth", "login"],
-          label: "OpenCode Login",
+          label: "Igris Login",
         },
       }
     }
@@ -128,7 +128,7 @@ export function make(input: {
       },
       authMethods: [authMethod],
       agentInfo: {
-        name: "OpenCode",
+        name: "Igris",
         version: InstallationVersion,
       },
     }
@@ -575,7 +575,7 @@ function makeSessionService() {
   )
 }
 
-function makeDirectoryService(sdk: OpencodeClient) {
+function makeDirectoryService(sdk: IgrisClient) {
   return ManagedRuntime.make(
     AppNodeBuilder.build(Directory.node, [
       [
@@ -591,7 +591,7 @@ function makeDirectoryService(sdk: OpencodeClient) {
   ).runSync(Directory.Service.use((service) => Effect.succeed(service)))
 }
 
-function makeUsageService(sdk: OpencodeClient) {
+function makeUsageService(sdk: IgrisClient) {
   const limits = new Map<string, Promise<number | undefined>>()
   const contextLimit: UsageService.Interface["contextLimit"] = Effect.fn("ACP.promptUsage.contextLimit")(
     function* (params) {
@@ -717,7 +717,7 @@ function profiledRequest<T>(name: string, fn: () => Promise<T | SdkResponse<T>>,
   return request(() => ACPProfile.measure(name, fn), service)
 }
 
-async function loadDirectorySnapshot(sdk: OpencodeClient, directory: string) {
+async function loadDirectorySnapshot(sdk: IgrisClient, directory: string) {
   return ACPProfile.measure("acp.directory.load", async () => {
     const [providersResponse, agentsResponse, commandsResponse, skillsResponse, configResponse] = await Promise.all([
       ACPProfile.measure("acp.directory.provider.list", () =>
@@ -866,12 +866,12 @@ const promptResponse = Effect.fn("ACP.promptResponse")(function* (
 
 function promptErrorMessage(error: AssistantError) {
   if ("message" in error.data && typeof error.data.message === "string") return error.data.message
-  return "OpenCode prompt failed"
+  return "Igris prompt failed"
 }
 
 function sendUsageUpdate(
   usage: UsageService.Interface | undefined,
-  sdk: OpencodeClient,
+  sdk: IgrisClient,
   connection: ServiceConnection | undefined,
   sessionID: string,
   directory: string,
@@ -948,7 +948,7 @@ function sendAvailableCommands(
 }
 
 function registerMcpServers(
-  sdk: OpencodeClient,
+  sdk: IgrisClient,
   registered: Map<string, Set<string>>,
   directory: string,
   sessionId: string,
@@ -1059,7 +1059,7 @@ function fromUnknownError(error: unknown, service?: string): Error {
   if (isAuthRequired(error)) {
     return new ACPError.AuthRequiredError({ providerId: findProviderID(error) })
   }
-  return new ACPError.ServiceFailureError({ safeMessage: "OpenCode service failure", service })
+  return new ACPError.ServiceFailureError({ safeMessage: "Igris service failure", service })
 }
 
 function isACPError(error: unknown): error is Error {

@@ -481,7 +481,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
           headers: {
             "HTTP-Referer": "https://igris.ai/",
             "X-Title": "igris",
-            "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+            "X-BILLING-INVOKE-ORIGIN": "Igris",
           },
         },
       }),

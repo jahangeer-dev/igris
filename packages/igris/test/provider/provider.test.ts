@@ -1187,7 +1187,7 @@ it.instance("ModelNotFoundError for provider includes suggestions", () =>
 
 it.instance("ModelNotFoundError suggests catalog models for unloaded providers", () =>
   Effect.gen(function* () {
-    yield* remove("OPENCODE_API_KEY")
+    yield* remove("IGRIS_API_KEY")
     const error = yield* Provider.use
       .getModel(ProviderV2.ID.igris, ModelV2.ID.make("claude-haiku-fake-model"))
       .pipe(Effect.flip)
@@ -1278,7 +1278,7 @@ it.instance(
     expect(providers[ProviderV2.ID.make("nvidia")].options.headers).toEqual({
       "HTTP-Referer": "https://igris.ai/",
       "X-Title": "igris",
-      "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+      "X-BILLING-INVOKE-ORIGIN": "Igris",
     })
   }),
   { config: { provider: { nvidia: { options: { apiKey: "test-api-key" } } } } },
@@ -1291,7 +1291,7 @@ it.instance(
     expect(providers[ProviderV2.ID.make("nvidia")].options.headers).toEqual({
       "HTTP-Referer": "https://igris.ai/",
       "X-Title": "igris",
-      "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+      "X-BILLING-INVOKE-ORIGIN": "Igris",
     })
   }),
   { config: { provider: { nvidia: { options: { apiKey: "test-api-key", baseURL: "http://localhost:8000/v1" } } } } },
