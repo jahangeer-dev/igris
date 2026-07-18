@@ -1340,6 +1340,10 @@ const layer = Layer.effect(
         const bridge = yield* EffectBridge.make()
         const cfg = yield* config.get()
         const modelsDev = yield* modelsDevSvc.get()
+        // Map renamed opencode provider to igris
+        if (modelsDev["opencode"] && !modelsDev["igris"]) {
+          modelsDev["igris"] = { ...modelsDev["opencode"], id: "igris", name: "Igris" }
+        }
         const catalog = mapValues(modelsDev, fromModelsDevProvider)
         const database = mapValues(catalog, toPublicInfo)
 
