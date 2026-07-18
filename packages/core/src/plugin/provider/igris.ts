@@ -162,9 +162,17 @@ export const IgrisPlugin = define<HttpClient.HttpClient | EventV2.Service | Scop
         }
       }
 
-      const item = catalog.provider.get(ProviderV2.ID.igris)
-      if (!item) return
-      const hasKey = Boolean(process.env.IGRIS_API_KEY || connected || item.provider.request.body.apiKey)
+      // Always register the igris provider, even without a remote backend
+      let item = catalog.provider.get(ProviderV2.ID.igris)
+      if (!item) {
+        catalog.provider.update("igris", (provider) => {
+          provider.name = "Igris"
+          provider.integrationID = Integration.ID.make("igris")
+          provider.api = { type: "native" as const, url: "", settings: {} }
+        })
+        item = catalog.provider.get(ProviderV2.ID.igris)
+      }
+      const hasKey = Boolean(process.env.IGRIS_API_KEY || connected || item?.provider.request.body.apiKey)
       catalog.provider.update(item.provider.id, (provider) => {
         if (!hasKey) provider.request.body.apiKey = "public"
       })

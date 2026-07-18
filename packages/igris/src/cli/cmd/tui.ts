@@ -142,6 +142,19 @@ export const TuiThreadCommand = cmd({
         hidden: true,
       }),
   handler: async (args) => {
+    // Play startup animation when running in interactive terminal
+    if (process.stdout.isTTY && process.stderr.isTTY && !args.mini) {
+      try {
+        const { runIgrisStartup, clearStartup } = await import("@/cli/animation/startup")
+        const width = process.stdout.columns || 80
+        const height = process.stdout.rows || 24
+        await runIgrisStartup({ width, height })
+        clearStartup()
+      } catch {
+        // Silently fall through if animation fails
+      }
+    }
+
     if (args.replay === true) {
       UI.error("--replay is not supported; replay is enabled by default")
       process.exitCode = 1
