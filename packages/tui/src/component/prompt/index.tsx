@@ -1361,16 +1361,16 @@ export function Prompt(props: PromptProps) {
             paddingRight={2}
             paddingTop={1}
             flexShrink={0}
-            backgroundColor={theme.backgroundElement}
+            backgroundColor="#140E22"
             flexGrow={1}
             width="100%"
           >
             <textarea
               width="100%"
               placeholder={placeholderText()}
-              placeholderColor={theme.textMuted}
-              textColor={leader() ? theme.textMuted : theme.text}
-              focusedTextColor={leader() ? theme.textMuted : theme.text}
+              placeholderColor="#5A40A8"
+              textColor={leader() ? theme.textMuted : "#E5E7EB"}
+              focusedTextColor={leader() ? theme.textMuted : "#E5E7EB"}
               minHeight={1}
               maxHeight={maxHeight()}
               onContentChange={() => {
@@ -1434,8 +1434,8 @@ export function Prompt(props: PromptProps) {
                 }, 0)
               }}
               onMouseDown={(r: MouseEvent) => r.target?.focus()}
-              focusedBackgroundColor={theme.backgroundElement}
-              cursorColor={props.disabled ? theme.backgroundElement : theme.text}
+              focusedBackgroundColor="#1A132A"
+              cursorColor={props.disabled ? "#140E22" : "#7B3ED4"}
               syntaxStyle={syntax()}
             />
             <box flexDirection="row" flexShrink={0} paddingTop={1} gap={1} justifyContent="space-between">

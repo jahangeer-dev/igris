@@ -1296,26 +1296,36 @@ export function Session() {
                   <SubagentFooter />
                 </Show>
                 <Show when={visible()}>
-                  <pluginRuntime.Slot
-                    name="session_prompt"
-                    mode="replace"
-                    session_id={route.sessionID}
-                    visible={visible()}
-                    disabled={disabled()}
-                    on_submit={toBottom}
-                    ref={bind}
-                  >
-                    <Prompt
+                    <pluginRuntime.Slot
+                      name="session_prompt"
+                      mode="replace"
+                      session_id={route.sessionID}
                       visible={visible()}
-                      ref={bind}
                       disabled={disabled()}
-                      onSubmit={() => {
-                        toBottom()
-                      }}
-                      sessionID={route.sessionID}
-                      right={<pluginRuntime.Slot name="session_prompt_right" session_id={route.sessionID} />}
-                    />
-                  </pluginRuntime.Slot>
+                      on_submit={toBottom}
+                      ref={bind}
+                    >
+                      <box 
+                        borderStyle="rounded" 
+                        borderColor="#7B3ED4"
+                        title="⚔️  Type your command"
+                        titleColor="#7B3ED4"
+                        titleAlignment="left"
+                        backgroundColor="#0A0612"
+                        padding={1}
+                      >
+                        <Prompt
+                          visible={visible()}
+                          ref={bind}
+                          disabled={disabled()}
+                          onSubmit={() => {
+                            toBottom()
+                          }}
+                          sessionID={route.sessionID}
+                          right={<pluginRuntime.Slot name="session_prompt_right" session_id={route.sessionID} />}
+                        />
+                      </box>
+                    </pluginRuntime.Slot>
                 </Show>
               </box>
             </Show>
