@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 APP=igris
+BIN_NAME=igris-cli
 
 MUTED='\033[0;2m'
 RED='\033[0;31m'
@@ -17,18 +18,21 @@ Options:
     -h, --help              Display this help message
     -v, --version <version> Install a specific version (e.g., 1.0.180)
     -b, --binary <path>     Install from a local binary instead of downloading
+    -y, --yes               Skip confirmation prompts (auto-install latest)
         --no-modify-path    Don't modify shell config files (.zshrc, .bashrc, etc.)
 
 Examples:
     curl -fsSL https://raw.githubusercontent.com/jahangeer-dev/igris/master/install | bash
+    curl -fsSL https://raw.githubusercontent.com/jahangeer-dev/igris/master/install | bash -s -- -y
     curl -fsSL https://raw.githubusercontent.com/jahangeer-dev/igris/master/install | bash -s -- --version 1.0.0
-    ./install --binary /path/to/igris
+    ./install --binary /path/to/igris-cli
 EOF
 }
 
 requested_version=${VERSION:-}
 no_modify_path=false
 binary_path=""
+auto_yes=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -53,6 +57,10 @@ while [[ $# -gt 0 ]]; do
                 echo -e "${RED}Error: --binary requires a path argument${NC}"
                 exit 1
             fi
+            ;;
+        -y|--yes)
+            auto_yes=true
+            shift
             ;;
         --no-modify-path)
             no_modify_path=true
@@ -181,37 +189,46 @@ else
     fi
 
     if [ -z "$requested_version" ]; then
-        # Fetch available versions and let user pick
-        echo -e "${MUTED}Fetching available versions...${NC}"
-        versions=$(curl -s https://api.github.com/repos/jahangeer-dev/igris/releases?per_page=10 | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p' | head -5)
-
-        if [[ $? -ne 0 || -z "$versions" ]]; then
-            echo -e "${RED}Failed to fetch version information${NC}"
-            exit 1
-        fi
-
-        echo -e "\n${ORANGE}Available versions:${NC}"
-        i=1
-        latest=""
-        while IFS= read -r ver; do
-            [ -z "$ver" ] && continue
-            if [ -z "$latest" ]; then latest="$ver"; fi
-            echo -e "  ${MUTED}$i)${NC} v$ver"
-            i=$((i + 1))
-        done <<< "$versions"
-
-        echo ""
-        echo -e "${MUTED}Press Enter to install latest (v$latest), or type a version number:${NC} "
-        read -r pick
-
-        if [ -z "$pick" ]; then
-            specific_version="$latest"
+        if [ "$auto_yes" = "true" ]; then
+            # Non-interactive: fetch latest version
+            specific_version=$(curl -s https://api.github.com/repos/jahangeer-dev/igris/releases/latest | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')
+            if [[ $? -ne 0 || -z "$specific_version" ]]; then
+                echo -e "${RED}Failed to fetch latest version${NC}"
+                exit 1
+            fi
         else
-            # Check if input is a number (index) or version string
-            if [[ "$pick" =~ ^[0-9]+$ ]] && [ "$pick" -ge 1 ] && [ "$pick" -lt "$i" ]; then
-                specific_version=$(echo "$versions" | sed -n "${pick}p")
+            # Interactive: fetch available versions and let user pick
+            echo -e "${MUTED}Fetching available versions...${NC}"
+            versions=$(curl -s https://api.github.com/repos/jahangeer-dev/igris/releases?per_page=10 | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p' | head -5)
+
+            if [[ $? -ne 0 || -z "$versions" ]]; then
+                echo -e "${RED}Failed to fetch version information${NC}"
+                exit 1
+            fi
+
+            echo -e "\n${ORANGE}Available versions:${NC}"
+            i=1
+            latest=""
+            while IFS= read -r ver; do
+                [ -z "$ver" ] && continue
+                if [ -z "$latest" ]; then latest="$ver"; fi
+                echo -e "  ${MUTED}$i)${NC} v$ver"
+                i=$((i + 1))
+            done <<< "$versions"
+
+            echo ""
+            echo -e "${MUTED}Press Enter to install latest (v$latest), or type a version number:${NC} "
+            read -r pick
+
+            if [ -z "$pick" ]; then
+                specific_version="$latest"
             else
-                specific_version="${pick#v}"
+                # Check if input is a number (index) or version string
+                if [[ "$pick" =~ ^[0-9]+$ ]] && [ "$pick" -ge 1 ] && [ "$pick" -lt "$i" ]; then
+                    specific_version=$(echo "$versions" | sed -n "${pick}p")
+                else
+                    specific_version="${pick#v}"
+                fi
             fi
         fi
 
@@ -247,11 +264,8 @@ print_message() {
 }
 
 check_version() {
-    if command -v igris >/dev/null 2>&1; then
-        igris_path=$(which igris)
-
-        ## Check the installed version
-        installed_version=$(igris --version 2>/dev/null || echo "")
+    if command -v $BIN_NAME >/dev/null 2>&1; then
+        installed_version=$($BIN_NAME --version 2>/dev/null || echo "")
 
         if [[ "$installed_version" != "$specific_version" ]]; then
             print_message info "${MUTED}Installed version: ${NC}$installed_version."
@@ -353,20 +367,22 @@ download_with_progress() {
 }
 
 download_and_install() {
-    echo ""
-    echo -e "${ORANGE}⚠  You are about to install igris from jahangeer-dev/igris${NC}"
-    echo -e "${MUTED}  Version: ${NC}$specific_version"
-    echo -e "${MUTED}  Platform: ${NC}$os-$arch"
-    echo -e "${MUTED}  URL: ${NC}$url"
-    echo ""
-    echo -e "${ORANGE}Proceed with installation? [Y/n]${NC} "
-    read -r confirm
-    if [[ "$confirm" =~ ^[Nn] ]]; then
-        echo -e "${RED}Installation cancelled.${NC}"
-        exit 0
+    if [ "$auto_yes" = "false" ]; then
+        echo ""
+        echo -e "${ORANGE}⚠  You are about to install igris-cli from jahangeer-dev/igris${NC}"
+        echo -e "${MUTED}  Version: ${NC}$specific_version"
+        echo -e "${MUTED}  Platform: ${NC}$os-$arch"
+        echo -e "${MUTED}  URL: ${NC}$url"
+        echo ""
+        echo -e "${ORANGE}Proceed with installation? [Y/n]${NC} "
+        read -r confirm
+        if [[ "$confirm" =~ ^[Nn] ]]; then
+            echo -e "${RED}Installation cancelled.${NC}"
+            exit 0
+        fi
     fi
 
-    print_message info "\n${MUTED}Installing ${NC}igris ${MUTED}version: ${NC}$specific_version"
+    print_message info "\n${MUTED}Installing ${NC}igris-cli ${MUTED}version: ${NC}$specific_version"
     local tmp_dir="${TMPDIR:-/tmp}/igris_install_$$"
     mkdir -p "$tmp_dir"
 
@@ -381,15 +397,16 @@ download_and_install() {
         unzip -q "$tmp_dir/$filename" -d "$tmp_dir"
     fi
 
-    mv "$tmp_dir/igris" "$INSTALL_DIR"
-    chmod 755 "${INSTALL_DIR}/igris"
+    mv "$tmp_dir/igris" "$tmp_dir/$BIN_NAME"
+    mv "$tmp_dir/$BIN_NAME" "$INSTALL_DIR"
+    chmod 755 "${INSTALL_DIR}/$BIN_NAME"
     rm -rf "$tmp_dir"
 }
 
 install_from_binary() {
-    print_message info "\n${MUTED}Installing ${NC}igris ${MUTED}from: ${NC}$binary_path"
-    cp "$binary_path" "${INSTALL_DIR}/igris"
-    chmod 755 "${INSTALL_DIR}/igris"
+    print_message info "\n${MUTED}Installing ${NC}igris-cli ${MUTED}from: ${NC}$binary_path"
+    cp "$binary_path" "${INSTALL_DIR}/$BIN_NAME"
+    chmod 755 "${INSTALL_DIR}/$BIN_NAME"
 }
 
 if [ -n "$binary_path" ]; then
@@ -398,7 +415,6 @@ else
     check_version
     download_and_install
 fi
-
 
 add_to_path() {
     local config_file=$1
@@ -409,7 +425,7 @@ add_to_path() {
     elif [[ -w $config_file ]]; then
         echo -e "\n# igris" >> "$config_file"
         echo "$command" >> "$config_file"
-        print_message info "${MUTED}Successfully added ${NC}igris ${MUTED}to \$PATH in ${NC}$config_file"
+        print_message info "${MUTED}Successfully added ${NC}$BIN_NAME ${MUTED}to \$PATH in ${NC}$config_file"
     else
         print_message warning "Manually add the directory to $config_file (or similar):"
         print_message info "  $command"
@@ -485,8 +501,8 @@ if [ -n "${GITHUB_ACTIONS-}" ] && [ "${GITHUB_ACTIONS}" == "true" ]; then
 fi
 
 echo -e ""
-echo -e "${ORANGE}  igris installed successfully!${NC}"
+echo -e "${ORANGE}  igris-cli installed successfully!${NC}"
 echo -e ""
 echo -e "cd <project>  ${MUTED}# Open directory${NC}"
-echo -e "igris      ${MUTED}# Run command${NC}"
+echo -e "$BIN_NAME   ${MUTED}# Run command${NC}"
 echo -e ""
