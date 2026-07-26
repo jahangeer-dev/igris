@@ -27,9 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+        uses: ./.github/actions/setup-bun
 
       - name: Generate version
         id: version
@@ -39,9 +37,6 @@ jobs:
           else
             echo "version=0.1.${{ github.run_id }}" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Install deps
-        run: bun install
 
       - name: Build CLI (linux only)
         run: |
