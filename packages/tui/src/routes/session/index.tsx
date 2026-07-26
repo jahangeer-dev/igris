@@ -1307,11 +1307,11 @@ export function Session() {
                     >
                       <box 
                         borderStyle="rounded" 
-                        borderColor="#7B3ED4"
+                        borderColor={theme.primary}
                         title="⚔️  Type your command"
-                        titleColor="#7B3ED4"
+                        titleColor={theme.primary}
                         titleAlignment="left"
-                        backgroundColor="#0A0612"
+                        backgroundColor={theme.backgroundPanel}
                         padding={1}
                       >
                         <Prompt
@@ -1658,9 +1658,7 @@ function ReasoningHeader(props: {
   return (
     <Switch>
       <Match when={!props.done}>
-        <box flexDirection="row">
-          <Spinner color={fg()}>{props.title ? "Thinking: " + props.title : "Thinking"}</Spinner>
-        </box>
+        <ShadowExtractingSpinner title={props.title} />
       </Match>
       <Match when={true}>
         <text fg={fg()} wrapMode="none">
@@ -1683,6 +1681,75 @@ function ReasoningHeader(props: {
         </text>
       </Match>
     </Switch>
+  )
+}
+
+const SHADOW_FRAMES = ["·", "•", "◦", "◈", "◆", "◈", "◦", "•"]
+const SHADOW_PARTICLES = ["·", "∙", "•", "●", "◉", "●", "•", "∙"]
+
+function ShadowExtractingSpinner(props: { title: string | null }) {
+  const [tick, setTick] = createSignal(0)
+  let mounted = true
+
+  onMount(() => {
+    const id = setInterval(() => {
+      if (!mounted) return
+      setTick((t) => t + 1)
+    }, 80)
+    onCleanup(() => {
+      mounted = false
+      clearInterval(id)
+    })
+  })
+
+  const text = createMemo(() => {
+    const t = tick()
+    const label = props.title ? ` ${props.title} ` : " "
+    const particles = "· · · · · · · ·"
+    return particles.split("").map((char, i) => {
+      const phase = (t + i * 2) % SHADOW_PARTICLES.length
+      return SHADOW_PARTICLES[phase]
+    }).join("")
+  })
+
+  const bracket = createMemo(() => {
+    const t = tick()
+    const leftIdx = t % SHADOW_FRAMES.length
+    const rightIdx = (t + 4) % SHADOW_FRAMES.length
+    return { left: SHADOW_FRAMES[leftIdx], right: SHADOW_FRAMES[rightIdx] }
+  })
+
+  const label = createMemo(() => {
+    const t = tick()
+    const base = "shadow extracting"
+    return base.split("").map((char, i) => {
+      const wave = Math.sin((t * 0.3) + i * 0.5) * 0.4 + 0.6
+      return { char, opacity: wave }
+    })
+  })
+
+  return (
+    <box flexDirection="row" gap={1}>
+      <text fg={RGBA.fromValues(0.4, 0.1, 0.5, 1)}>
+        <b>{bracket().left}</b>
+      </text>
+      <text fg={RGBA.fromValues(0.5, 0.15, 0.6, 0.6)}>
+        {text()}
+      </text>
+      <text>
+        {label().map((item) => (
+          <span style={{ fg: RGBA.fromValues(0.6 * item.opacity, 0.1 * item.opacity, 0.8 * item.opacity, item.opacity) }}>
+            {item.char}
+          </span>
+        ))}
+      </text>
+      <text fg={RGBA.fromValues(0.5, 0.15, 0.6, 0.6)}>
+        {text()}
+      </text>
+      <text fg={RGBA.fromValues(0.4, 0.1, 0.5, 1)}>
+        <b>{bracket().right}</b>
+      </text>
+    </box>
   )
 }
 

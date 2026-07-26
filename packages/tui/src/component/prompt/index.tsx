@@ -12,6 +12,7 @@ import type { CommandContext } from "@opentui/keymap"
 import { createEffect, createMemo, onMount, createSignal, onCleanup, on, Show, Switch, Match } from "solid-js"
 import { registerIgrisSpinner } from "../register-spinner"
 import path from "path"
+import fs from "fs"
 import { fileURLToPath } from "url"
 import { useLocal } from "../../context/local"
 import { Flag } from "@igris-ai/core/flag/flag"
@@ -59,6 +60,96 @@ import { readLocalAttachment } from "./local-attachment"
 import { useLocation } from "../../context/location"
 
 registerIgrisSpinner()
+
+const DOT_CHARS = ["·", "∙", "•", "●", "•", "∙", "·"]
+
+function MovingArrowSpinner(props: { color?: RGBA }) {
+  const [tick, setTick] = createSignal(0)
+  let mounted = true
+
+  onMount(() => {
+    const id = setInterval(() => {
+      if (!mounted) return
+      setTick((t) => t + 1)
+    }, 60)
+    onCleanup(() => {
+      mounted = false
+      clearInterval(id)
+    })
+  })
+
+  const display = createMemo(() => {
+    const t = tick()
+    const width = 16
+    const arrowPos = (t * 0.8) % width
+    const chars: string[] = []
+    const colors: { r: number; g: number; b: number; a: number }[] = []
+
+    const baseColor = props.color ?? RGBA.fromValues(0.4, 0.1, 0.6, 1)
+
+    for (let i = 0; i < width; i++) {
+      const distFromArrow = Math.abs(i - arrowPos)
+      const distFromArrowWrapped = Math.min(distFromArrow, width - distFromArrow)
+
+      const breath = 0.5 + Math.sin(t * 0.08 + i * 0.4) * 0.5
+
+      if (distFromArrowWrapped < 0.5) {
+        chars.push("▶")
+        colors.push({ r: baseColor.r, g: baseColor.g, b: baseColor.b, a: 1.0 })
+      } else if (distFromArrowWrapped < 1.5) {
+        chars.push("▸")
+        const fade = 1.0 - (distFromArrowWrapped - 0.5)
+        colors.push({ r: baseColor.r * fade, g: baseColor.g * fade, b: baseColor.b * fade, a: fade })
+      } else if (distFromArrowWrapped < 3) {
+        const dotIdx = Math.floor((t + i) % DOT_CHARS.length)
+        chars.push(DOT_CHARS[dotIdx])
+        const brightness = 0.2 + breath * 0.4
+        colors.push({ r: baseColor.r * brightness, g: baseColor.g * brightness, b: baseColor.b * brightness, a: 0.5 + breath * 0.3 })
+      } else {
+        const dotIdx = Math.floor((t * 0.3 + i) % DOT_CHARS.length)
+        chars.push(DOT_CHARS[dotIdx])
+        const brightness = 0.1 + breath * 0.15
+        colors.push({ r: baseColor.r * brightness, g: baseColor.g * brightness, b: baseColor.b * brightness, a: 0.2 + breath * 0.2 })
+      }
+    }
+
+    return { chars, colors }
+  })
+
+  return (
+    <text>
+      {display().chars.map((char, i) => {
+        const c = display().colors[i]
+        return <span style={{ fg: RGBA.fromValues(c.r * 255, c.g * 255, c.b * 255, c.a) }}>{char}</span>
+      })}
+    </text>
+  )
+}
+
+function getProcessStats(): { cpu: string; ram: string } {
+  try {
+    const status = fs.readFileSync("/proc/self/status", "utf8")
+    let rssKb = 0
+    for (const line of status.split("\n")) {
+      if (line.startsWith("VmRSS:")) {
+        rssKb = parseInt(line.split(/\s+/)[1], 10)
+        break
+      }
+    }
+    const ramMb = (rssKb / 1024).toFixed(0)
+
+    const stat = fs.readFileSync("/proc/self/stat", "utf8").split(" ")
+    const utime = parseInt(stat[13], 10)
+    const stime = parseInt(stat[14], 10)
+    const totalTicks = utime + stime
+    const clkTck = 100
+    const totalSec = (totalTicks / clkTck).toFixed(1)
+
+    return { cpu: `${totalSec}s`, ram: `${ramMb}MB` }
+  } catch {
+    return { cpu: "-", ram: "-" }
+  }
+}
 
 export type PromptProps = {
   sessionID?: string
@@ -278,6 +369,15 @@ export function Prompt(props: PromptProps) {
       context: pct ? `${Locale.number(tokens)} (${pct})` : Locale.number(tokens),
       cost: cost > 0 ? money.format(cost) : undefined,
     }
+  })
+
+  const [procStats, setProcStats] = createSignal(getProcessStats())
+  let statsTimer: ReturnType<typeof setInterval> | undefined
+  onMount(() => {
+    statsTimer = setInterval(() => setProcStats(getProcessStats()), 2000)
+  })
+  onCleanup(() => {
+    if (statsTimer) clearInterval(statsTimer)
   })
 
   const [store, setStore] = createStore<{
@@ -1221,6 +1321,16 @@ export function Prompt(props: PromptProps) {
   }
 
   async function pasteAttachment(file: { filename?: string; filepath?: string; content: string; mime: string }) {
+    const isImage = file.mime.startsWith("image/")
+    if (isImage && !local.model.parsed().image) {
+      toast.show({
+        message: `Cannot attach image: the current model (${local.model.parsed().model}) does not support image input`,
+        variant: "error",
+        duration: 3000,
+      })
+      return
+    }
+
     const currentOffset = input.cursorOffset
     const extmarkStart = currentOffset
     const pdf = file.mime === "application/pdf"
@@ -1319,25 +1429,21 @@ export function Prompt(props: PromptProps) {
   })
 
   const spinnerDef = createMemo(() => {
-    const agent =
-      status().type !== "idle"
-        ? (local.agent.list().find((a) => a.name === lastUserMessage()?.agent) ?? local.agent.current())
-        : local.agent.current()
-    const color = agent ? local.agent.color(agent.name) : theme.border
+    const shadowColor = RGBA.fromValues(0.4, 0.1, 0.5, 1)
     return {
       frames: createFrames({
-        color,
-        style: "blocks",
-        inactiveFactor: 0.6,
-        // enableFading: false,
-        minAlpha: 0.3,
+        color: shadowColor,
+        style: "diamonds",
+        trailSteps: 12,
+        inactiveFactor: 0.3,
+        minAlpha: 0.1,
+        width: 16,
       }),
       color: createColors({
-        color,
-        style: "blocks",
-        inactiveFactor: 0.6,
-        // enableFading: false,
-        minAlpha: 0.3,
+        color: shadowColor,
+        trailSteps: 12,
+        inactiveFactor: 0.3,
+        minAlpha: 0.1,
       }),
     }
   })
@@ -1361,18 +1467,21 @@ export function Prompt(props: PromptProps) {
             paddingRight={2}
             paddingTop={1}
             flexShrink={0}
-            backgroundColor="#140E22"
+            backgroundColor={theme.backgroundElement}
             flexGrow={1}
             width="100%"
           >
             <textarea
               width="100%"
               placeholder={placeholderText()}
-              placeholderColor="#5A40A8"
-              textColor={leader() ? theme.textMuted : "#E5E7EB"}
-              focusedTextColor={leader() ? theme.textMuted : "#E5E7EB"}
+              placeholderColor={theme.textMuted}
+              textColor={theme.text}
+              focusedTextColor={theme.text}
               minHeight={1}
               maxHeight={maxHeight()}
+              onSubmit={() => {
+                submit()
+              }}
               onContentChange={() => {
                 const value = input.plainText
                 setStore("prompt", "input", value)
@@ -1386,11 +1495,6 @@ export function Prompt(props: PromptProps) {
                   e.preventDefault()
                   return
                 }
-              }}
-              onSubmit={() => {
-                // IME: double-defer so the last composed character (e.g. Korean
-                // hangul) is flushed to plainText before we read it for submission.
-                setTimeout(() => setTimeout(() => submit(), 0), 0)
               }}
               onPaste={async (event: PasteEvent) => {
                 if (props.disabled) {
@@ -1422,6 +1526,11 @@ export function Prompt(props: PromptProps) {
                 Object.assign(r, {
                   getClipboardText: (text: string) => expandPastedTextPlaceholders(text, store.prompt.parts),
                 })
+                // Enter/Shift+Enter are handled by the keymap system via
+                // input.submit (→ editor.submit() → onSubmit) and
+                // input.newline (→ editor.newLine()). The old handleKeyPress
+                // override is removed because registerManagedTextareaLayer
+                // suspends textarea-native key handling.
                 setInputTarget(r)
                 if (promptPartTypeId === 0) {
                   promptPartTypeId = input.extmarks.registerType("prompt-part")
@@ -1434,8 +1543,8 @@ export function Prompt(props: PromptProps) {
                 }, 0)
               }}
               onMouseDown={(r: MouseEvent) => r.target?.focus()}
-              focusedBackgroundColor="#1A132A"
-              cursorColor={props.disabled ? "#140E22" : "#7B3ED4"}
+              focusedBackgroundColor={theme.backgroundElement}
+              cursorColor={props.disabled ? theme.backgroundElement : theme.primary}
               syntaxStyle={syntax()}
             />
             <box flexDirection="row" flexShrink={0} paddingTop={1} gap={1} justifyContent="space-between">
@@ -1519,7 +1628,7 @@ export function Prompt(props: PromptProps) {
                 <box flexShrink={0} flexDirection="row" gap={1}>
                   <box marginLeft={1}>
                     <Show when={kv.get("animations_enabled", true)} fallback={<text fg={theme.textMuted}>[⋯]</text>}>
-                      <spinner color={spinnerDef().color} frames={spinnerDef().frames} interval={40} />
+                      <MovingArrowSpinner color={highlight()} />
                     </Show>
                   </box>
                   <box flexDirection="row" gap={1} flexShrink={0}>
@@ -1660,14 +1769,22 @@ export function Prompt(props: PromptProps) {
                 <Match when={store.mode === "normal"}>
                   <Switch>
                     <Match when={usage()}>
-                      {(item) => (
-                        <text fg={theme.textMuted} wrapMode="none">
-                          {[item().context, item().cost].filter(Boolean).join(" · ")}
-                        </text>
-                      )}
+                      {(item) => {
+                        const stats = procStats()
+                        return (
+                          <text fg={theme.textMuted} wrapMode="none">
+                            {[item().context, item().cost, `CPU ${stats.cpu}`, `RAM ${stats.ram}`].filter(Boolean).join(" · ")}
+                          </text>
+                        )
+                      }}
                     </Match>
                     <Match when={true}>
-                      <text fg={theme.text}>
+                      <text fg={theme.textMuted} wrapMode="none">
+                        {(() => {
+                          const stats = procStats()
+                          return `CPU ${stats.cpu} · RAM ${stats.ram}`
+                        })()}
+                        {" · "}
                         {agentShortcut()} <span style={{ fg: theme.textMuted }}>agents</span>
                       </text>
                     </Match>
