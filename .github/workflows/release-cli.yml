@@ -39,6 +39,7 @@ jobs:
           bun packages/igris/script/build.ts --single --skip-embed-web-ui
         env:
           IGRIS_VERSION: ${{ steps.version.outputs.version }}
+          IGRIS_CHANNEL: latest
 
       - name: Package artifact
         run: |
