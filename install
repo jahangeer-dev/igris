@@ -190,12 +190,8 @@ else
 
     if [ -z "$requested_version" ]; then
         if [ "$auto_yes" = "true" ]; then
-            # Non-interactive: fetch latest version
-            specific_version=$(curl -s https://api.github.com/repos/jahangeer-dev/igris/releases/latest | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')
-            if [[ $? -ne 0 || -z "$specific_version" ]]; then
-                echo -e "${RED}Failed to fetch latest version${NC}"
-                exit 1
-            fi
+            # Non-interactive: use latest
+            specific_version="latest"
         else
             # Interactive: fetch available versions and let user pick
             echo -e "${MUTED}Fetching available versions...${NC}"
