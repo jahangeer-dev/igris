@@ -51,6 +51,8 @@ jobs:
           ls -la release-assets/
 
       - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           VERSION=v${{ steps.version.outputs.version }}
           gh release delete "$VERSION" --yes 2>/dev/null || true
