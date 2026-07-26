@@ -38,7 +38,7 @@ jobs:
         run: |
           bun packages/igris/script/build.ts --single --skip-embed-web-ui
         env:
-          OPENCODE_VERSION: ${{ steps.version.outputs.version }}
+          IGRIS_VERSION: ${{ steps.version.outputs.version }}
 
       - name: Package artifact
         run: |
