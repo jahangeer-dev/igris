@@ -51,25 +51,40 @@ jobs:
           done
           ls -la release-assets/
 
+      - name: Delete old release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=v${{ steps.version.outputs.version }}
+          gh release delete "$VERSION" --yes --cleanup-tag 2>/dev/null || true
+
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION=v${{ steps.version.outputs.version }}
-          gh release delete "$VERSION" --yes 2>/dev/null || true
+          echo "Creating release: $VERSION"
           gh release create "$VERSION" \
             --title "igris $VERSION" \
             --notes "Build from ${{ github.sha }}"
+          echo "Uploading artifacts..."
           for f in release-assets/*; do
             [ -f "$f" ] || continue
-            gh release upload "$VERSION" "$f"
+            echo "Uploading: $f"
+            gh release upload "$VERSION" "$f" --clobber
           done
+          echo "Release created successfully!"
 
-      - name: Keep only last 2 releases
+      - name: Cleanup old releases (keep last 2)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release list --limit 50 --json tagName,isLatest --jq '.[].tagName' | head -n -2 | while read -r tag; do
-            echo "Deleting old release: $tag"
+          echo "Listing releases..."
+          gh release list --limit 10
+          echo ""
+          echo "Keeping only last 2 releases..."
+          gh release list --limit 10 --json tagName --jq '.[].tagName' | head -n -2 | while read -r tag; do
+            echo "Deleting: $tag"
             gh release delete "$tag" --yes --cleanup-tag 2>/dev/null || true
           done
+          echo "Done!"
