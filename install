@@ -183,7 +183,7 @@ else
     if [ -z "$requested_version" ]; then
         # Fetch available versions and let user pick
         echo -e "${MUTED}Fetching available versions...${NC}"
-        versions=$(curl -s https://api.github.com/repos/jahangeer-dev/igris-releases/releases?per_page=10 | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p' | head -5)
+        versions=$(curl -s https://api.github.com/repos/jahangeer-dev/igris/releases?per_page=10 | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p' | head -5)
 
         if [[ $? -ne 0 || -z "$versions" ]]; then
             echo -e "${RED}Failed to fetch version information${NC}"
@@ -215,18 +215,18 @@ else
             fi
         fi
 
-        url="https://github.com/jahangeer-dev/igris-releases/releases/download/v${specific_version}/$filename"
+        url="https://github.com/jahangeer-dev/igris/releases/download/v${specific_version}/$filename"
     else
         # Strip leading 'v' if present
         requested_version="${requested_version#v}"
-        url="https://github.com/jahangeer-dev/igris-releases/releases/download/v${requested_version}/$filename"
+        url="https://github.com/jahangeer-dev/igris/releases/download/v${requested_version}/$filename"
         specific_version=$requested_version
 
         # Verify the release exists before downloading
-        http_status=$(curl -sI -o /dev/null -w "%{http_code}" "https://github.com/jahangeer-dev/igris-releases/releases/tag/v${requested_version}")
+        http_status=$(curl -sI -o /dev/null -w "%{http_code}" "https://github.com/jahangeer-dev/igris/releases/tag/v${requested_version}")
         if [ "$http_status" = "404" ]; then
             echo -e "${RED}Error: Release v${requested_version} not found${NC}"
-            echo -e "${MUTED}Available releases: https://github.com/jahangeer-dev/igris-releases/releases${NC}"
+            echo -e "${MUTED}Available releases: https://github.com/jahangeer-dev/igris/releases${NC}"
             exit 1
         fi
     fi
@@ -354,7 +354,7 @@ download_with_progress() {
 
 download_and_install() {
     echo ""
-    echo -e "${ORANGE}⚠  You are about to install igris from jahangeer-dev/igris-releases${NC}"
+    echo -e "${ORANGE}⚠  You are about to install igris from jahangeer-dev/igris${NC}"
     echo -e "${MUTED}  Version: ${NC}$specific_version"
     echo -e "${MUTED}  Platform: ${NC}$os-$arch"
     echo -e "${MUTED}  URL: ${NC}$url"
