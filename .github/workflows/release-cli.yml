@@ -1,0 +1,97 @@
+name: release-cli
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag (e.g., 1.0.0). Auto-generated if empty."
+        required: false
+        type: string
+  push:
+    branches:
+      - master
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+
+env:
+  RELEASES_REPO: jahangeer-dev/igris-releases
+
+jobs:
+  build-and-release:
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: ./.github/actions/setup-bun
+
+      - name: Generate version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=0.1.${{ github.run_id }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build CLI binaries
+        run: |
+          ./packages/igris/script/build.ts --skip-embed-web-ui
+        env:
+          OPENCODE_VERSION: ${{ steps.version.outputs.version }}
+
+      - name: Package artifacts
+        run: |
+          VERSION=v${{ steps.version.outputs.version }}
+          mkdir -p release-assets
+          for dir in packages/igris/dist/igris-*; do
+            [ -d "$dir" ] || continue
+            name=$(basename "$dir")
+            if [[ "$dir" == *windows* ]]; then
+              (cd "$dir/bin" && zip -q "$OLDPWD/release-assets/$name.zip" .)
+            else
+              tar -czf "release-assets/$name.tar.gz" -C "$dir/bin" .
+            fi
+          done
+          ls -la release-assets/
+
+      - name: Create release on public repo
+        env:
+          GH_TOKEN: ${{ secrets.RELEASES_PAT }}
+        run: |
+          VERSION=v${{ steps.version.outputs.version }}
+          # Delete release if it already exists (for re-runs)
+          gh release delete "$VERSION" --repo "${{ env.RELEASES_REPO }}" --yes 2>/dev/null || true
+          git tag -d "$VERSION" 2>/dev/null || true
+
+          gh release create "$VERSION" \
+            --repo "${{ env.RELEASES_REPO }}" \
+            --title "igris $VERSION" \
+            --notes "Build from ${{ github.repository }}@${{ github.sha }}"
+
+          # Only upload linux builds for now (cross-compiled from Linux)
+          for f in release-assets/igris-linux-*; do
+            [ -f "$f" ] || continue
+            gh release upload "$VERSION" "$f" --repo "${{ env.RELEASES_REPO }}"
+          done
+
+      - name: Keep only last 2 releases
+        env:
+          GH_TOKEN: ${{ secrets.RELEASES_PAT }}
+        run: |
+          releases=$(gh release list --repo "${{ env.RELEASES_REPO }}" --limit 50 --json tagName,isLatest --jq '.[].tagName' | head -n -2)
+          if [ -n "$releases" ]; then
+            echo "$releases" | while read -r tag; do
+              echo "Deleting old release: $tag"
+              gh release delete "$tag" --repo "${{ env.RELEASES_REPO }}" --yes
+              # Delete the tag too
+              git ls-remote --tags "https://github.com/${{ env.RELEASES_REPO }}" "refs/tags/$tag" | cut -f1 | while read -r sha; do
+                gh api -X DELETE "repos/${{ env.RELEASES_REPO }}/git/refs/tags/$tag" --silent 2>/dev/null || true
+              done
+            done
+          fi
