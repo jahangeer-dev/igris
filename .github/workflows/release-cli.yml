@@ -69,8 +69,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release list --limit 50 --json tagName --jq '.[].tagName' | head -n -2 | while read -r tag; do
+          gh release list --limit 50 --json tagName,isLatest --jq '.[].tagName' | head -n -2 | while read -r tag; do
             echo "Deleting old release: $tag"
-            gh release delete "$tag" --yes 2>/dev/null || true
-            gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/$tag" --silent 2>/dev/null || true
+            gh release delete "$tag" --yes --cleanup-tag 2>/dev/null || true
           done
