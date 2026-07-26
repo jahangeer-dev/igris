@@ -228,15 +228,15 @@ else
             fi
         fi
 
-        url="https://github.com/jahangeer-dev/igris/releases/download/v${specific_version}/$filename"
+        url="https://github.com/jahangeer-dev/igris/releases/download/${specific_version}/$filename"
     else
         # Strip leading 'v' if present
         requested_version="${requested_version#v}"
-        url="https://github.com/jahangeer-dev/igris/releases/download/v${requested_version}/$filename"
         specific_version=$requested_version
+        url="https://github.com/jahangeer-dev/igris/releases/download/${specific_version}/$filename"
 
         # Verify the release exists before downloading
-        http_status=$(curl -sI -o /dev/null -w "%{http_code}" "https://github.com/jahangeer-dev/igris/releases/tag/v${requested_version}")
+        http_status=$(curl -sI -o /dev/null -w "%{http_code}" "https://github.com/jahangeer-dev/igris/releases/tag/${specific_version}")
         if [ "$http_status" = "404" ]; then
             echo -e "${RED}Error: Release v${requested_version} not found${NC}"
             echo -e "${MUTED}Available releases: https://github.com/jahangeer-dev/igris/releases${NC}"
