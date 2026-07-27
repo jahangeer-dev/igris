@@ -419,6 +419,11 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
       setReady(true)
     })
 
+  // Fallback: ensure home page renders even if plugins hang
+  setTimeout(() => {
+    setReady(true)
+  }, 15000).unref()
+
   // Let selection copy/dismiss win ahead of normal bindings when explicit copy is required.
   const offSelectionKeys = keymap.intercept(
     "key",
