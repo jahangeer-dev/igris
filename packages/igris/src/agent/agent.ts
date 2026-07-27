@@ -21,6 +21,9 @@ import PROMPT_MULTIMODAL_LOOKER from "./prompt/multimodal-looker.txt"
 import PROMPT_PROMETHEUS from "./prompt/prometheus.txt"
 import PROMPT_WEBFINDER from "./prompt/webfinder.txt"
 import PROMPT_DOCSMITH from "./prompt/docsmith.txt"
+import PROMPT_ANALYST from "./prompt/analyst.txt"
+import PROMPT_SENSEI from "./prompt/sensei.txt"
+import PROMPT_ARGIVER from "./prompt/argiver.txt"
 import { Permission } from "@/permission"
 import { mergeDeep, pipe, sortBy, values } from "remeda"
 import { Global } from "@igris-ai/core/global"
@@ -56,6 +59,7 @@ export const Info = Schema.Struct({
     }),
   ),
   variant: Schema.optional(Schema.String),
+  tier: Schema.optional(Schema.String),
   prompt: Schema.optional(Schema.String),
   options: Schema.Record(Schema.String, Schema.Unknown),
   steps: Schema.optional(Schema.Finite),
@@ -229,6 +233,68 @@ const layer = Layer.effect(
             mode: "primary",
             native: true,
           },
+          analyst: {
+            name: "analyst",
+            description:
+              "R&D analyst. Researches technologies, compares alternatives, and recommends best-in-class solutions with evidence.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                "*": "deny",
+                read: "allow",
+                webfetch: "allow",
+                websearch: "allow",
+                bash: "allow",
+              }),
+              user,
+            ),
+            prompt: PROMPT_ANALYST,
+            options: {},
+            mode: "primary",
+            native: true,
+          },
+          sensei: {
+            name: "sensei",
+            description:
+              "Teaching agent. Explains concepts clearly, adapts to your level, and always explains why.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                "*": "deny",
+                read: "allow",
+                webfetch: "allow",
+                websearch: "allow",
+              }),
+              user,
+            ),
+            prompt: PROMPT_SENSEI,
+            options: {},
+            mode: "primary",
+            native: true,
+          },
+          argiver: {
+            name: "argiver",
+            description:
+              "Constructive critic. Challenges your approach, finds blind spots, and suggests better alternatives with clear reasoning.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                read: "allow",
+                webfetch: "allow",
+                websearch: "allow",
+                bash: "allow",
+                edit: "allow",
+                write: "allow",
+                glob: "allow",
+                grep: "allow",
+              }),
+              user,
+            ),
+            prompt: PROMPT_ARGIVER,
+            options: {},
+            mode: "primary",
+            native: true,
+          },
           oracle: {
             name: "oracle",
             description:
@@ -379,6 +445,7 @@ const layer = Layer.effect(
             }
           if (value.model) item.model = Provider.parseModel(value.model)
           item.variant = value.variant ?? item.variant
+          item.tier = value.tier ?? item.tier
           item.prompt = value.prompt ?? item.prompt
           item.description = value.description ?? item.description
           item.temperature = value.temperature ?? item.temperature

@@ -1,0 +1,8 @@
+- Query JSON data using jq syntax
+- Takes a jq filter expression and optional file path
+- Returns formatted query results
+- Use when you need to extract specific fields, filter arrays, or transform JSON
+- Examples: '.key', '.[].name', 'select(.age > 18)'
+- If no file path given, reads from stdin context
+- Supports pipes and complex jq expressions
+- Prefer this over reading and manually parsing JSON files

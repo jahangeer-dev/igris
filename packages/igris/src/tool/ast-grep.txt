@@ -1,0 +1,11 @@
+- Search code by syntax structure using ast-grep (sg)
+- Finds code patterns by AST structure, not text regex
+- Use for: finding all arrow functions, all class methods, all error handlers, etc.
+- Syntax-aware: understands nesting, scope, and code structure
+- Supports YAML/JSON pattern files and inline patterns
+- Pattern format uses tree-sitter query syntax
+- Examples:
+  - `sg -p 'console.log($A)'` — find all console.log calls
+  - `sg -p 'if ($A) { $B } else { $C }'` — find if-else blocks
+  - `sg -p 'function $NAME($$$) { $$$ }'` — find all functions
+- Use when grep gives too many false positives or you need structural matches

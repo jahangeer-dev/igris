@@ -1,0 +1,5 @@
+- Recall previously stored project facts from persistent memory
+- Searches all memories by keyword and returns matching entries
+- Use when you need to remember decisions, conventions, or patterns from past sessions
+- Returns the full content of each matching memory
+- If no query given, returns all memories

@@ -1,6 +1,6 @@
 Create or update `AGENTS.md` for this repository.
 
-The goal is a compact instruction file that helps future OpenCode sessions avoid mistakes and ramp up quickly. Every line should answer: "Would an agent likely miss this without help?" If not, leave it out.
+The goal is a compact instruction file that helps future Igris sessions avoid mistakes and ramp up quickly. Every line should answer: "Would an agent likely miss this without help?" If not, leave it out.
 
 User-provided focus or constraints (honor these):
 $ARGUMENTS
@@ -12,7 +12,7 @@ Read the highest-value sources first:
 - build, test, lint, formatter, typecheck, and codegen config
 - CI workflows and pre-commit / task runner config
 - existing instruction files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.cursorrules`, `.github/copilot-instructions.md`)
-- repo-local OpenCode config such as `igris.json`
+- repo-local Igris config such as `igris.json`
 
 If architecture is still unclear after reading config and docs, inspect a small number of representative code files to find the real entrypoints, package boundaries, and execution flow. Prefer reading the files that explain how the system is wired together over random leaf files.
 
@@ -50,6 +50,39 @@ Check if Graphify (https://graphify.net/) is already set up in this repo (look f
 > "Would you like to set up Graphify for this repo? It builds a queryable knowledge graph to help AI assistants understand the codebase faster. Install with `pip install graphifyy`, then run `graphify opencode install`."
 
 If the user agrees, add a note in `AGENTS.md` about the Graphify setup and recommended commands. Do not install it yourself — just document the intent.
+
+### LSP setup check
+
+Check if LSP is configured in `igris.json` (look for the `"lsp"` key). If not configured, ask the user:
+
+> "LSP (Language Server Protocol) provides live diagnostics — errors, warnings, and info — while you code. This helps the AI catch issues immediately after edits. Would you like to enable it? (Recommended for most projects.)"
+
+If the user agrees:
+- Report back that LSP is enabled by default — no `igris.json` change needed
+- If they want to disable or fine-tune specific servers, they can set `"lsp": false` or configure per-server in `igris.json`
+- Document the decision in `AGENTS.md`
+
+### Model tier setup check
+
+Check if `model_tiers` is configured in `igris.json`. If not configured, ask the user:
+
+> "I can route tasks to different models based on complexity — cheap models for quick searches, ultra models for deep reasoning. Would you like to configure model tiers?"
+>
+> If yes, ask for:
+> 1. **Cheap model** for fast/cheap tasks (e.g., `openai/gpt-4-mini`, `mistral/mistral-small`, `anthropic/claude-haiku`)
+> 2. **Ultra model** for complex reasoning (e.g., `anthropic/claude-opus-4`, `openai/gpt-5`)
+
+If the user provides models, add to `igris.json`:
+```json
+{
+  "model_tiers": {
+    "cheap": "<user's choice>",
+    "ultra": "<user's choice>"
+  }
+}
+```
+
+Explain that agents with tiers (explore, oracle, etc.) will automatically use these models when delegated.
 
 ## Writing rules
 

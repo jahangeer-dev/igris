@@ -23,6 +23,7 @@ import { LocationServiceMap, locationServiceMapLayer } from "@igris-ai/core/loca
 import { Reference } from "@igris-ai/core/reference"
 import { MCP } from "@/mcp"
 import { PermissionV1 } from "@igris-ai/core/v1/permission"
+import { Memory } from "@/memory"
 
 export function provider(model: Provider.Model) {
   if (model.api.id.includes("muse-spark")) return [PROMPT_META]
@@ -54,6 +55,7 @@ const layer = Layer.effect(
   Effect.gen(function* () {
     const skill = yield* Skill.Service
     const mcp = yield* MCP.Service
+    const memory = yield* Memory.Service
     const locations = yield* LocationServiceMap.Service
 
     return Service.of({
@@ -92,6 +94,7 @@ const layer = Layer.effect(
                   ]),
                 "</available_references>",
               ].join("\n"),
+              yield* memory.inject(),
         ].filter((part): part is string => part !== undefined)
       }),
 
@@ -139,7 +142,7 @@ const locationServiceMapNode = LayerNode.make({
 export const node = LayerNode.make({
   service: Service,
   layer: layer,
-  deps: [Skill.node, MCP.node, locationServiceMapNode],
+  deps: [Skill.node, MCP.node, Memory.node, locationServiceMapNode],
 })
 
 export * as SystemPrompt from "./system"

@@ -3751,6 +3751,7 @@ export class Session2 extends HeyApiClient {
       }
       agent?: string
       noReply?: boolean
+      skillSuggest?: boolean
       tools?: {
         [key: string]: boolean
       }

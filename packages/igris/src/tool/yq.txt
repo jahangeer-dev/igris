@@ -1,0 +1,7 @@
+- Query YAML/YAML/TOML data using yq syntax
+- Takes a yq filter expression and file path
+- Returns formatted query results
+- Use when you need to extract fields from YAML config files, frontmatter, or TOML
+- Examples: '.key', '.nested.value', '.[].name'
+- Supports both yq (Go version) and Python yq
+- Prefer this over reading and manually parsing YAML files

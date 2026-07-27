@@ -1,0 +1,6 @@
+- Save an important fact about the project to persistent memory
+- Memory persists across sessions — future agents will recall it
+- Use when you discover something the next agent should know (architecture decisions, gotchas, conventions)
+- Examples: "This project uses Effect v4, never use tsc", "Deploy is via the release-cli workflow"
+- The content is indexed and will be injected into system prompts for future sessions
+- Do NOT store secrets, passwords, or API keys

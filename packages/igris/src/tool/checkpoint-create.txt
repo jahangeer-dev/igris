@@ -1,0 +1,6 @@
+- Create a snapshot of the current worktree state before risky operations
+- Uses git stash to save uncommitted changes with a descriptive message
+- Returns a reference you can use with checkpoint restore
+- Use before: large refactors, destructive edits, experimental changes
+- After restoring, the snapshot is removed (one-time use)
+- Only works in git repositories

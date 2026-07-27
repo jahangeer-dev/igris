@@ -28,7 +28,7 @@ const load = <A>(f: (svc: Agent.Service) => Effect.Effect<A>) =>
   })
 
 describe("default agents", () => {
-  it.instance("returns sisyphus, prometheus, webfinder, docsmith, oracle, librarian, multimodal-looker, explore, compaction, title, summary when no config", () =>
+  it.instance("returns sisyphus, prometheus, webfinder, docsmith, analyst, sensei, argiver, oracle, librarian, multimodal-looker, explore, compaction, title, summary when no config", () =>
     Effect.gen(function* () {
       const agents = yield* load((svc) => svc.list())
       const names = agents.map((a) => a.name)
@@ -36,6 +36,9 @@ describe("default agents", () => {
       expect(names).toContain("prometheus")
       expect(names).toContain("webfinder")
       expect(names).toContain("docsmith")
+      expect(names).toContain("analyst")
+      expect(names).toContain("sensei")
+      expect(names).toContain("argiver")
       expect(names).toContain("oracle")
       expect(names).toContain("librarian")
       expect(names).toContain("multimodal-looker")
@@ -87,6 +90,33 @@ describe("default agents", () => {
       expect(evalPerm(docsmith, "bash")).toBe("allow")
       expect(evalPerm(docsmith, "write")).toBe("allow")
       expect(evalPerm(docsmith, "edit")).toBe("allow")
+    }),
+  )
+
+  it.instance("analyst is primary R&D agent", () =>
+    Effect.gen(function* () {
+      const analyst = yield* load((svc) => svc.get("analyst"))
+      expect(analyst).toBeDefined()
+      expect(analyst?.mode).toBe("primary")
+      expect(analyst?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("sensei is primary teaching agent", () =>
+    Effect.gen(function* () {
+      const sensei = yield* load((svc) => svc.get("sensei"))
+      expect(sensei).toBeDefined()
+      expect(sensei?.mode).toBe("primary")
+      expect(sensei?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("argiver is primary constructive critic", () =>
+    Effect.gen(function* () {
+      const argiver = yield* load((svc) => svc.get("argiver"))
+      expect(argiver).toBeDefined()
+      expect(argiver?.mode).toBe("primary")
+      expect(argiver?.prompt).toBeTruthy()
     }),
   )
 

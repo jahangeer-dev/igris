@@ -1,0 +1,5 @@
+- Restore worktree state from a previous snapshot
+- Applies the stashed changes back to the worktree
+- The snapshot is consumed after restore (one-time use)
+- Use when: a refactor went wrong, you need to undo experimental changes
+- Run `checkpoint create` before risky work, then `checkpoint restore` if it fails

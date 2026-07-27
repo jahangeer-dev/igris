@@ -54,6 +54,17 @@ import { ModelV2 } from "@igris-ai/core/model"
 import { MCP } from "@/mcp"
 import { PermissionV1 } from "@igris-ai/core/v1/permission"
 import { McpCatalog } from "@/mcp/catalog"
+import { JqTool } from "./jq"
+import { YqTool } from "./yq"
+import { GhTool } from "./gh"
+import { SqTool } from "./sq"
+import { FzfTool } from "./fzf"
+import { BatTool } from "./bat"
+import { MemorizeTool } from "./memorize"
+import { RecallTool } from "./recall"
+import { AstGrepTool } from "./ast-grep"
+import { CheckpointCreateTool } from "./checkpoint-create"
+import { CheckpointRestoreTool } from "./checkpoint-restore"
 
 export function webSearchEnabled(providerID: ProviderV2.ID, flags = { exa: false, parallel: false }) {
   return providerID === ProviderV2.ID.igris || flags.exa || flags.parallel
@@ -112,6 +123,18 @@ const layer = Layer.effect(
     const agent = yield* Agent.Service
     const codeMode = flags.experimentalCodeMode ? yield* Effect.promise(() => import("./code-mode")) : undefined
     const codeModeTool = codeMode ? yield* codeMode.CodeModeTool : undefined
+
+    const jqtool = yield* JqTool
+    const yqtool = yield* YqTool
+    const ghtool = yield* GhTool
+    const sqtool = yield* SqTool
+    const fzftool = yield* FzfTool
+    const battool = yield* BatTool
+    const memorizetool = yield* MemorizeTool
+    const recalltool = yield* RecallTool
+    const astgrep = yield* AstGrepTool
+    const checkpointCreate = yield* CheckpointCreateTool
+    const checkpointRestore = yield* CheckpointRestoreTool
 
     const state = yield* InstanceState.make<State>(
       Effect.fn("ToolRegistry.state")(function* (ctx) {
@@ -218,6 +241,17 @@ const layer = Layer.effect(
           question: Tool.init(question),
           lsp: Tool.init(lsptool),
           plan: Tool.init(plan),
+          jq: Tool.init(jqtool),
+          yq: Tool.init(yqtool),
+          gh: Tool.init(ghtool),
+          sq: Tool.init(sqtool),
+          fzf: Tool.init(fzftool),
+          bat: Tool.init(battool),
+          memorize: Tool.init(memorizetool),
+          recall: Tool.init(recalltool),
+          astgrep: Tool.init(astgrep),
+          checkpointCreate: Tool.init(checkpointCreate),
+          checkpointRestore: Tool.init(checkpointRestore),
           ...(codeModeTool ? { execute: Tool.init(codeModeTool) } : {}),
         })
 
@@ -241,6 +275,10 @@ const layer = Layer.effect(
             ...(tool.execute ? [tool.execute] : []),
             ...(flags.experimentalLspTool ? [tool.lsp] : []),
             ...(flags.experimentalPlanMode && flags.client === "cli" ? [tool.plan] : []),
+            tool.jq, tool.yq, tool.gh, tool.sq, tool.fzf, tool.bat,
+            tool.memorize, tool.recall,
+            tool.astgrep,
+            tool.checkpointCreate, tool.checkpointRestore,
           ],
           task: tool.task,
           read: tool.read,
@@ -288,11 +326,6 @@ const layer = Layer.effect(
         if (tool.id === WebSearchTool.id) {
           return webSearchEnabled(input.providerID, { exa: flags.enableExa, parallel: flags.enableParallel })
         }
-
-        const usePatch =
-          input.modelID.includes("gpt-") && !input.modelID.includes("oss") && !input.modelID.includes("gpt-4")
-        if (tool.id === ApplyPatchTool.id) return usePatch
-        if (tool.id === EditTool.id || tool.id === WriteTool.id) return !usePatch
 
         return true
       })

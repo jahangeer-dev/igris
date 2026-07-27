@@ -18,7 +18,7 @@ export function pretty(diagnostic: LSPClient.Diagnostic) {
 }
 
 export function report(file: string, issues: LSPClient.Diagnostic[]) {
-  const errors = issues.filter((item) => item.severity === 1)
+  const errors = issues.filter((item) => item.severity !== undefined && item.severity <= 3)
   if (errors.length === 0) return ""
   const limited = errors.slice(0, MAX_PER_FILE)
   const more = errors.length - MAX_PER_FILE

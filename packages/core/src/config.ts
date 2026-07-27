@@ -36,6 +36,9 @@ export class Info extends Schema.Class<Info>("Config.Info")({
   model: Schema.String.pipe(Schema.optional).annotate({
     description: "Default model to use when no session or agent model is selected",
   }),
+  model_tiers: Schema.Record(Schema.String, Schema.String).pipe(Schema.optional).annotate({
+    description: "Model tier mappings (e.g. { \"cheap\": \"openai/gpt-4-mini\", \"ultra\": \"anthropic/claude-opus-4\" })",
+  }),
   default_agent: Schema.String.pipe(Schema.optional).annotate({
     description: "Default primary agent to use when no session agent is selected",
   }),

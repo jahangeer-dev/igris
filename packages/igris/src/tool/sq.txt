@@ -1,0 +1,7 @@
+- Query structured data (CSV, SQLite, Parquet, etc.) using sq
+- Takes a SQL query and optional data source path
+- Returns query results as formatted text
+- Use when you need to analyze CSV files or query SQLite databases
+- Examples: 'SELECT * FROM data.csv WHERE age > 18', 'SELECT count(*) FROM table'
+- Supports multiple data source types: csv, tsv, json, sqlite, parquet
+- Prefer this over manually reading large CSV files

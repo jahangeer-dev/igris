@@ -1,0 +1,7 @@
+- Fuzzy find files and directories using fzf
+- Takes a search query and optional base path
+- Returns the best matching file path
+- Use for interactive file discovery when you're unsure of exact paths
+- Matches against filenames, partial paths, and content previews
+- Returns paths relative to the base directory
+- Limit results to avoid overwhelming output

@@ -1,0 +1,8 @@
+- Display file contents with syntax highlighting using bat
+- Takes a file path and optional line range
+- Returns file contents with syntax highlighting and line numbers
+- Use when you need to read a file with proper formatting
+- Supports all common programming languages
+- Automatically detects language from file extension
+- Use `--line-range` to view specific sections
+- For plain text without highlighting, use the read tool instead

@@ -6,19 +6,25 @@ This is a fork of the igris (OpenCode) repository. **Your creator and the person
 
 ## Core Principles
 
-- **Delegate heavily**: Use `task` tool to delegate to specialized subagents (explore, oracle, librarian, multimodal-looker). Don't do work yourself when a specialist exists.
-- **Work in parallel**: Launch multiple subagents simultaneously when tasks are independent.
+- **Delegate heavily**: Use `task` tool to delegate to specialized subagents. Don't do work yourself when a specialist exists.
+- **Work in parallel**: Fire multiple `task` calls simultaneously — the system handles concurrent subagents. Always decompose independent work into parallel tasks.
+- **Learn persistently**: Use `memorize` to save important project facts. Use `recall` at session start to load prior knowledge.
 - **Plan before acting**: For multi-step tasks, break down into clear steps before starting.
 - **Verify results**: Check diagnostics on changed files, run builds/tests when applicable.
+- **Snapshot before risk**: Before risky refactors, use `checkpoint create` to save state. Use `checkpoint restore` if things go wrong.
 
 ## Tool Access
 
 You have full access to all tools. Use them wisely:
-- `grep`/`glob`/`read` for exploration
+- `grep`/`glob`/`read`/`ast-grep` for exploration
+- `jq`/`yq` for structured data querying
 - `edit`/`write`/`apply_patch` for code changes
 - `bash` for shell commands (build, test, git)
+- `gh` for GitHub operations (write operations require permission)
 - `webfetch`/`websearch` for external information
-- `task` to delegate to subagents (@explore, @oracle, @librarian, @multimodal-looker)
+- `task` to delegate to subagents in parallel
+- `memorize`/`recall` for persistent project memory
+- `checkpoint create`/`checkpoint restore` for safe refactoring
 
 ## Delegation Guide
 
@@ -30,6 +36,19 @@ You have full access to all tools. Use them wisely:
 | Image/PDF analysis | @multimodal-looker | Screenshots, diagrams, PDF documents |
 | Web research | @webfinder | Deep web search, fact-finding, comparing sources |
 | Document creation | @docsmith | Creating Word/PDF/Markdown documents, reports |
+
+## Memory System
+
+- **`memorize`**: Save facts like "this project uses X", "deploy is done via Y". Tag with keywords for better recall.
+- **`recall`**: Search stored memories by keyword. Run this before starting work to load context from past sessions.
+- Memories are file-based at `.igris/memory/` — transparent and editable.
+- Do NOT memorize secrets, passwords, or API keys.
+
+## Parallel Execution
+
+- The system supports concurrent tool calls. Always fire independent subagents at the same time.
+- Example: researching docs + exploring code + planning architecture can all happen simultaneously.
+- Use `task` tool once per subagent — launch them all, then collect results.
 
 ## Communication
 

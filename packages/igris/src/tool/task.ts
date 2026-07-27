@@ -14,6 +14,8 @@ import { Effect, Exit, Schema, Scope } from "effect"
 import { EffectBridge } from "@/effect/bridge"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Database } from "@igris-ai/core/database/database"
+import { ProviderV2 } from "@igris-ai/core/provider"
+import { ModelV2 } from "@igris-ai/core/model"
 
 export interface TaskPromptOps {
   cancel(sessionID: SessionID): Effect.Effect<void>
@@ -178,7 +180,20 @@ export const TaskTool = Tool.define(
       if (msg.info.role !== "assistant") return yield* Effect.fail(new Error("Not an assistant message"))
       const variant = msg.info.variant
 
-      const model = next.model ?? {
+      // Resolve model: explicit > tier mapping > inherit from parent
+      const model = (() => {
+        if (next.model) return next.model
+        if (next.tier && cfg.model_tiers) {
+          const mapped = cfg.model_tiers[next.tier]
+          if (mapped) {
+            try {
+              const [providerID, ...modelParts] = mapped.split("/")
+              return { providerID: ProviderV2.ID.make(providerID), modelID: ModelV2.ID.make(modelParts.join("/")) }
+            } catch { /* fall through to inherit */ }
+          }
+        }
+        return null
+      })() ?? {
         modelID: msg.info.modelID,
         providerID: msg.info.providerID,
       }

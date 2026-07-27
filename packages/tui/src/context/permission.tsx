@@ -8,8 +8,9 @@ export const { use: usePermission, provider: PermissionProvider } = createSimple
   name: "Permission",
   init: () => {
     const args = useArgs()
-    const [store, setStore] = createStore<{ mode: PermissionMode }>({
+    const [store, setStore] = createStore<{ mode: PermissionMode; skillSuggest: boolean }>({
       mode: args.auto ? "auto" : "normal",
+      skillSuggest: true,
     })
     return {
       get mode() {
@@ -20,6 +21,12 @@ export const { use: usePermission, provider: PermissionProvider } = createSimple
       },
       toggle() {
         setStore("mode", (mode) => (mode === "auto" ? "normal" : "auto"))
+      },
+      get skillSuggest() {
+        return store.skillSuggest
+      },
+      toggleSkillSuggest() {
+        setStore("skillSuggest", (v) => !v)
       },
     }
   },

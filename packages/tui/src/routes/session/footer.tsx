@@ -65,6 +65,9 @@ export function Footer() {
             <Show when={local.permission.mode === "auto"}>
               <text fg={theme.warning} bold={true}>YOLO</text>
             </Show>
+            <Show when={local.permission.skillSuggest}>
+              <text fg={theme.info} bold={true}>SKILL</text>
+            </Show>
             <Show when={permissions().length > 0}>
               <text fg={theme.warning}>
                 <span style={{ fg: theme.warning }}>△</span> {permissions().length} Permission

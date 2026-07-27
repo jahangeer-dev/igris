@@ -1,0 +1,7 @@
+- Interact with GitHub via the gh CLI
+- Supports all gh operations: issues, PRs, repos, workflows, releases
+- Takes a gh command as a string (e.g. "pr list", "issue view 123", "repo clone owner/name")
+- Destructive operations (push, merge, delete, create release, etc.) require explicit user permission
+- Read operations (view, list, status, search) use standard permission rules
+- Always use this tool instead of running gh via bash
+- Output is the raw gh CLI output

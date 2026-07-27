@@ -23,6 +23,8 @@ import { ProviderV2 } from "@igris-ai/core/provider"
 import { ModelV2 } from "@igris-ai/core/model"
 import { isRecord } from "@/util/record"
 import { RuntimeFlags } from "@/effect/runtime-flags"
+import { check as guardCheck, reset as guardReset } from "../tool/guard"
+import { check as commentCheck } from "../tool/comment-check"
 
 const MCP_RESOURCE_TOOLS = {
   list: "list_mcp_resources",
@@ -55,6 +57,8 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
   const mcp = yield* MCP.Service
   const truncate = yield* Truncate.Service
   const flags = yield* RuntimeFlags.Service
+
+  guardReset(input.session.id)
 
   const context = (args: Record<string, unknown>, options: ToolExecutionOptions): Tool.Context => ({
     sessionID: input.session.id,
@@ -108,6 +112,8 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
               { tool: item.id, sessionID: ctx.sessionID, callID: ctx.callID },
               { args },
             )
+            yield* guardCheck(ctx.sessionID, item.id, args)
+            yield* commentCheck(item.id, args)
             const result = yield* item.execute(args, ctx)
             const output = {
               ...result,

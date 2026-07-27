@@ -1,6 +1,7 @@
 import { useProject } from "../../context/project"
 import { useSync } from "../../context/sync"
-import { createMemo, Show } from "solid-js"
+import { createMemo, Show, createSignal, onMount, onCleanup } from "solid-js"
+import { RGBA } from "@opentui/core"
 import { useTheme } from "../../context/theme"
 import { useTuiConfig } from "../../config"
 import { InstallationChannel, InstallationVersion } from "@igris-ai/core/installation/version"
@@ -35,6 +36,7 @@ export function Sidebar(props: { sessionID: string; overlay?: boolean }) {
         paddingRight={2}
         position={props.overlay ? "absolute" : "relative"}
       >
+        <IgrisHeader theme={theme} />
         <scrollbox
           flexGrow={1}
           scrollAcceleration={scrollAcceleration()}
@@ -99,5 +101,49 @@ export function Sidebar(props: { sessionID: string; overlay?: boolean }) {
         </box>
       </box>
     </Show>
+  )
+}
+
+function IgrisHeader(props: { theme: ReturnType<typeof useTheme>["theme"] }) {
+  const [tick, setTick] = createSignal(0)
+  let mounted = true
+
+  onMount(() => {
+    const id = setInterval(() => {
+      if (!mounted) return
+      setTick((t) => t + 1)
+    }, 40)
+    onCleanup(() => {
+      mounted = false
+      clearInterval(id)
+    })
+  })
+
+  const letters = ["I", "G", "R", "I", "S"]
+
+  const colors = createMemo(() => {
+    tick()
+    const t = Date.now() / 1000
+    return letters.map((_, i) => {
+      const phase = i * 0.8
+      const breath = 0.6 + Math.sin(t * 2 + phase) * 0.4
+      const shadow = Math.sin(t * 3.7 + phase * 1.3) * 0.5 + 0.5
+      const r = (40 + shadow * 180) * breath
+      const g = (10 + shadow * 20) * breath
+      const b = (60 + shadow * 100) * breath
+      return RGBA.fromValues(r, g, b, 1)
+    })
+  })
+
+  return (
+    <box paddingBottom={1} paddingLeft={1}>
+      <text>
+        {letters.map((letter, i) => (
+          <span style={{ fg: colors()[i] }}>
+            <b>{letter}</b>
+          </span>
+        ))}
+      </text>
+    </box>
   )
 }

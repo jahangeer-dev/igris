@@ -10,9 +10,8 @@ const STOP_WORDS = new Set([
   "need", "want", "help", "tell", "show", "find", "give", "take",
 ])
 
-function tokenize(text: string): Set<string> {
-  const words = text.toLowerCase().split(/[\s\W]+/).filter((w) => w.length > 2 && !STOP_WORDS.has(w))
-  return new Set(words)
+function tokenize(text: string): string[] {
+  return text.toLowerCase().split(/[\s\W]+/).filter((w) => w.length > 2 && !STOP_WORDS.has(w))
 }
 
 function score(skill: Skill.Info, tokens: Set<string>): number {
@@ -20,7 +19,6 @@ function score(skill: Skill.Info, tokens: Set<string>): number {
   let score = 0
   for (const token of tokens) {
     if (target.includes(token)) {
-      // Name matches count more than description matches
       score += skill.name.toLowerCase().includes(token) ? 3 : 1
     }
   }
@@ -29,7 +27,7 @@ function score(skill: Skill.Info, tokens: Set<string>): number {
 
 export function match(text: string, skills: Skill.Info[]): Skill.Info | undefined {
   if (!text || skills.length === 0) return undefined
-  const tokens = tokenize(text)
+  const tokens = new Set(tokenize(text))
   let best: Skill.Info | undefined
   let bestScore = 0
   for (const skill of skills) {
@@ -42,8 +40,29 @@ export function match(text: string, skills: Skill.Info[]): Skill.Info | undefine
   return bestScore >= 2 ? best : undefined
 }
 
+/**
+ * Returns a skill suggestion hint for the LLM.
+ * @returns A system hint string, or undefined if no match and no suggestion needed.
+ */
 export function suggest(text: string, skills: Skill.Info[]): string | undefined {
   const m = match(text, skills)
-  if (!m) return undefined
-  return `[system] Skill suggestion: "${m.name}" matches your request. Use \`/skill ${m.name}\` or ask the skill tool to load it.\nSkill: ${m.description}`
+  if (m) {
+    return [
+      `[system] Skill suggestion: "${m.name}" matches your request.`,
+      `Use \`/skill ${m.name}\` or the skill tool to load it.`,
+      `Skill: ${m.description}`,
+    ].join("\n")
+  }
+
+  // No local match — inject discovery instruction so the LLM searches externally
+  const keywords = tokenize(text).slice(0, 5).join(" ")
+  if (!keywords) return undefined
+
+  return [
+    "[system] Skill discovery: No local skill matches your request.",
+    "Before proceeding, search for relevant skills using the find-skills mechanism:",
+    `  \`npx skills find ${keywords}\``,
+    "If you find a relevant skill, present it to the user, ask for permission (unless YOLO mode is active), and install it.",
+    "Only proceed without a skill if none is relevant after searching.",
+  ].join("\n")
 }
