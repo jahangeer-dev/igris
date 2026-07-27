@@ -63,10 +63,10 @@ export function Footer() {
           </Match>
           <Match when={connected()}>
             <Show when={local.permission.mode === "auto"}>
-              <text fg={theme.warning} bold={true}>YOLO</text>
+              <b><text fg={theme.warning}>YOLO</text></b>
             </Show>
             <Show when={local.permission.skillSuggest}>
-              <text fg={theme.info} bold={true}>SKILL</text>
+              <b><text fg={theme.info}>SKILL</text></b>
             </Show>
             <Show when={permissions().length > 0}>
               <text fg={theme.warning}>
