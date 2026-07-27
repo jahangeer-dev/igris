@@ -28,14 +28,64 @@ const load = <A>(f: (svc: Agent.Service) => Effect.Effect<A>) =>
   })
 
 describe("default agents", () => {
-  it.instance("returns explore, compaction, title, summary when no config", () =>
+  it.instance("returns sisyphus, prometheus, oracle, librarian, multimodal-looker, explore, compaction, title, summary when no config", () =>
     Effect.gen(function* () {
       const agents = yield* load((svc) => svc.list())
       const names = agents.map((a) => a.name)
+      expect(names).toContain("sisyphus")
+      expect(names).toContain("prometheus")
+      expect(names).toContain("oracle")
+      expect(names).toContain("librarian")
+      expect(names).toContain("multimodal-looker")
       expect(names).toContain("explore")
       expect(names).toContain("compaction")
       expect(names).toContain("title")
       expect(names).toContain("summary")
+    }),
+  )
+
+  it.instance("sisyphus is primary orchestrator with full access", () =>
+    Effect.gen(function* () {
+      const sisyphus = yield* load((svc) => svc.get("sisyphus"))
+      expect(sisyphus).toBeDefined()
+      expect(sisyphus?.mode).toBe("primary")
+      expect(sisyphus?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("prometheus is primary with edit restricted to plans", () =>
+    Effect.gen(function* () {
+      const prometheus = yield* load((svc) => svc.get("prometheus"))
+      expect(prometheus).toBeDefined()
+      expect(prometheus?.mode).toBe("primary")
+      expect(prometheus?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("oracle is read-only subagent", () =>
+    Effect.gen(function* () {
+      const oracle = yield* load((svc) => svc.get("oracle"))
+      expect(oracle).toBeDefined()
+      expect(oracle?.mode).toBe("subagent")
+      expect(oracle?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("librarian is read-only subagent", () =>
+    Effect.gen(function* () {
+      const librarian = yield* load((svc) => svc.get("librarian"))
+      expect(librarian).toBeDefined()
+      expect(librarian?.mode).toBe("subagent")
+      expect(librarian?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("multimodal-looker is subagent", () =>
+    Effect.gen(function* () {
+      const mm = yield* load((svc) => svc.get("multimodal-looker"))
+      expect(mm).toBeDefined()
+      expect(mm?.mode).toBe("subagent")
+      expect(mm?.prompt).toBeTruthy()
     }),
   )
 
@@ -272,8 +322,13 @@ describe("Agent.list", () => {
     Effect.gen(function* () {
       const agents = yield* load((svc) => svc.list())
       const names = agents.map((a) => a.name)
-      expect(names).toContain("compaction")
+      expect(names).toContain("sisyphus")
+      expect(names).toContain("prometheus")
+      expect(names).toContain("oracle")
+      expect(names).toContain("librarian")
+      expect(names).toContain("multimodal-looker")
       expect(names).toContain("explore")
+      expect(names).toContain("compaction")
       expect(names).toContain("summary")
       expect(names).toContain("title")
     }),

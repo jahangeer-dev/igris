@@ -14,6 +14,11 @@ import PROMPT_COMPACTION from "./prompt/compaction.txt"
 import PROMPT_EXPLORE from "./prompt/explore.txt"
 import PROMPT_SUMMARY from "./prompt/summary.txt"
 import PROMPT_TITLE from "./prompt/title.txt"
+import PROMPT_SISYPHUS from "./prompt/sisyphus.txt"
+import PROMPT_ORACLE from "./prompt/oracle.txt"
+import PROMPT_LIBRARIAN from "./prompt/librarian.txt"
+import PROMPT_MULTIMODAL_LOOKER from "./prompt/multimodal-looker.txt"
+import PROMPT_PROMETHEUS from "./prompt/prometheus.txt"
 import { Permission } from "@/permission"
 import { mergeDeep, pipe, sortBy, values } from "remeda"
 import { Global } from "@igris-ai/core/global"
@@ -138,6 +143,111 @@ const layer = Layer.effect(
         const user = Permission.fromConfig(cfg.permission ?? {})
 
         const agents: Record<string, Info> = {
+          sisyphus: {
+            name: "sisyphus",
+            description:
+              "Orchestrator agent. Coordinates work across specialized subagents and executes tasks directly. Default agent with full tool access.",
+            options: {},
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                question: "allow",
+                plan_enter: "allow",
+              }),
+              user,
+            ),
+            mode: "primary",
+            native: true,
+            prompt: PROMPT_SISYPHUS,
+          },
+          prometheus: {
+            name: "prometheus",
+            description: "Strategic planning agent. Creates detailed plans before implementation. Read-only to source code.",
+            options: {},
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                question: "allow",
+                plan_exit: "allow",
+                external_directory: {
+                  [path.join(".igris", "plans", "*")]: "allow",
+                  [path.join(Global.Path.data, "plans", "*")]: "allow",
+                },
+                edit: {
+                  "*": "deny",
+                  [path.join(".igris", "plans", "*.md")]: "allow",
+                  [path.join(Global.Path.data, "plans", "*.md")]: "allow",
+                },
+              }),
+              user,
+            ),
+            mode: "primary",
+            native: true,
+            prompt: PROMPT_PROMETHEUS,
+          },
+          oracle: {
+            name: "oracle",
+            description:
+              "Strategic technical advisor for complex analysis, architecture decisions, and hard debugging. Read-only consultation agent.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                "*": "deny",
+                grep: "allow",
+                glob: "allow",
+                read: "allow",
+                webfetch: "allow",
+                websearch: "allow",
+                bash: "allow",
+                external_directory: readonlyExternalDirectory,
+              }),
+              user,
+            ),
+            prompt: PROMPT_ORACLE,
+            options: {},
+            mode: "subagent",
+            native: true,
+          },
+          librarian: {
+            name: "librarian",
+            description:
+              "Research agent for finding documentation, exploring open-source code, and answering questions about libraries and frameworks.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                "*": "deny",
+                grep: "allow",
+                glob: "allow",
+                read: "allow",
+                webfetch: "allow",
+                websearch: "allow",
+                bash: "allow",
+                external_directory: readonlyExternalDirectory,
+              }),
+              user,
+            ),
+            prompt: PROMPT_LIBRARIAN,
+            options: {},
+            mode: "subagent",
+            native: true,
+          },
+          "multimodal-looker": {
+            name: "multimodal-looker",
+            description:
+              "Visual analysis specialist for analyzing images, screenshots, and PDF documents.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                "*": "deny",
+                read: "allow",
+              }),
+              user,
+            ),
+            prompt: PROMPT_MULTIMODAL_LOOKER,
+            options: {},
+            mode: "subagent",
+            native: true,
+          },
           explore: {
             name: "explore",
             permission: Permission.merge(
