@@ -1078,6 +1078,18 @@ export function Session() {
         moveChild(-1)
       }),
     },
+    {
+      title: local.permission.mode === "auto" ? "Disable YOLO mode" : "Enable YOLO mode",
+      value: "session.yolo",
+      category: "Session",
+      slash: {
+        name: "yolo",
+      },
+      run: () => {
+        local.permission.toggle()
+        dialog.clear()
+      },
+    },
   ])
 
   const sessionCommands = createMemo(() =>
