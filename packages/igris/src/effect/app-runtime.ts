@@ -17,6 +17,7 @@ import { Provider } from "@/provider/provider"
 import { ProviderAuth } from "@/provider/auth"
 import { Agent } from "@/agent/agent"
 import { Skill } from "@/skill"
+import { Memory } from "@/memory"
 import { Discovery } from "@/skill/discovery"
 import { Question } from "@/question"
 import { Permission } from "@/permission"
@@ -73,6 +74,7 @@ export const AppLayer = AppNodeBuilderV1.build(
     Agent.node,
     Skill.node,
     Discovery.node,
+    Memory.node,
     Question.node,
     Permission.node,
     Todo.node,

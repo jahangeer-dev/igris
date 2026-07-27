@@ -1557,11 +1557,11 @@ export function Prompt(props: PromptProps) {
                         {store.mode === "shell" ? "Shell" : Locale.titlecase(agent().name)}
                       </text>
                       <Show when={store.mode === "normal" && local.permission.mode === "auto"}>
-                        <b><text fg={theme.warning}>YOLO</text></b>
+                        <text><span style={{ fg: theme.warning, bold: true }}>YOLO</span></text>
                         <text fg={fadeColor(theme.warning, agentMetaAlpha())}>(always)</text>
                       </Show>
                       <Show when={store.mode === "normal" && local.permission.skillSuggest}>
-                        <b><text fg={theme.info}>SKILL</text></b>
+                        <text><span style={{ fg: theme.info, bold: true }}>SKILL</span></text>
                       </Show>
                       <Show when={store.mode === "normal"}>
                         <box flexDirection="row" gap={1}>
