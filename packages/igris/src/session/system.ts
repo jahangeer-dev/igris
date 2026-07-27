@@ -94,7 +94,7 @@ const layer = Layer.effect(
                   ]),
                 "</available_references>",
               ].join("\n"),
-              yield* memory.inject(),
+              yield* memory.inject().pipe(Effect.catch(() => Effect.succeed(undefined))),
         ].filter((part): part is string => part !== undefined)
       }),
 
