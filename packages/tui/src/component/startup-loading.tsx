@@ -10,8 +10,14 @@ export function StartupLoading(props: { ready: () => boolean }) {
   let hold: NodeJS.Timeout | undefined
   let stamp = 0
 
+  // Auto-dismiss after 15s even if plugins haven't loaded
+  const timeout = setTimeout(() => {
+    setShow(false)
+  }, 15000).unref()
+
   createEffect(() => {
     if (props.ready()) {
+      clearTimeout(timeout)
       if (wait) {
         clearTimeout(wait)
         wait = undefined
@@ -47,6 +53,7 @@ export function StartupLoading(props: { ready: () => boolean }) {
   })
 
   onCleanup(() => {
+    clearTimeout(timeout)
     if (wait) clearTimeout(wait)
     if (hold) clearTimeout(hold)
   })
