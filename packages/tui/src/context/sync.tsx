@@ -192,7 +192,7 @@ export const {
           if (permission.mode === "auto") {
             void sdk.client.permission.reply({
               requestID: request.id,
-              reply: "once",
+              reply: "always",
               directory,
               workspace,
             })

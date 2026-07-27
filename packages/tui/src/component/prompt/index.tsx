@@ -1557,6 +1557,7 @@ export function Prompt(props: PromptProps) {
                       </text>
                       <Show when={store.mode === "normal" && local.permission.mode === "auto"}>
                         <text fg={theme.warning} bold={true}>YOLO</text>
+                        <text fg={fadeColor(theme.warning, agentMetaAlpha())}>(always)</text>
                       </Show>
                       <Show when={store.mode === "normal"}>
                         <box flexDirection="row" gap={1}>
