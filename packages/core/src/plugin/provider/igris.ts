@@ -163,7 +163,7 @@ export const IgrisPlugin = define<HttpClient.HttpClient | EventV2.Service | Scop
       }
 
       // Igris provider disabled — no such provider exists for this fork
-      return
+      // (keep the provider registration loop above for user-configured providers)
     })
 
     const refresh = () => loading.withPermit(load().pipe(Effect.andThen(ctx.catalog.reload())))
