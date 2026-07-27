@@ -48,9 +48,6 @@ it.instance("returns default native agents when no config", () =>
   Effect.gen(function* () {
     const agents = yield* load((svc) => svc.list())
     const names = agents.map((a) => a.name)
-    expect(names).toContain("build")
-    expect(names).toContain("plan")
-    expect(names).toContain("general")
     expect(names).toContain("explore")
     expect(names).toContain("compaction")
     expect(names).toContain("title")
@@ -58,55 +55,15 @@ it.instance("returns default native agents when no config", () =>
   }),
 )
 
-it.instance("build agent has correct default properties", () =>
+it.instance("explore agent has correct default properties", () =>
   Effect.gen(function* () {
-    const build = yield* load((svc) => svc.get("build"))
-    expect(build).toBeDefined()
-    expect(build?.mode).toBe("primary")
-    expect(build?.native).toBe(true)
-    expect(evalPerm(build, "edit")).toBe("allow")
-    expect(evalPerm(build, "bash")).toBe("allow")
+    const explore = yield* load((svc) => svc.get("explore"))
+    expect(explore).toBeDefined()
+    expect(explore?.mode).toBe("subagent")
+    expect(explore?.native).toBe(true)
+    expect(evalPerm(explore, "grep")).toBe("allow")
+    expect(evalPerm(explore, "bash")).toBe("allow")
   }),
-)
-
-it.instance("plan agent denies edits except .igris/plans/*", () =>
-  Effect.gen(function* () {
-    const plan = yield* load((svc) => svc.get("plan"))
-    expect(plan).toBeDefined()
-    // Wildcard is denied
-    expect(evalPerm(plan, "edit")).toBe("deny")
-    // But specific path is allowed
-    expect(Permission.evaluate("edit", ".igris/plans/foo.md", plan!.permission).action).toBe("allow")
-  }),
-)
-
-it.instance("plan agent denies the general subagent by default", () =>
-  Effect.gen(function* () {
-    const plan = yield* load((svc) => svc.get("plan"))
-    expect(plan).toBeDefined()
-    expect(Permission.evaluate("task", "general", plan!.permission).action).toBe("deny")
-    expect(Permission.evaluate("task", "explore", plan!.permission).action).toBe("allow")
-    expect(Permission.evaluate("task", "custom", plan!.permission).action).toBe("allow")
-  }),
-)
-
-it.instance(
-  "user permission can allow the general subagent from plan mode",
-  () =>
-    Effect.gen(function* () {
-      const plan = yield* load((svc) => svc.get("plan"))
-      expect(plan).toBeDefined()
-      expect(Permission.evaluate("task", "general", plan!.permission).action).toBe("allow")
-    }),
-  {
-    config: {
-      permission: {
-        task: {
-          general: "allow",
-        },
-      },
-    },
-  },
 )
 
 it.instance("explore agent denies edit and write", () =>
