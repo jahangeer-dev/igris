@@ -221,9 +221,10 @@ print_message() {
 }
 
 check_version() {
+    # Always skip version check when using -y (always install latest)
+    [ "$auto_yes" = "true" ] && return
     if command -v $BIN_NAME >/dev/null 2>&1; then
         installed_version=$($BIN_NAME --version 2>/dev/null || echo "")
-
         if [[ "$installed_version" != "$specific_version" ]]; then
             print_message info "${MUTED}Installed version: ${NC}$installed_version."
         else
