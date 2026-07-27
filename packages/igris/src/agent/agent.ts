@@ -19,6 +19,8 @@ import PROMPT_ORACLE from "./prompt/oracle.txt"
 import PROMPT_LIBRARIAN from "./prompt/librarian.txt"
 import PROMPT_MULTIMODAL_LOOKER from "./prompt/multimodal-looker.txt"
 import PROMPT_PROMETHEUS from "./prompt/prometheus.txt"
+import PROMPT_WEBFINDER from "./prompt/webfinder.txt"
+import PROMPT_DOCSMITH from "./prompt/docsmith.txt"
 import { Permission } from "@/permission"
 import { mergeDeep, pipe, sortBy, values } from "remeda"
 import { Global } from "@igris-ai/core/global"
@@ -184,6 +186,48 @@ const layer = Layer.effect(
             mode: "primary",
             native: true,
             prompt: PROMPT_PROMETHEUS,
+          },
+          webfinder: {
+            name: "webfinder",
+            description:
+              "Web research specialist. Searches, fetches, and synthesizes information from the web. Use for deep research, fact-finding, and comparing sources.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                "*": "deny",
+                read: "allow",
+                webfetch: "allow",
+                websearch: "allow",
+                bash: "allow",
+              }),
+              user,
+            ),
+            prompt: PROMPT_WEBFINDER,
+            options: {},
+            mode: "primary",
+            native: true,
+          },
+          docsmith: {
+            name: "docsmith",
+            description:
+              "Document creation specialist. Creates polished documents in Markdown, Word (.docx), and PDF formats using Pandoc. Use for generating reports, docs, and formatted output.",
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                read: "allow",
+                write: "allow",
+                edit: "allow",
+                glob: "allow",
+                grep: "allow",
+                webfetch: "allow",
+                bash: "allow",
+              }),
+              user,
+            ),
+            prompt: PROMPT_DOCSMITH,
+            options: {},
+            mode: "primary",
+            native: true,
           },
           oracle: {
             name: "oracle",

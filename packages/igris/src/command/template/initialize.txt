@@ -43,6 +43,14 @@ Good questions:
 
 Do not ask about anything the repo already makes clear.
 
+### Graphify setup check
+
+Check if Graphify (https://graphify.net/) is already set up in this repo (look for `.graphify/` directory or graphify references in config). If not set up, ask the user:
+
+> "Would you like to set up Graphify for this repo? It builds a queryable knowledge graph to help AI assistants understand the codebase faster. Install with `pip install graphifyy`, then run `graphify opencode install`."
+
+If the user agrees, add a note in `AGENTS.md` about the Graphify setup and recommended commands. Do not install it yourself — just document the intent.
+
 ## Writing rules
 
 Include only high-signal, repo-specific guidance such as:

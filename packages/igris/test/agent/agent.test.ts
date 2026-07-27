@@ -28,12 +28,14 @@ const load = <A>(f: (svc: Agent.Service) => Effect.Effect<A>) =>
   })
 
 describe("default agents", () => {
-  it.instance("returns sisyphus, prometheus, oracle, librarian, multimodal-looker, explore, compaction, title, summary when no config", () =>
+  it.instance("returns sisyphus, prometheus, webfinder, docsmith, oracle, librarian, multimodal-looker, explore, compaction, title, summary when no config", () =>
     Effect.gen(function* () {
       const agents = yield* load((svc) => svc.list())
       const names = agents.map((a) => a.name)
       expect(names).toContain("sisyphus")
       expect(names).toContain("prometheus")
+      expect(names).toContain("webfinder")
+      expect(names).toContain("docsmith")
       expect(names).toContain("oracle")
       expect(names).toContain("librarian")
       expect(names).toContain("multimodal-looker")
@@ -59,6 +61,32 @@ describe("default agents", () => {
       expect(prometheus).toBeDefined()
       expect(prometheus?.mode).toBe("primary")
       expect(prometheus?.prompt).toBeTruthy()
+    }),
+  )
+
+  it.instance("webfinder is primary web research agent", () =>
+    Effect.gen(function* () {
+      const webfinder = yield* load((svc) => svc.get("webfinder"))
+      expect(webfinder).toBeDefined()
+      expect(webfinder?.mode).toBe("primary")
+      expect(webfinder?.prompt).toBeTruthy()
+      expect(evalPerm(webfinder, "webfetch")).toBe("allow")
+      expect(evalPerm(webfinder, "websearch")).toBe("allow")
+      expect(evalPerm(webfinder, "edit")).toBe("deny")
+      expect(evalPerm(webfinder, "write")).toBe("deny")
+    }),
+  )
+
+  it.instance("docsmith is primary document creation agent", () =>
+    Effect.gen(function* () {
+      const docsmith = yield* load((svc) => svc.get("docsmith"))
+      expect(docsmith).toBeDefined()
+      expect(docsmith?.mode).toBe("primary")
+      expect(docsmith?.prompt).toBeTruthy()
+      expect(evalPerm(docsmith, "webfetch")).toBe("allow")
+      expect(evalPerm(docsmith, "bash")).toBe("allow")
+      expect(evalPerm(docsmith, "write")).toBe("allow")
+      expect(evalPerm(docsmith, "edit")).toBe("allow")
     }),
   )
 

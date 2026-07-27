@@ -56,6 +56,8 @@ import { SessionTable } from "@igris-ai/core/session/sql"
 import { SessionReminders } from "./reminders"
 import { SessionTools } from "./tools"
 import { LLMEvent } from "@igris-ai/llm"
+import { Skill } from "../skill"
+import { suggest as suggestSkill } from "../skill/suggest"
 
 // @ts-ignore
 globalThis.AI_SDK_LOG_WARNINGS = false
@@ -1008,6 +1010,25 @@ const layer = Layer.effect(
         { message: info, parts: resolvedParts },
       )
 
+      // Skill auto-suggestion: check if any available skill matches the user's request
+      const userText = input.parts
+        .filter((p): p is { type: "text"; text: string } & typeof p => p.type === "text")
+        .map((p) => p.text)
+        .join(" ")
+      if (userText && input.skillSuggest !== false) {
+        const skills = yield* Skill.Service.pipe(Effect.flatMap((svc) => svc.available()))
+        const suggestion = suggestSkill(userText, skills)
+        if (suggestion) {
+          ;(resolvedParts as any[]).unshift({
+            messageID: info.id,
+            sessionID: input.sessionID,
+            type: "text",
+            text: suggestion,
+            synthetic: true,
+          })
+        }
+      }
+
       const parts = yield* Effect.forEach(resolvedParts, (part) =>
         part.type === "file" && part.mime.startsWith("image/")
           ? image.normalize(part).pipe(
@@ -1502,6 +1523,7 @@ export const PromptInput = Schema.Struct({
   model: Schema.optional(ModelRef),
   agent: Schema.optional(Schema.String),
   noReply: Schema.optional(Schema.Boolean),
+  skillSuggest: Schema.optional(Schema.Boolean),
   tools: Schema.optional(Schema.Record(Schema.String, Schema.Boolean)).annotate({
     description:
       "@deprecated tools and permissions have been merged, you can set permissions on the session itself now",
@@ -1625,6 +1647,7 @@ export const node = LayerNode.make({
     EventV2Bridge.node,
     RuntimeFlags.node,
     Database.node,
+    Skill.node,
   ],
 })
 
